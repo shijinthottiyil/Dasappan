@@ -5,8 +5,8 @@
 import FlutterMacOS
 import Foundation
 
-import ffmpeg_kit_flutter
+import rive_common
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
-  FFmpegKitFlutterPlugin.register(with: registry.registrar(forPlugin: "FFmpegKitFlutterPlugin"))
+  RivePlugin.register(with: registry.registrar(forPlugin: "RivePlugin"))
 }

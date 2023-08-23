@@ -1,84 +1,106 @@
-import 'dart:developer';
-import 'dart:io';
-import 'package:android_path_provider/android_path_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:youtube_explode_dart/youtube_explode_dart.dart';
-import 'package:path/path.dart' as path;
-import 'package:ffmpeg_kit_flutter/ffmpeg_kit.dart' as ffmpeg;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:music_stream/home_controller.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  final textController = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final provider = ref.watch(homeProvider);
+    final height = MediaQuery.sizeOf(context).height;
     return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: Column(
-          children: [
-            CupertinoTextField(
-              controller: textController,
+      backgroundColor: Colors.grey[300],
+      body: SafeArea(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Container(
+              width: double.infinity,
+              height: height / 2,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: Colors.grey.shade300,
+                boxShadow: [
+                  // Bottom Right Shadow Darker
+                  BoxShadow(
+                    color: Colors.grey.shade500,
+                    // Negative value of offset means top left corner (-1,-1) means top left corner
+                    // (1,1) Means Bottom Right Corner
+                    offset: const Offset(5, 5),
+                    blurRadius: 15,
+                    spreadRadius: 1,
+                  ),
+                  // Top Left Shadow Lighter
+                  const BoxShadow(
+                    color: Colors.white,
+                    offset: Offset(-5, -5),
+                    blurRadius: 15,
+                    spreadRadius: 1,
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    const Text(
+                      "Youtube Video to mp3 converter",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                    CupertinoTextField(
+                      controller: provider.textController,
+                      placeholder: "Paste video link",
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                    Visibility(
+                      visible: !provider.isLoading,
+                      replacement: LoadingAnimationWidget.halfTriangleDot(
+                          color: Colors.black, size: 25),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade300,
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              // Bottom Right Darker
+                              BoxShadow(
+                                color: Colors.grey.shade500,
+                                offset: const Offset(5, 5),
+                                blurRadius: 5,
+                                spreadRadius: 1,
+                              ),
+                              // Top Left
+                              const BoxShadow(
+                                color: Colors.white,
+                                offset: Offset(-5, -5),
+                                blurRadius: 5,
+                                spreadRadius: 1,
+                              ),
+                            ]),
+                        child: IconButton(
+                          color: Colors.black,
+                          onPressed: () {
+                            ref.read(homeProvider).covert(context);
+                          },
+                          icon: const Icon(Icons.download),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-            ElevatedButton(
-              onPressed: () async {
-                final yt = YoutubeExplode();
-                final id = VideoId(textController.text.trim());
-                final video = await yt.videos.get(id);
-
-                await Permission.storage.request();
-
-                final manifest = await yt.videos.streamsClient.getManifest(id);
-                final audio = manifest.audioOnly.withHighestBitrate();
-
-                final dir = await AndroidPathProvider.downloadsPath;
-                final filePath = path.join(
-                  dir,
-                  '${video.id}.mp3',
-                );
-
-                final file = File(filePath);
-                final fileStream = file.openWrite();
-                await yt.videos.streamsClient.get(audio).pipe(fileStream);
-                await fileStream.flush();
-                await fileStream.close();
-
-                // Convert .webm to .mp3 using FFmpeg
-                // final mp3FilePath = path.join(
-                //   dir,
-                //   '${video.id}.mp3',
-                // );
-
-                // final ffmpegCommand =
-                //     '-i "$filePath" -vn -acodec libmp3lame "$mp3FilePath"';
-
-                // await ffmpeg.FFmpegKit.execute(ffmpegCommand).then((value) {
-                //   log("success");
-                // });
-
-                await showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      content:
-                          Text('Download completed and saved to: $filePath'),
-                    );
-                  },
-                );
-
-                yt.close();
-              },
-              child: Text("Download and Convert"),
-            ),
-          ],
+          ),
         ),
       ),
     );
