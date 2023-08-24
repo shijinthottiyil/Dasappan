@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,6 +12,8 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final provider = ref.watch(homeProvider);
+    final progresProvider = ref.watch(downloadProgressProvider);
+    log(progresProvider.toDouble().toString());
     final height = MediaQuery.sizeOf(context).height;
     return Scaffold(
       backgroundColor: Colors.grey[300],
@@ -66,34 +70,66 @@ class HomeScreen extends ConsumerWidget {
                     Visibility(
                       visible: !provider.isLoading,
                       replacement: LoadingAnimationWidget.halfTriangleDot(
-                          color: Colors.black, size: 25),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.grey.shade300,
-                            shape: BoxShape.circle,
-                            boxShadow: [
-                              // Bottom Right Darker
-                              BoxShadow(
-                                color: Colors.grey.shade500,
-                                offset: const Offset(5, 5),
-                                blurRadius: 5,
-                                spreadRadius: 1,
+                        color: Colors.black,
+                        size: 25,
+                      ),
+                      child: Column(
+                        children: [
+                          if (progresProvider == 0 ||
+                              progresProvider == 100) ...[
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.grey.shade300,
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    // Bottom Right Darker
+                                    BoxShadow(
+                                      color: Colors.grey.shade500,
+                                      offset: const Offset(5, 5),
+                                      blurRadius: 5,
+                                      spreadRadius: 1,
+                                    ),
+                                    // Top Left
+                                    const BoxShadow(
+                                      color: Colors.white,
+                                      offset: Offset(-5, -5),
+                                      blurRadius: 5,
+                                      spreadRadius: 1,
+                                    ),
+                                  ]),
+                              child: IconButton(
+                                color: Colors.black,
+                                onPressed: () {
+                                  ref.read(homeProvider).covert(context, ref);
+                                },
+                                icon: const Icon(Icons.download),
                               ),
-                              // Top Left
-                              const BoxShadow(
-                                color: Colors.white,
-                                offset: Offset(-5, -5),
-                                blurRadius: 5,
-                                spreadRadius: 1,
-                              ),
-                            ]),
-                        child: IconButton(
-                          color: Colors.black,
-                          onPressed: () {
-                            ref.read(homeProvider).covert(context);
-                          },
-                          icon: const Icon(Icons.download),
-                        ),
+                            ),
+                          ] else ...[
+                            Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                CircularProgressIndicator(
+                                  value: progresProvider / 100,
+                                  backgroundColor: Colors.grey,
+                                  strokeWidth: 6,
+                                  valueColor:
+                                      const AlwaysStoppedAnimation<Color>(
+                                          Colors.black),
+                                ),
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    "$progresProvider%",
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ]
+                        ],
                       ),
                     ),
                   ],
