@@ -12,6 +12,7 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final provider = ref.watch(homeProvider);
+    provider.mock();
     final progresProvider = ref.watch(downloadProgressProvider);
     log(progresProvider.toDouble().toString());
     final height = MediaQuery.sizeOf(context).height;

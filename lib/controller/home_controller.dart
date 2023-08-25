@@ -5,6 +5,7 @@ import 'package:android_path_provider/android_path_provider.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import 'package:path/path.dart' as path;
@@ -180,5 +181,32 @@ class HomeController with ChangeNotifier {
     //   desc: 'Download completed and saved to: $filePath',
     //   btnOkOnPress: () {},
     // ).show();
+  }
+
+  // <============ MOCK METHOD TO PLAYLIST ===============>
+  mock() async {
+    var yt = YoutubeExplode();
+    // var playlistUrl =
+    //     "https://www.youtube.com/watch?v=OiC1rgCPmUQ&list=PLMC9KNkIncKtGvr2kFRuXBVmBev6cAJ2u";
+    // final id = PlaylistId(playlistUrl);
+
+    // var playlist = await yt.playlists.get(id);
+
+    // await for (var video in yt.playlists.getVideos(playlist.id).take(10)) {
+    //   log(video.title);
+    //   log(video.author);
+    // }
+    // log(playlist.title);
+    // log(playlist.author);
+
+    var audioUrl = "";
+    final id = VideoId("https://www.youtube.com/watch?v=RVLNBVK8auM");
+    final StreamManifest manifest =
+        await yt.videos.streamsClient.getManifest(id);
+    audioUrl = manifest.audioOnly.withHighestBitrate().url.toString();
+
+    final player = AudioPlayer();
+    await player.setUrl(audioUrl);
+    player.pause();
   }
 }
