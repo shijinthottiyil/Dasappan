@@ -21,7 +21,19 @@ class SearchController with ChangeNotifier {
   final player = AudioPlayer();
   List<SearchModel> searchModelList = [];
   var isLoading = false;
-
+  var duration = const Duration();
+  var position = const Duration();
+  final playlist = ConcatenatingAudioSource(
+    // Start loading next item just before reaching it
+    useLazyPreparation: true,
+    // Customise the shuffle algorithm
+    shuffleOrder: DefaultShuffleOrder(),
+    // Specify the playlist items
+    children: [],
+  );
+  var index = -1;
+  var title = "title";
+  var subTitle = "subTitle";
   // <================================= METHODS =========================================>
 
   // <================================= METHOD FOR SEARCH ===============================>
@@ -79,7 +91,23 @@ class SearchController with ChangeNotifier {
 
     await player.setUrl(audioUrl);
 
+    // for (var data in searchModelList) {
+    //   await playlist.add(
+    //     AudioSource.uri(
+    //       await exractAudioUrl(
+    //         videoId: data.videoId,
+    //       ),
+    //     ),
+    //   );
+    // }
+
+    // await player.setAudioSource(
+    //   playlist,
+    //   initialIndex: 0,
+    //   initialPosition: Duration.zero,
+    // );
     player.play();
+    mockDuration();
     if (context.mounted) {
       Navigator.push(
         context,
@@ -103,6 +131,94 @@ class SearchController with ChangeNotifier {
     } else if (!player.playing) {
       notifyListeners();
       await player.play();
+    }
+  }
+
+  // <================================= METHOD TO EXRACT AUDIO URL =========================================>
+  Future<Uri> exractAudioUrl({required String videoId}) async {
+    var audioUrl = "";
+    try {
+      final StreamManifest manifest =
+          await yt.videos.streamsClient.getManifest(videoId);
+      audioUrl = manifest.audioOnly.withHighestBitrate().url.toString();
+      return Uri.parse(audioUrl);
+    } catch (e) {
+      log(e.toString());
+      return Uri();
+    }
+  }
+
+  // <==================================== MOCK SLIDER ====================================>
+  void mockDuration() {
+    player.durationStream.listen((dura) {
+      duration = dura!;
+      notifyListeners();
+    });
+    player.positionStream.listen((pos) {
+      position = pos;
+      notifyListeners();
+    });
+  }
+
+  onChanged(double value) {
+    position = Duration(seconds: value.toInt());
+    player.seek(position);
+    notifyListeners();
+  }
+
+  // <================================ METHOD FOR FAST FORWARD ===============================>
+  fastForward() {
+    var sec10 = const Duration(seconds: 10);
+    if (position + sec10 >= duration) {
+      return;
+    }
+    position += sec10;
+    player.seek(position);
+    notifyListeners();
+  }
+
+  // <============================ METHOD FOR FAST BACKWARD ====================================>
+  fastBackward() {
+    var sec10 = const Duration(seconds: 10);
+    if (position - sec10 <= Duration.zero) {
+      return;
+    }
+    position -= sec10;
+    player.seek(position);
+    notifyListeners();
+  }
+
+  // <========================== METHOD FOR CARD TAP ==============================================>
+  Future<void> searchCardTap({required int selectedIndex}) async {
+    if (player.playing) {
+      await player.pause();
+    }
+    var audioUrl = "";
+    final StreamManifest manifest = await yt.videos.streamsClient
+        .getManifest(searchModelList.elementAt(selectedIndex).videoId);
+    audioUrl = manifest.audioOnly.withHighestBitrate().url.toString();
+
+    await player.setUrl(audioUrl);
+    player.play();
+    mockDuration();
+    index = selectedIndex;
+    title = searchModelList.elementAt(index).title;
+    subTitle = searchModelList.elementAt(index).artists;
+    notifyListeners();
+  }
+
+  // <================================ METHOD FOR LISTTILE TAP =====================================>
+  Future<void> listTileTap({required BuildContext context}) async {
+    if (index != -1) {
+      await showModalBottomSheet(
+        // backgroundColor: Colors.red,
+        context: context,
+        isScrollControlled: true,
+        builder: (context) {
+          return NowPlayingScreen(
+              url: searchModelList.elementAt(index).thumbnails, title: title);
+        },
+      );
     }
   }
 }
