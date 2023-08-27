@@ -154,12 +154,14 @@ class SearchScreen extends ConsumerWidget {
 
                           title: Text(
                             provider.title,
+                            overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               color: Colors.black,
                             ),
                           ),
                           subtitle: Text(
                             provider.subTitle,
+                            overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               color: Colors.black,
                             ),

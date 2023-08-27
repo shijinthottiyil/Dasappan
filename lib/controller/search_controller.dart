@@ -34,6 +34,11 @@ class SearchController with ChangeNotifier {
   var index = -1;
   var title = "title";
   var subTitle = "subTitle";
+
+  // <================================VOLUME CONTROL =======================================>
+  var minVolume = 0.0;
+  var maxVolume = 1.0;
+  var currentVolume = 0.5;
   // <================================= METHODS =========================================>
 
   // <================================= METHOD FOR SEARCH ===============================>
@@ -79,49 +84,49 @@ class SearchController with ChangeNotifier {
   }
 
   // <========================================== METHOD FOR NAVIGATING TO NOW PLAYING SCREEN ===============================================>
-  void goNowPlay(BuildContext context,
-      {required String url, required String title, required int index}) async {
-    if (player.playing) {
-      await player.pause();
-    }
-    var audioUrl = "";
-    final StreamManifest manifest = await yt.videos.streamsClient
-        .getManifest(searchModelList.elementAt(index).videoId);
-    audioUrl = manifest.audioOnly.withHighestBitrate().url.toString();
+  // void goNowPlay(BuildContext context,
+  //     {required String url, required String title, required int index}) async {
+  //   if (player.playing) {
+  //     await player.pause();
+  //   }
+  //   var audioUrl = "";
+  //   final StreamManifest manifest = await yt.videos.streamsClient
+  //       .getManifest(searchModelList.elementAt(index).videoId);
+  //   audioUrl = manifest.audioOnly.withHighestBitrate().url.toString();
 
-    await player.setUrl(audioUrl);
+  //   await player.setUrl(audioUrl);
 
-    // for (var data in searchModelList) {
-    //   await playlist.add(
-    //     AudioSource.uri(
-    //       await exractAudioUrl(
-    //         videoId: data.videoId,
-    //       ),
-    //     ),
-    //   );
-    // }
+  //   // for (var data in searchModelList) {
+  //   //   await playlist.add(
+  //   //     AudioSource.uri(
+  //   //       await exractAudioUrl(
+  //   //         videoId: data.videoId,
+  //   //       ),
+  //   //     ),
+  //   //   );
+  //   // }
 
-    // await player.setAudioSource(
-    //   playlist,
-    //   initialIndex: 0,
-    //   initialPosition: Duration.zero,
-    // );
-    player.play();
-    mockDuration();
-    if (context.mounted) {
-      Navigator.push(
-        context,
-        CupertinoPageRoute(
-          builder: (context) {
-            return NowPlayingScreen(
-              url: url,
-              title: title,
-            );
-          },
-        ),
-      );
-    }
-  }
+  //   // await player.setAudioSource(
+  //   //   playlist,
+  //   //   initialIndex: 0,
+  //   //   initialPosition: Duration.zero,
+  //   // );
+  //   player.play();
+  //   mockDuration();
+  //   if (context.mounted) {
+  //     Navigator.push(
+  //       context,
+  //       CupertinoPageRoute(
+  //         builder: (context) {
+  //           return NowPlayingScreen(
+  //             url: url,
+  //             title: title,
+  //           );
+  //         },
+  //       ),
+  //     );
+  //   }
+  // }
 
   // <================================= METHOD FOR PLAY AND PAUSE MUSIC =======================================>
   Future<void> playOrPause() async {
@@ -216,9 +221,19 @@ class SearchController with ChangeNotifier {
         isScrollControlled: true,
         builder: (context) {
           return NowPlayingScreen(
-              url: searchModelList.elementAt(index).thumbnails, title: title);
+            url: searchModelList.elementAt(index).thumbnails,
+            title: title,
+            artist: subTitle,
+          );
         },
       );
     }
+  }
+
+  // <=================================METHOD FOR VOLUME CONTROL ======================================>
+  Future<void> controlVolume(double volume) async {
+    currentVolume = volume;
+    await player.setVolume(currentVolume);
+    notifyListeners();
   }
 }

@@ -1,12 +1,18 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:music_stream/controller/search_controller.dart';
 
 class NowPlayingScreen extends ConsumerWidget {
-  const NowPlayingScreen({super.key, required this.url, required this.title});
+  const NowPlayingScreen(
+      {super.key,
+      required this.url,
+      required this.title,
+      required this.artist});
   final String url;
   final String title;
+  final String artist;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.sizeOf(context);
@@ -28,7 +34,7 @@ class NowPlayingScreen extends ConsumerWidget {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: NetworkImage(url),
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fill,
                       filterQuality: FilterQuality.high,
                     ),
                     borderRadius: BorderRadius.circular(8),
@@ -47,21 +53,34 @@ class NowPlayingScreen extends ConsumerWidget {
                     title,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w200,
                       fontSize: 24,
                       letterSpacing: 0.2,
                     ),
                   ),
-                  Column(
+                  Text(
+                    artist,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w100,
+                      fontSize: 16,
+                      letterSpacing: 0.2,
+                    ),
+                  ),
+                  Row(
                     children: [
-                      SliderTheme(
-                        data: SliderTheme.of(context).copyWith(trackHeight: 2),
-                        child: Slider(
+                      Text(
+                        provider.position.toString().substring(2, 7),
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      Expanded(
+                        child: CupertinoSlider(
                           min: const Duration(microseconds: 0)
                               .inSeconds
                               .toDouble(),
                           max: provider.duration.inSeconds.toDouble(),
                           value: provider.position.inSeconds.toDouble(),
+                          activeColor: Colors.white,
                           onChanged: ((value) {
                             // setState(() {
                             //   changeToSeconds(value.toInt());
@@ -69,26 +88,15 @@ class NowPlayingScreen extends ConsumerWidget {
                             // });
                             provider.onChanged(value);
                           }),
-                          activeColor: Colors.white,
-                          inactiveColor: Colors.white.withOpacity(0.3),
-                          thumbColor: Colors.white,
+                          // activeColor: Colors.white,
+
+                          // inactiveColor: Colors.white.withOpacity(0.3),
+                          // thumbColor: Colors.white,
                         ),
                       ),
-                      Container(
-                        padding: EdgeInsets.fromLTRB(23, 0, 23, 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              provider.position.toString().substring(2, 7),
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            Text(
-                              provider.duration.toString().substring(2, 7),
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ],
-                        ),
+                      Text(
+                        provider.duration.toString().substring(2, 7),
+                        style: TextStyle(color: Colors.white),
                       ),
                     ],
                   ),
@@ -97,36 +105,43 @@ class NowPlayingScreen extends ConsumerWidget {
                     children: [
                       IconButton(
                         onPressed: provider.fastBackward,
-                        icon: Icon(Icons.fast_rewind_rounded),
+                        icon: Icon(CupertinoIcons.backward_fill),
                       ),
                       IconButton(
                         onPressed: provider.playOrPause,
                         icon: Column(
                           children: [
                             if (provider.player.playing) ...[
-                              Icon(Icons.pause_rounded)
+                              Icon(CupertinoIcons.pause_fill)
                             ] else if (!provider.player.playing) ...[
-                              Icon(Icons.play_arrow_rounded)
+                              Icon(CupertinoIcons.play_fill)
                             ]
                           ],
                         ),
                       ),
                       IconButton(
                         onPressed: provider.fastForward,
-                        icon: Icon(Icons.fast_forward_rounded),
+                        icon: Icon(CupertinoIcons.forward_fill),
                       ),
                     ],
                   ),
                 ],
               ),
             ),
-            Column(
+            Row(
               children: [
-                Container(
-                  width: double.infinity,
-                  height: 5,
-                  color: Colors.blue,
-                )
+                Icon(CupertinoIcons.volume_down),
+                Expanded(
+                  child: CupertinoSlider(
+                    min: provider.minVolume,
+                    max: provider.maxVolume,
+                    value: provider.currentVolume,
+                    onChanged: (value) {
+                      provider.controlVolume(value);
+                    },
+                  ),
+                ),
+                Icon(CupertinoIcons.volume_up),
               ],
             )
           ],
