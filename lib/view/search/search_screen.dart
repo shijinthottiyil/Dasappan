@@ -58,22 +58,27 @@ class SearchScreen extends ConsumerWidget {
                     ),
                     itemBuilder: (context, index) {
                       final data = provider.searchModelList.elementAt(index);
-                      return Card(
-                        color: Colors.transparent,
-                        child: Expanded(
-                          child: Column(
-                            children: [
-                              Image.network(data.thumbnails),
-                              Text(data.title,
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      overflow: TextOverflow.ellipsis)),
-                              Text(data.artists,
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      overflow: TextOverflow.ellipsis)),
-                            ],
-                          ),
+                      return InkWell(
+                        onTap: () {
+                          ref.read(searchProvider).goNowPlay(
+                                context,
+                                url: data.thumbnails,
+                                title: data.title,
+                                index: index,
+                              );
+                        },
+                        child: Column(
+                          children: [
+                            Image.network(data.thumbnails),
+                            Text(data.title,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    overflow: TextOverflow.ellipsis)),
+                            Text(data.artists,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    overflow: TextOverflow.ellipsis)),
+                          ],
                         ),
                       );
                     },

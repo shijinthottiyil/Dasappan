@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:music_stream/view/home/home_screen.dart';
-import 'package:music_stream/view/search_screen.dart';
+import 'package:music_stream/view/search/search_screen.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -28,6 +28,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         fontFamily: 'Sen',
+        scaffoldBackgroundColor: Colors.black,
+        textTheme: Theme.of(context).textTheme.apply(
+              bodyColor: Colors.white,
+              displayColor: Colors.white,
+            ),
       ),
       debugShowCheckedModeBanner: false,
       home: const SearchScreen(),
