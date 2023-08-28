@@ -6,22 +6,10 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:music_stream/controller/search_controller.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import 'package:path/path.dart' as path;
-
-final downloadProgressProvider =
-    StateNotifierProvider<DownloadProgressController, int>((ref) {
-  return DownloadProgressController();
-});
-
-class DownloadProgressController extends StateNotifier<int> {
-  DownloadProgressController() : super(0);
-
-  void updateProgress(int progress) {
-    state = progress;
-  }
-}
 
 final homeProvider = ChangeNotifierProvider<HomeController>((ref) {
   return HomeController();
@@ -113,12 +101,12 @@ class HomeController with ChangeNotifier {
     await for (final data in audioStream) {
       count += data.length;
       final progress = ((count / len) * 100).ceil();
-      ref.watch(downloadProgressProvider.notifier).updateProgress(progress);
+      // ref.watch(downloadProgressProvider.notifier).updateProgress(progress);
       output.add(data);
     }
     await output.flush();
     await output.close();
-    textController.clear();
+    // textController.clear();
     AwesomeDialog(
       context: context,
       dialogType: DialogType.success,

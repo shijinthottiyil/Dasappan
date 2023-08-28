@@ -1,14 +1,32 @@
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:android_path_provider/android_path_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:music_stream/model/search_model.dart';
 import 'package:music_stream/utils/constants/api.dart';
 import 'package:music_stream/view/now_playing/nowplaying_screen.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
+import 'package:path/path.dart' as path;
+
+final downloadProgressProvider =
+    StateNotifierProvider<DownloadProgressController, int>((ref) {
+  return DownloadProgressController();
+});
+
+class DownloadProgressController extends StateNotifier<int> {
+  DownloadProgressController() : super(0);
+
+  void updateProgress(int progress) {
+    state = progress;
+  }
+}
 
 final searchProvider = ChangeNotifierProvider<SearchController>((ref) {
   return SearchController();
@@ -34,7 +52,8 @@ class SearchController with ChangeNotifier {
   var index = -1;
   var title = "title";
   var subTitle = "subTitle";
-
+  var audioUrl = "";
+  var isDownloadStarted = false;
   // <================================VOLUME CONTROL =======================================>
   var minVolume = 0.0;
   var maxVolume = 1.0;
@@ -205,7 +224,7 @@ class SearchController with ChangeNotifier {
     if (player.playing) {
       await player.pause();
     }
-    var audioUrl = "";
+
     final StreamManifest manifest = await yt.videos.streamsClient
         .getManifest(searchModelList.elementAt(selectedIndex).videoId);
     audioUrl = manifest.audioOnly.withHighestBitrate().url.toString();
@@ -231,6 +250,7 @@ class SearchController with ChangeNotifier {
             url: searchModelList.elementAt(index).thumbnails,
             title: title,
             artist: subTitle,
+            videoId: searchModelList.elementAt(index).videoId,
           );
         },
       );
@@ -242,5 +262,62 @@ class SearchController with ChangeNotifier {
     currentVolume = volume;
     await player.setVolume(currentVolume);
     notifyListeners();
+  }
+
+  // <====================================== METHOD FOR DOWNLOADING SONGS ===============================>
+  Future<void> downloadSongs(
+      {required String videoId, required WidgetRef ref}) async {
+    try {
+      isDownloadStarted = true;
+      notifyListeners();
+      var status = await Permission.storage.status;
+      log(status.toString());
+      if (!status.isGranted) {
+        await Permission.storage.request();
+      }
+
+      final manifest = await yt.videos.streamsClient.getManifest(videoId);
+      final audio = manifest.audioOnly.withHighestBitrate();
+      final audioStream = yt.videos.streamsClient.get(audio);
+      final dir = await AndroidPathProvider.downloadsPath;
+      final filePath = path.join(
+        dir,
+        '$videoId.mp3',
+      );
+      final file = File(filePath);
+      // Delete The File If Exists
+      if (file.existsSync()) {
+        file.deleteSync();
+      }
+      // Open the file in writeAppened.
+      final output = file.openWrite(mode: FileMode.writeOnlyAppend);
+
+// Track the file download status.
+      final len = audio.size.totalBytes;
+      var count = 0.0;
+      // Listen for data received.
+      await for (final data in audioStream) {
+        count += data.length;
+        final progress = ((count / len) * 100).ceil();
+        ref.watch(downloadProgressProvider.notifier).updateProgress(progress);
+        output.add(data);
+      }
+      await output.flush();
+      await output.close();
+      Fluttertoast.showToast(
+          msg: 'Download completed and saved to: $filePath',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.white,
+          textColor: Colors.black,
+          fontSize: 16.0);
+      isDownloadStarted = false;
+      notifyListeners();
+    } catch (e) {
+      log(e.toString());
+      isDownloadStarted = false;
+      notifyListeners();
+    }
   }
 }

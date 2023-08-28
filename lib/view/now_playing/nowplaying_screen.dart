@@ -2,23 +2,32 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:music_stream/controller/home_controller.dart';
 import 'package:music_stream/controller/search_controller.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 class NowPlayingScreen extends ConsumerWidget {
-  const NowPlayingScreen(
-      {super.key,
-      required this.url,
-      required this.title,
-      required this.artist});
+  const NowPlayingScreen({
+    super.key,
+    required this.url,
+    required this.title,
+    required this.artist,
+    required this.videoId,
+  });
   final String url;
   final String title;
   final String artist;
+  // videoId variable is used for downloading
+
+  final String videoId;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.sizeOf(context);
     final height = size.height;
     final width = size.width;
     final provider = ref.watch(searchProvider);
+    // final homeProvi = ref.watch(homeProvider);
+    final progressProvider = ref.watch(downloadProgressProvider);
     return Scaffold(
       body: SafeArea(
           child: Padding(
@@ -128,8 +137,50 @@ class NowPlayingScreen extends ConsumerWidget {
                         icon: Icon(CupertinoIcons.forward_fill),
                       ),
                       IconButton(
-                        onPressed: () {},
-                        icon: Icon(CupertinoIcons.arrow_down_to_line_alt),
+                        onPressed: () {
+                          // homeProvi.store(
+                          //     yt: provider.yt,
+                          //     id: VideoId(
+                          //         provider.searchModelList.first.videoId),
+                          //     video: provider.searchModelList.first.videoId,
+                          //     context: context,
+                          //     ref: ref);
+                          provider.downloadSongs(videoId: videoId, ref: ref);
+                        },
+                        icon: Column(
+                          children: [
+                            if (!provider.isDownloadStarted) ...[
+                              Icon(CupertinoIcons.arrow_down_to_line_alt)
+                            ] else if (provider.isDownloadStarted) ...[
+                              Expanded(
+                                child: Stack(
+                                  alignment: Alignment.center,
+                                  children: [
+                                    Center(
+                                      child: CircularProgressIndicator(
+                                        value: progressProvider / 100,
+                                        backgroundColor: Colors.white,
+                                        strokeWidth: 6,
+                                        valueColor:
+                                            const AlwaysStoppedAnimation<Color>(
+                                                Colors.black),
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        "$progressProvider%",
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ]
+                          ],
+                        ),
                       ),
                     ],
                   ),
