@@ -40,6 +40,7 @@ dependencies:
   path: ^1.8.3
   permission_handler: ^10.4.3
   youtube_explode_dart: ^2.0.2
+  lottie: ^2.6.0
 
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1

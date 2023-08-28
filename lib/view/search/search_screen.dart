@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lottie/lottie.dart';
 import 'package:music_stream/controller/search_controller.dart';
+import 'package:music_stream/utils/loader.dart';
 
 class SearchScreen extends ConsumerWidget {
   const SearchScreen({super.key});
@@ -17,9 +19,7 @@ class SearchScreen extends ConsumerWidget {
         title: Text("Search"),
       ),
       body: provider.isLoading
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
+          ? const Loader()
           : SafeArea(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -45,6 +45,11 @@ class SearchScreen extends ConsumerWidget {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(6),
                       ),
+                      placeholder: "Enter a name",
+                      placeholderStyle: TextStyle(
+                        color: Colors.black.withOpacity(0.4),
+                        fontWeight: FontWeight.w300,
+                      ),
                       prefix: Padding(
                         padding: const EdgeInsets.only(left: 7),
                         child: Icon(CupertinoIcons.search, color: Colors.black),
@@ -57,13 +62,18 @@ class SearchScreen extends ConsumerWidget {
                         provider.getSearch(value.trim().toLowerCase());
                       },
                     ),
-                    // if (provider.isLoading) ...[
-                    //   Expanded(
-                    //     child: Center(
-                    //       child: CircularProgressIndicator(),
-                    //     ),
-                    //   ),
-                    // ],
+                    if (provider.searchModelList.isEmpty) ...[
+                      Expanded(
+                        child: Center(
+                          child: Lottie.asset(
+                            "assets/images/search_i.json",
+                            width: 200,
+                            height: 200,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ],
                     if (provider.searchModelList.isNotEmpty) ...[
                       Expanded(
                         child: GridView.builder(
@@ -119,15 +129,16 @@ class SearchScreen extends ConsumerWidget {
                                       Text(
                                         data.title,
                                         style: TextStyle(
-                                          color: Colors.white,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
+                                            color: Colors.white,
+                                            overflow: TextOverflow.ellipsis,
+                                            fontWeight: FontWeight.w300),
                                       ),
                                       Text(
                                         data.artists,
                                         style: TextStyle(
                                           color: Colors.white,
                                           overflow: TextOverflow.ellipsis,
+                                          fontWeight: FontWeight.w100,
                                         ),
                                       ),
                                     ],
@@ -157,6 +168,7 @@ class SearchScreen extends ConsumerWidget {
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               color: Colors.black,
+                              fontWeight: FontWeight.w300,
                             ),
                           ),
                           subtitle: Text(
@@ -164,6 +176,7 @@ class SearchScreen extends ConsumerWidget {
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               color: Colors.black,
+                              fontWeight: FontWeight.w100,
                             ),
                           ),
                           trailing: IconButton(

@@ -174,7 +174,11 @@ class SearchController with ChangeNotifier {
   // <================================ METHOD FOR FAST FORWARD ===============================>
   fastForward() {
     var sec10 = const Duration(seconds: 10);
-    if (position + sec10 >= duration) {
+    if (position + sec10 > duration) {
+      position = duration;
+
+      player.seek(position);
+      notifyListeners();
       return;
     }
     position += sec10;
@@ -185,7 +189,10 @@ class SearchController with ChangeNotifier {
   // <============================ METHOD FOR FAST BACKWARD ====================================>
   fastBackward() {
     var sec10 = const Duration(seconds: 10);
-    if (position - sec10 <= Duration.zero) {
+    if (position < sec10) {
+      position = Duration.zero;
+      player.seek(position);
+      notifyListeners();
       return;
     }
     position -= sec10;

@@ -104,6 +104,10 @@ class NowPlayingScreen extends ConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       IconButton(
+                        onPressed: () {},
+                        icon: Icon(CupertinoIcons.shuffle),
+                      ),
+                      IconButton(
                         onPressed: provider.fastBackward,
                         icon: Icon(CupertinoIcons.backward_fill),
                       ),
@@ -123,6 +127,10 @@ class NowPlayingScreen extends ConsumerWidget {
                         onPressed: provider.fastForward,
                         icon: Icon(CupertinoIcons.forward_fill),
                       ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(CupertinoIcons.arrow_down_to_line_alt),
+                      ),
                     ],
                   ),
                 ],
@@ -130,7 +138,9 @@ class NowPlayingScreen extends ConsumerWidget {
             ),
             Row(
               children: [
-                Icon(CupertinoIcons.volume_down),
+                provider.currentVolume == provider.minVolume
+                    ? Icon(CupertinoIcons.volume_off)
+                    : Icon(CupertinoIcons.volume_down),
                 Expanded(
                   child: CupertinoSlider(
                     min: provider.minVolume,
