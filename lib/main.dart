@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:music_stream/controller/home_controller.dart';
 import 'package:music_stream/view/home/home_screen.dart';
 import 'package:music_stream/view/search/search_screen.dart';
+import 'package:music_stream/view/tabbar/tabbar_screen.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -35,6 +37,7 @@ class MyApp extends StatelessWidget {
       //       ),
       // ),
       theme: ThemeData.dark().copyWith(
+        useMaterial3: true,
         scaffoldBackgroundColor: Colors.black,
         appBarTheme: AppBarTheme(
           elevation: 0,
@@ -42,7 +45,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: const SearchScreen(),
+      home: const TabBarScreen(),
     );
   }
 }

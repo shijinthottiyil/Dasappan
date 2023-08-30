@@ -16,13 +16,34 @@ class SearchScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text("Search"),
+        title: CupertinoTextField(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(6),
+          ),
+          placeholder: "Enter a name",
+          placeholderStyle: TextStyle(
+            color: Colors.black.withOpacity(0.4),
+            fontWeight: FontWeight.w300,
+          ),
+          prefix: Padding(
+            padding: const EdgeInsets.only(left: 7),
+            child: Icon(CupertinoIcons.search, color: Colors.black),
+          ),
+          style: TextStyle(
+            fontWeight: FontWeight.w500,
+          ),
+          controller: provider.searchController,
+          onSubmitted: (value) {
+            provider.getSearch(value.trim().toLowerCase());
+          },
+        ),
       ),
       body: provider.isLoading
           ? const Loader()
           : SafeArea(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
+                padding: const EdgeInsets.only(top: 15, left: 15, right: 15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -40,28 +61,28 @@ class SearchScreen extends ConsumerWidget {
                     //   ),
                     // ),
                     // SizedBox(width: double.infinity, height: height / 90),
-                    CupertinoTextField(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      placeholder: "Enter a name",
-                      placeholderStyle: TextStyle(
-                        color: Colors.black.withOpacity(0.4),
-                        fontWeight: FontWeight.w300,
-                      ),
-                      prefix: Padding(
-                        padding: const EdgeInsets.only(left: 7),
-                        child: Icon(CupertinoIcons.search, color: Colors.black),
-                      ),
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                      ),
-                      controller: provider.searchController,
-                      onSubmitted: (value) {
-                        provider.getSearch(value.trim().toLowerCase());
-                      },
-                    ),
+                    // CupertinoTextField(
+                    //   decoration: BoxDecoration(
+                    //     color: Colors.white,
+                    //     borderRadius: BorderRadius.circular(6),
+                    //   ),
+                    //   placeholder: "Enter a name",
+                    //   placeholderStyle: TextStyle(
+                    //     color: Colors.black.withOpacity(0.4),
+                    //     fontWeight: FontWeight.w300,
+                    //   ),
+                    //   prefix: Padding(
+                    //     padding: const EdgeInsets.only(left: 7),
+                    //     child: Icon(CupertinoIcons.search, color: Colors.black),
+                    //   ),
+                    //   style: TextStyle(
+                    //     fontWeight: FontWeight.w500,
+                    //   ),
+                    //   controller: provider.searchController,
+                    //   onSubmitted: (value) {
+                    //     provider.getSearch(value.trim().toLowerCase());
+                    //   },
+                    // ),
                     if (provider.searchModelList.isEmpty) ...[
                       Expanded(
                         child: Center(

@@ -1,3 +1,5 @@
+// <======================================= THE WHOLE COMMENTED CODE BELOW IS USED FOR THE YOUTUBE VIDEO DOWNLOADER=====================================>
+
 // import 'dart:developer';
 
 // import 'package:flutter/cupertino.dart';
@@ -144,3 +146,136 @@
 //     );
 //   }
 // }
+
+// <===================================================================================================================================>
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:music_stream/controller/home_controller.dart';
+import 'package:music_stream/controller/music_controller.dart';
+import 'package:music_stream/utils/loader.dart';
+
+class HomeScreen extends ConsumerStatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  getData() {
+    if (ref.read(homeProvider).filteredSongModelList.isEmpty) {
+      ref.read(homeProvider).getQuickPicks();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final provider = ref.watch(homeProvider);
+    return Scaffold(
+      body: provider.isLoading
+          ? Loader()
+          : Column(
+              children: [
+                Expanded(
+                  child: ListView.separated(
+                    itemBuilder: (context, index) {
+                      final data =
+                          provider.filteredSongModelList.elementAt(index);
+                      return ListTile(
+                        leading: Image.network(
+                          data.thumbnails,
+                        ),
+                        title: Text(
+                          data.title,
+                          style: TextStyle(
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        subtitle: Text(
+                          data.artists,
+                          style: TextStyle(
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        trailing: IconButton(
+                            onPressed: () {},
+                            icon: Icon(CupertinoIcons.ellipsis_vertical)),
+                        onTap: () {
+                          ref
+                              .read(homeProvider)
+                              .play(index: index, context: context);
+                        },
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return Divider(
+                        indent: 75,
+                        endIndent: 25,
+                      );
+                    },
+                    itemCount: provider.filteredSongModelList.length,
+                  ),
+                ),
+                Visibility(
+                  visible: provider.isMiniShown,
+                  child: ListTile(
+                    // contentPadding: EdgeInsets.all(5),
+                    onTap: () {
+                      provider.getModelSheet(context: context);
+                    },
+                    tileColor: Colors.white,
+                    // leading: provider.index == -1
+                    //     ? Image.asset("assets/images/default_music.png")
+                    //     : Image.network(provider.searchModelList
+                    //         .elementAt(provider.index)
+                    //         .thumbnails),
+                    leading: Image.network(provider.filteredSongModelList
+                        .elementAt(provider.selectedIndex)
+                        .thumbnails),
+                    title: Text(
+                      provider.filteredSongModelList
+                          .elementAt(provider.selectedIndex)
+                          .title,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                    subtitle: Text(
+                      provider.filteredSongModelList
+                          .elementAt(provider.selectedIndex)
+                          .artists,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w100,
+                      ),
+                    ),
+                    trailing: IconButton(
+                      onPressed: () {},
+                      icon: MusicController.player.playing
+                          ? Icon(
+                              CupertinoIcons.pause_fill,
+                              color: Colors.black,
+                            )
+                          : Icon(
+                              CupertinoIcons.play_fill,
+                              color: Colors.black,
+                            ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+    );
+  }
+}

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:music_stream/controller/home_controller.dart';
+import 'package:music_stream/controller/music_controller.dart';
 import 'package:music_stream/controller/search_controller.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
@@ -37,16 +38,23 @@ class NowPlayingScreen extends ConsumerWidget {
           children: [
             Column(
               children: [
-                Container(
+                SizedBox(
                   width: width / 1.5,
                   height: height / 3,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(url),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(5),
+                    child: Image.network(
+                      url,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.network(
+                          url,
+                          width: double.infinity,
+                          fit: BoxFit.fill,
+                        );
+                      },
+                      width: double.infinity,
                       fit: BoxFit.fill,
-                      filterQuality: FilterQuality.high,
                     ),
-                    borderRadius: BorderRadius.circular(8),
                   ),
                 )
               ],
