@@ -3,7 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:music_stream/controller/music_controller.dart';
-import 'package:music_stream/features/home/controller/home_provider.dart';
+import 'package:music_stream/old%20feature/home/controller/home_provider.dart';
 import 'package:music_stream/utils/loader.dart';
 
 class HomePage extends ConsumerStatefulWidget {
@@ -71,8 +71,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                         onPressed: () {},
                         icon: Icon(CupertinoIcons.ellipsis_vertical)),
                     onTap: () {
-                      provider.songTap(
-                          videoId: data.videoId, selectedIndex: index);
+                      // provider.songTap(
+                      //     videoId: data.videoId, selectedIndex: index);
                     },
                   );
                 },

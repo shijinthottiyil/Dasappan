@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:music_stream/features/now_playing/widget/reorder_song.dart';
+import 'package:music_stream/old%20feature/now_playing/widget/reorder_song.dart';
 
 final nowProvider = ChangeNotifierProvider<NowPlayProvider>((ref) {
   return NowPlayProvider();

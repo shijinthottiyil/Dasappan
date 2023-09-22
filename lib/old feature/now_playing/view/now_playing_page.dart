@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:music_stream/controller/music_controller.dart';
-import 'package:music_stream/features/home/controller/home_provider.dart';
-import 'package:music_stream/features/now_playing/controller/now_play_provider.dart';
+import 'package:music_stream/old%20feature/home/controller/home_provider.dart';
+import 'package:music_stream/old%20feature/now_playing/controller/now_play_provider.dart';
 import 'package:music_stream/utils/loader.dart';
 
 class NowPlayingPage extends ConsumerWidget {

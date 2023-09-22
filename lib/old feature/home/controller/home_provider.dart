@@ -7,8 +7,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:music_stream/controller/music_controller.dart';
-import 'package:music_stream/features/now_playing/view/now_playing_page.dart';
-import 'package:music_stream/features/search/view/search_page.dart';
+import 'package:music_stream/old%20feature/now_playing/view/now_playing_page.dart';
+import 'package:music_stream/old%20feature/search/view/search_page.dart';
 import 'package:music_stream/model/song_model.dart';
 import 'package:music_stream/utils/constants/api.dart';
 import 'package:music_stream/view/now_playing/now_play_screen.dart';
@@ -57,51 +57,51 @@ class HomeProvider with ChangeNotifier {
   }
 
   // METHOD FOR LISTTILE ONTAP
-  Future<void> songTap(
-      {required String videoId, required int selectedIndex}) async {
-    try {
-      AudioSource? audioSource;
-      playingSongModelList.clear();
-      await MusicController.player.stop();
-      await MusicController.playlist.clear();
-      await MusicController.player.setAudioSource(
-        MusicController.playlist,
-        initialIndex: 0,
-        initialPosition: Duration.zero,
-        preload: false,
-      );
-      audioSource = await getAudioSource(videoId: videoId);
-      if (audioSource != null) {
-        playingSongModelList.add(songModelList.elementAt(selectedIndex));
-        await MusicController.playlist.add(audioSource);
-        isMiniShown = true;
-        notifyListeners();
-        MusicController.player.play();
+  // Future<void> songTap(
+  //     {required String videoId, required int selectedIndex}) async {
+  //   try {
+  //     AudioSource? audioSource;
+  //     playingSongModelList.clear();
+  //     await MusicController.player.stop();
+  //     await MusicController.playlist.clear();
+  //     await MusicController.player.setAudioSource(
+  //       MusicController.playlist,
+  //       initialIndex: 0,
+  //       initialPosition: Duration.zero,
+  //       preload: false,
+  //     );
+  //     audioSource = await getAudioSource(videoId: videoId);
+  //     if (audioSource != null) {
+  //       playingSongModelList.add(songModelList.elementAt(selectedIndex));
+  //       await MusicController.playlist.add(audioSource);
+  //       isMiniShown = true;
+  //       notifyListeners();
+  //       MusicController.player.play();
 
-        await getWatchPlaylist(videoId: videoId, limit: 10).then((value) async {
-          // playingSongModelList.elementAt(0).thumbnails = value.elementAt(0).thumbnails;
-          // log(value.elementAt(0).thumbnails);
-          playingSongModelList[0].thumbnails = value[0].thumbnails;
-          value.removeAt(0);
-          // log(playingSongModelList[0].thumbnails);
-          notifyListeners();
-          for (int i = 0; i < 10; i++) {
-            SongModel song = value[i];
-            await getAudioSource(videoId: song.videoId)
-                .then((audioSource) async {
-              if (audioSource != null) {
-                playingSongModelList.add(value.elementAt(i));
-                await MusicController.playlist.add(audioSource);
-                notifyListeners();
-              }
-            });
-          }
-        });
-      }
-    } catch (e) {
-      log(e.toString());
-    }
-  }
+  //       await getWatchPlaylist(videoId: videoId, limit: 10).then((value) async {
+  //         // playingSongModelList.elementAt(0).thumbnails = value.elementAt(0).thumbnails;
+  //         // log(value.elementAt(0).thumbnails);
+  //         playingSongModelList[0].thumbnails = value[0].thumbnails;
+  //         value.removeAt(0);
+  //         // log(playingSongModelList[0].thumbnails);
+  //         notifyListeners();
+  //         for (int i = 0; i < 10; i++) {
+  //           SongModel song = value[i];
+  //           await getAudioSource(videoId: song.videoId)
+  //               .then((audioSource) async {
+  //             if (audioSource != null) {
+  //               playingSongModelList.add(value.elementAt(i));
+  //               await MusicController.playlist.add(audioSource);
+  //               notifyListeners();
+  //             }
+  //           });
+  //         }
+  //       });
+  //     }
+  //   } catch (e) {
+  //     log(e.toString());
+  //   }
+  // }
 
   // <============================================= METHOD FOR GETTING AUDIOURL FROM VIDEO ID============================================>
   Future<AudioSource?> getAudioSource({required String videoId}) async {
