@@ -61,7 +61,7 @@ class HomeView extends StatelessWidget {
                       style: AppTypography.kRegular13,
                     ),
                     onTap: () {
-                      // AppPopups.showDialog();
+                      _controller.play(index: index);
                     },
                   );
                 },
