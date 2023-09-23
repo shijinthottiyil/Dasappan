@@ -14,6 +14,8 @@ class AppTheme {
       backgroundColor: AppColors.kBlack,
       elevation: 0,
     ),
+
+    iconTheme: const IconThemeData(color: AppColors.kWhite),
     // tabBarTheme: TabBarTheme(
     //   labelPadding: EdgeInsets.only(
     //     left: 10,

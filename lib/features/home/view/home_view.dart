@@ -38,9 +38,9 @@ class HomeView extends StatelessWidget {
                     contentPadding: EdgeInsets.zero,
                     leading: ClipRRect(
                       borderRadius: BorderRadius.circular(6).r,
-                      child: data.thumbnails?[1].url != null
+                      child: data.thumbnails?.last.url != null
                           ? Image.network(
-                              data.thumbnails![1].url!,
+                              data.thumbnails!.last.url!,
                               width: 48.w,
                               height: 48.w,
                               fit: BoxFit.cover,
@@ -61,7 +61,7 @@ class HomeView extends StatelessWidget {
                       style: AppTypography.kRegular13,
                     ),
                     onTap: () {
-                      _controller.play(index: index);
+                      _controller.listTileTap(index: index);
                     },
                   );
                 },

@@ -14,6 +14,16 @@ class AppTypography {
     fontSize: 14.sp,
   );
 
+// Bold
+  static TextStyle kBold12 = TextStyle(
+    fontWeight: FontWeight.w700,
+    fontSize: 12.sp,
+  );
+  static TextStyle kBold24 = TextStyle(
+    fontWeight: FontWeight.w700,
+    fontSize: 24.sp,
+  );
+
   // ExtraBold
   static TextStyle kExtraBold24 = TextStyle(
     fontWeight: FontWeight.w800,
