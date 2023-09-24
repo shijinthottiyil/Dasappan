@@ -5,7 +5,6 @@ import 'package:music_stream/features/bottom/controller/bottom_controller.dart';
 import 'package:music_stream/features/home/view/home_view.dart';
 import 'package:music_stream/features/now_play/view/now_play_view.dart';
 import 'package:music_stream/features/search/view/search_view.dart';
-import 'package:music_stream/utils/constants/app_colors.dart';
 
 class BottomView extends StatelessWidget {
   BottomView({super.key});
@@ -21,7 +20,7 @@ class BottomView extends StatelessWidget {
             _controller.changeTab(index);
           },
           selectedIndex: _controller.bottom.selectedIndex.value,
-          destinations: [
+          destinations: const [
             NavigationDestination(
               icon: Icon(Icons.home),
               label: 'Home',

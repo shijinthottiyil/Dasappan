@@ -45,7 +45,7 @@ class AppTheme {
     //     borderSide: BorderSide.none,
     //   ),
     // ),
-    navigationBarTheme: NavigationBarThemeData(
+    navigationBarTheme: const NavigationBarThemeData(
       // type: BottomNavigationBarType.fixed,
       // backgroundColor: AppColors.kBrown,
       // elevation: 0,

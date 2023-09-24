@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:just_audio_background/just_audio_background.dart';
 import 'package:music_stream/features/home/model/playlist_model.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 

@@ -9,6 +9,10 @@ class AppTypography {
   );
 
   // Medium
+  static TextStyle kMedium14 = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: 14.sp,
+  );
   static TextStyle kMedium18 = TextStyle(
     fontWeight: FontWeight.w500,
     fontSize: 18.sp,
@@ -28,6 +32,10 @@ class AppTypography {
   static TextStyle kBold12 = TextStyle(
     fontWeight: FontWeight.w700,
     fontSize: 12.sp,
+  );
+  static TextStyle kBold16 = TextStyle(
+    fontWeight: FontWeight.w700,
+    fontSize: 16.sp,
   );
   static TextStyle kBold24 = TextStyle(
     fontWeight: FontWeight.w700,

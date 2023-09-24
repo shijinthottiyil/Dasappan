@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:music_stream/features/home/model/home_model.dart';
-import 'package:music_stream/features/home/model/playlist_model.dart';
 
 class Home {
 // List of HomeModel
