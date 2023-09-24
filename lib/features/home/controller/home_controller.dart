@@ -10,6 +10,7 @@ import 'package:music_stream/features/home/model/home.dart';
 import 'package:music_stream/features/home/model/home_model.dart';
 import 'package:music_stream/features/home/model/playlist_model.dart';
 import 'package:music_stream/features/home/service/home_service.dart';
+import 'package:music_stream/features/search/controller/search_controller.dart';
 import 'package:music_stream/utils/helpers/audio_helper.dart';
 import 'package:music_stream/utils/networking/app_popups.dart';
 
@@ -24,6 +25,7 @@ class HomeController extends GetxController {
   Future<void> getQuickpicks() async {
     try {
       AppPopups.showDialog();
+      home.homeList.clear();
       var response = await service.getQuickpicks();
       List songList = response.data[0]["contents"];
       for (var song in songList) {
@@ -39,36 +41,71 @@ class HomeController extends GetxController {
   }
 
 //Listtile tap
-  Future<void> listTileTap({required int index}) async {
+  Future<void> listTileTap({required int index, required bool isHome}) async {
     Uri? audioSource;
+    AudioHelper.playlistList.clear();
     try {
       AppPopups.showDialog();
-      audioSource = await AudioHelper.getAudioUri(
-        videoId: home.homeList.elementAt(index).videoId!,
-      );
-      if (audioSource == null) {
-        throw Exception();
+      if (isHome) {
+        audioSource = await AudioHelper.getAudioUri(
+          videoId: home.homeList.elementAt(index).videoId!,
+        );
+        if (audioSource == null) {
+          throw Exception();
+        } else {
+          // await AudioHelper.player.stop();
+
+          // //clear the playlist list if it contains any items
+          // home.playlistList.clear();
+          // home.playlist.value.clear();
+          // await home.playlist.value.add(audioSource);
+          // AudioHelper.player.setAudioSource(home.playlist.value,
+          //     initialIndex: 0, initialPosition: Duration.zero, preload: false);
+          // AudioHelper.player.play();
+          // await getOne(
+          //     videoId: home.homeList.elementAt(index).videoId!, index: index);
+
+          // Get.find<BottomController>().bottom.selectedIndex.value = 1;
+          // AppPopups.cancelDialog();
+          // await getAll(videoId: home.homeList.elementAt(index).videoId!);
+          // // listenPosition();
+          // // listenDuration();
+
+          await getPlaylist(audioSource,
+              home.homeList.elementAt(index).videoId!, index, isHome);
+        }
       } else {
-        // await AudioHelper.player.stop();
+        audioSource = await AudioHelper.getAudioUri(
+          videoId:
+              Get.find<SearchCtr>().search.searchList.elementAt(index).videoId!,
+        );
+        if (audioSource == null) {
+          throw Exception();
+        } else {
+          // await AudioHelper.player.stop();
 
-        // //clear the playlist list if it contains any items
-        // home.playlistList.clear();
-        // home.playlist.value.clear();
-        // await home.playlist.value.add(audioSource);
-        // AudioHelper.player.setAudioSource(home.playlist.value,
-        //     initialIndex: 0, initialPosition: Duration.zero, preload: false);
-        // AudioHelper.player.play();
-        // await getOne(
-        //     videoId: home.homeList.elementAt(index).videoId!, index: index);
+          // //clear the playlist list if it contains any items
+          // home.playlistList.clear();
+          // home.playlist.value.clear();
+          // await home.playlist.value.add(audioSource);
+          // AudioHelper.player.setAudioSource(home.playlist.value,
+          //     initialIndex: 0, initialPosition: Duration.zero, preload: false);
+          // AudioHelper.player.play();
+          // await getOne(
+          //     videoId: home.homeList.elementAt(index).videoId!, index: index);
 
-        // Get.find<BottomController>().bottom.selectedIndex.value = 1;
-        // AppPopups.cancelDialog();
-        // await getAll(videoId: home.homeList.elementAt(index).videoId!);
-        // // listenPosition();
-        // // listenDuration();
+          // Get.find<BottomController>().bottom.selectedIndex.value = 1;
+          // AppPopups.cancelDialog();
+          // await getAll(videoId: home.homeList.elementAt(index).videoId!);
+          // // listenPosition();
+          // // listenDuration();
 
-        await getPlaylist(
-            audioSource, home.homeList.elementAt(index).videoId!, index);
+          await getPlaylist(
+              audioSource,
+              Get.find<SearchCtr>().search.searchList.elementAt(index).videoId!,
+              index,
+              isHome);
+        }
       }
     } catch (error) {
       AppPopups.cancelDialog();
@@ -80,34 +117,61 @@ class HomeController extends GetxController {
   }
 
 // Get Playlist
-  Future<void> getPlaylist(Uri uri, String? videoId, int index) async {
+  Future<void> getPlaylist(
+      Uri uri, String? videoId, int index, bool isHome) async {
     Uri? audio;
     try {
       // Clearing data
       await AudioHelper.player.stop();
       await AudioHelper.playlist.value.clear();
-      home.playlistList.clear();
+      AudioHelper.playlistList.clear();
 
-      // add song data
-      await AudioHelper.playlist.value.add(
-        AudioSource.uri(
-          uri,
-          tag: MediaItem(
-            id: home.homeList.elementAt(index).videoId!,
-            title: home.homeList.elementAt(index).title!,
+      if (isHome) {
+        // add song data
+        await AudioHelper.playlist.value.add(
+          AudioSource.uri(
+            uri,
+            tag: MediaItem(
+              id: home.homeList.elementAt(index).videoId!,
+              title: home.homeList.elementAt(index).title!,
+            ),
           ),
-        ),
-      );
-      await AudioHelper.player.setAudioSource(AudioHelper.playlist.value,
-          initialIndex: 0, initialPosition: Duration.zero, preload: false);
+        );
+        await AudioHelper.player.setAudioSource(AudioHelper.playlist.value,
+            initialIndex: 0, initialPosition: Duration.zero, preload: false);
 
-      // playing song
-      AudioHelper.player.play();
+        // playing song
+        AudioHelper.player.play();
+      } else {
+        // add song data
+        await AudioHelper.playlist.value.add(
+          AudioSource.uri(
+            uri,
+            tag: MediaItem(
+              id: Get.find<SearchCtr>()
+                  .search
+                  .searchList
+                  .elementAt(index)
+                  .videoId!,
+              title: Get.find<SearchCtr>()
+                  .search
+                  .searchList
+                  .elementAt(index)
+                  .title!,
+            ),
+          ),
+        );
+        await AudioHelper.player.setAudioSource(AudioHelper.playlist.value,
+            initialIndex: 0, initialPosition: Duration.zero, preload: false);
+
+        // playing song
+        AudioHelper.player.play();
+      }
 
       // call api
       var response = await service.getPlaylist(videoId: videoId);
       List tracks = response.data["tracks"];
-      home.playlistList.add(PlaylistModel.fromJson(tracks[0]));
+      AudioHelper.playlistList.add(PlaylistModel.fromJson(tracks[0]));
 
       // go now play
       Get.find<BottomController>().bottom.selectedIndex.value = 1;
@@ -121,12 +185,12 @@ class HomeController extends GetxController {
         if (audio == null) {
           throw Exception("getting audio failed");
         } else {
-          home.playlistList.add(PlaylistModel.fromJson(tracks[i]));
+          AudioHelper.playlistList.add(PlaylistModel.fromJson(tracks[i]));
           await AudioHelper.playlist.value.add(AudioSource.uri(
             audio,
             tag: MediaItem(
-              id: home.playlistList.elementAt(i).videoId!,
-              title: home.playlistList.elementAt(i).title!,
+              id: AudioHelper.playlistList.elementAt(i).videoId!,
+              title: AudioHelper.playlistList.elementAt(i).title!,
             ),
           ));
         }

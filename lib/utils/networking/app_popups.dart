@@ -1,6 +1,8 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:music_stream/utils/constants/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class AppPopups {
   static void errorSnackbar({required String title, required String message}) {
@@ -31,8 +33,11 @@ class AppPopups {
   static Future<void> showDialog() async {
     await Get.dialog(
       WillPopScope(
-        child: const Center(
-          child: CircularProgressIndicator(),
+        child: Center(
+          child: LoadingAnimationWidget.inkDrop(
+            color: AppColors.kWhite,
+            size: 50.r,
+          ),
         ),
         onWillPop: () => Future.value(false),
       ),

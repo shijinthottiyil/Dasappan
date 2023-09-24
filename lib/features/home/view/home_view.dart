@@ -77,7 +77,7 @@ class HomeView extends StatelessWidget {
                         style: AppTypography.kRegular13,
                       ),
                       onTap: () {
-                        _controller.listTileTap(index: index);
+                        _controller.listTileTap(index: index, isHome: true);
                       },
                     );
                   },

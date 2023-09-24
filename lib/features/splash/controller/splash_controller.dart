@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:music_stream/features/bottom/view/bottom_view.dart';
-import 'package:music_stream/old%20feature/home/view/home_page.dart';
 
 class SplashController extends GetxController {
   // go Home

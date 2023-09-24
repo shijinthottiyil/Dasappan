@@ -17,7 +17,7 @@ class NowPlayView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: _homeController.home.playlistList.isEmpty
+        child: AudioHelper.playlistList.isEmpty
             ? Center(
                 child: Text(
                   "Not selected any song!",
@@ -46,14 +46,14 @@ class NowPlayView extends StatelessWidget {
                                   AppAssets.kNowplay,
                                 ),
                                 image: NetworkImage(
-                                  _homeController.home.playlistList.isEmpty
-                                      ? _homeController.home.playlistList
+                                  AudioHelper.playlistList.isEmpty
+                                      ? AudioHelper.playlistList
                                           .elementAt(0)
                                           .thumbnail!
                                           .last
                                           .url
                                           .toString()
-                                      : _homeController.home.playlistList
+                                      : AudioHelper.playlistList
                                           .elementAt(currentIndex.data!)
                                           .thumbnail!
                                           .last
@@ -70,9 +70,9 @@ class NowPlayView extends StatelessWidget {
                           AppSpacing.gapH100,
                           Obx(
                             () => Text(
-                              _homeController.home.playlistList.isEmpty
+                              AudioHelper.playlistList.isEmpty
                                   ? "Sia_-_Chandelier"
-                                  : _homeController.home.playlistList
+                                  : AudioHelper.playlistList
                                       .elementAt(currentIndex.data!)
                                       .title
                                       .toString(),

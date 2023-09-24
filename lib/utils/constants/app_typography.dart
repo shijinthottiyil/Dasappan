@@ -8,10 +8,20 @@ class AppTypography {
     fontSize: 13.sp,
   );
 
+  // Medium
+  static TextStyle kMedium18 = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: 18.sp,
+  );
+
 // SemiBold
   static TextStyle kSemiBold14 = TextStyle(
     fontWeight: FontWeight.w600,
     fontSize: 14.sp,
+  );
+  static TextStyle kSemiBold32 = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 32.sp,
   );
 
 // Bold

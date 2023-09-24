@@ -1,16 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:just_audio_background/just_audio_background.dart';
-import 'package:music_stream/controller/home_controller.dart';
-import 'package:music_stream/old%20feature/home/view/home_page.dart';
 import 'package:music_stream/features/splash/view/splash_view.dart';
 import 'package:music_stream/utils/constants/constants.dart';
-
-import 'package:music_stream/view/home/home_screen.dart';
-import 'package:music_stream/view/search/search_screen.dart';
-import 'package:music_stream/view/tabbar/tabbar_screen.dart';
 
 // Migrating to Getx
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -34,7 +27,7 @@ Future<void> main() async {
       systemNavigationBarColor: Colors.black,
     ),
   );
-  runApp(const ProviderScope(child: MyApp()));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

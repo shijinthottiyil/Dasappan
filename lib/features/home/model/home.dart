@@ -7,8 +7,8 @@ class Home {
 // List of HomeModel
   var homeList = List<HomeModel>.empty(growable: true).obs;
 
-  // Playlist List
-  var playlistList = List<PlaylistModel>.empty(growable: true).obs;
+  // // Playlist List
+  // var playlistList = List<PlaylistModel>.empty(growable: true).obs;
 
   // Playlist
   var playlist = ConcatenatingAudioSource(
