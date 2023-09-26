@@ -12,6 +12,7 @@ import 'package:music_stream/features/home/service/home_service.dart';
 import 'package:music_stream/features/search/controller/search_controller.dart';
 import 'package:music_stream/utils/helpers/audio_helper.dart';
 import 'package:music_stream/utils/networking/app_popups.dart';
+import 'package:music_stream/utils/networking/dio_exception_handler.dart';
 
 class HomeController extends GetxController {
   // Variables
@@ -22,20 +23,24 @@ class HomeController extends GetxController {
 
   // Get List of HomeModel
   Future<void> getQuickpicks() async {
-    try {
-      AppPopups.showDialog();
-      home.homeList.clear();
-      var response = await service.getQuickpicks();
-      List songList = response.data[0]["contents"];
-      for (var song in songList) {
-        home.homeList.add(HomeModel.fromJson(song));
+    if (!Get.isSnackbarOpen) {
+      try {
+        AppPopups.showDialog();
+
+        var response = await service.getQuickpicks();
+
+        home.homeList.clear();
+        List songList = response.data[0]["contents"];
+        for (var song in songList) {
+          home.homeList.add(HomeModel.fromJson(song));
+        }
+      } on DioException catch (dioError) {
+        DioExceptionHandler.dioError(dioError.type);
+      } catch (error) {
+        log(error.toString());
+      } finally {
+        AppPopups.cancelDialog();
       }
-    } on DioException catch (dioError) {
-      log(dioError.toString());
-    } catch (error) {
-      log(error.toString());
-    } finally {
-      AppPopups.cancelDialog();
     }
   }
 

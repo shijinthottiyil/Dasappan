@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:music_stream/features/home/controller/home_controller.dart';
 import 'package:music_stream/utils/constants/constants.dart';
+import 'package:music_stream/utils/general_widgets.dart/empty_card.dart';
 import 'package:music_stream/utils/helpers/exit_app.dart';
 
 class HomeView extends StatelessWidget {

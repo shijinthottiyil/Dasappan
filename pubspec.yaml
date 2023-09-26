@@ -56,6 +56,12 @@ dependencies:
   # Background play
   just_audio_background: ^0.0.1-beta.10
 
+  # BottomBar
+  curved_navigation_bar: ^1.0.3 
+
+  # Lottie
+  lottie: ^2.6.0
+
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1
   flutter_lints: ^2.0.0
@@ -79,6 +85,7 @@ flutter:
      - assets/images/
      - assets/fonts/
      - assets/icons/
+     - assets/lottie/
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

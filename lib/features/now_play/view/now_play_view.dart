@@ -4,17 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
-
+import 'package:lottie/lottie.dart';
 import 'package:music_stream/features/home/controller/home_controller.dart';
 import 'package:music_stream/features/now_play/view/widgets/now_button.dart';
 import 'package:music_stream/features/now_play/view/widgets/play_pause_button.dart';
 import 'package:music_stream/utils/constants/constants.dart';
+import 'package:music_stream/utils/general_widgets.dart/empty_card.dart';
 import 'package:music_stream/utils/helpers/audio_helper.dart';
 import 'package:music_stream/utils/helpers/exit_app.dart';
 
 class NowPlayView extends StatelessWidget {
   NowPlayView({super.key});
-  final _homeController = Get.find<HomeController>();
+  final homeController = Get.find<HomeController>();
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -22,12 +23,7 @@ class NowPlayView extends StatelessWidget {
       child: Scaffold(
         body: SafeArea(
           child: AudioHelper.playlistList.isEmpty
-              ? Center(
-                  child: Text(
-                    "Not selected any song!",
-                    style: AppTypography.kExtraBold24,
-                  ),
-                )
+              ? EmptyCard(text: "Select any song")
               : Padding(
                   padding: EdgeInsets.symmetric(horizontal: 24.w),
                   child: StreamBuilder(
