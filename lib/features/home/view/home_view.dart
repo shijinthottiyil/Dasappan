@@ -5,12 +5,13 @@ import 'package:music_stream/features/home/controller/home_controller.dart';
 import 'package:music_stream/utils/constants/constants.dart';
 import 'package:music_stream/utils/general_widgets.dart/empty_card.dart';
 import 'package:music_stream/utils/helpers/exit_app.dart';
+import 'package:music_stream/utils/networking/connection_controller.dart';
 
 class HomeView extends StatelessWidget {
   HomeView({super.key});
 
   final _controller = Get.put(HomeController());
-
+  final connectionCtr = Get.put(ConnectionController());
   // @override
   @override
   Widget build(BuildContext context) {

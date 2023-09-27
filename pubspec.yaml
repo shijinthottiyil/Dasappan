@@ -62,6 +62,9 @@ dependencies:
   # Lottie
   lottie: ^2.6.0
 
+  # Connection check
+  connectivity_plus: ^4.0.2
+
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1
   flutter_lints: ^2.0.0
