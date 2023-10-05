@@ -28,7 +28,7 @@ class HomeController extends GetxController {
         AppPopups.showDialog();
 
         var response = await service.getQuickpicks();
-
+        AppPopups.cancelDialog();
         home.homeList.clear();
         List songList = response.data[0]["contents"];
         for (var song in songList) {

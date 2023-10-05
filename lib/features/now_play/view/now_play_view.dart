@@ -23,7 +23,7 @@ class NowPlayView extends StatelessWidget {
       child: Scaffold(
         body: SafeArea(
           child: AudioHelper.playlistList.isEmpty
-              ? EmptyCard(text: "Select any song")
+              ? EmptyCard()
               : Padding(
                   padding: EdgeInsets.symmetric(horizontal: 24.w),
                   child: StreamBuilder(
@@ -60,9 +60,9 @@ class NowPlayView extends StatelessWidget {
                                             .url
                                             .toString(),
                                   ),
-                                  width: 293.w,
-                                  height: 270.h,
-                                  fit: BoxFit.cover,
+                                  width: 350.w,
+                                  height: 350.h,
+                                  fit: BoxFit.fill,
                                 ),
                               ),
                             ),

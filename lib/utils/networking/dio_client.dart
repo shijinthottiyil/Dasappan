@@ -1,5 +1,4 @@
-import 'package:dio/dio.dart';
-import 'package:music_stream/utils/constants/constants.dart';
+import 'package:music_stream/utils/networking/networking.dart';
 
 class DioClient {
   static final Dio dio = Dio(

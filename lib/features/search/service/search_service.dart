@@ -1,6 +1,4 @@
-import 'package:dio/dio.dart';
-import 'package:music_stream/utils/constants/constants.dart';
-import 'package:music_stream/utils/networking/dio_client.dart';
+import 'package:music_stream/utils/networking/networking.dart';
 
 class SearchService {
   // Get Search result

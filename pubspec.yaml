@@ -65,6 +65,13 @@ dependencies:
   # Connection check
   connectivity_plus: ^4.0.2
 
+  # Logging
+  logger: ^2.0.2+1
+
+  # Custom Icons
+  icons_plus: ^4.0.0
+
+
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1
   flutter_lints: ^2.0.0
