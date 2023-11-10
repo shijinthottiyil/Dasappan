@@ -3,4 +3,5 @@ class AppUrls {
   static const String kHome = "home";
   static const String kPlaylist = "searchwatchplaylist";
   static const String kSearch = "search";
+  static const String kPlaylistList = "playlist";
 }

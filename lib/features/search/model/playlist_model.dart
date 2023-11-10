@@ -1,34 +1,29 @@
 class PlaylistModel {
-  String? videoId;
   String? title;
-  List<Thumbnail>? thumbnail;
+  String? browseId;
+  List<Thumbnail>? thumbnails;
 
   PlaylistModel({
-    this.videoId,
     this.title,
-    this.thumbnail,
+    this.browseId,
+    this.thumbnails,
   });
 
   factory PlaylistModel.fromJson(Map<String, dynamic> json) => PlaylistModel(
-        videoId: json["videoId"],
         title: json["title"],
-        thumbnail: json["thumbnail"] != null
-            ? List<Thumbnail>.from(
-                json["thumbnail"]!.map((x) => Thumbnail.fromJson(x)),
-              )
-            : json["thumbnails"] != null
-                ? List<Thumbnail>.from(
-                    json["thumbnails"]!.map((x) => Thumbnail.fromJson(x)),
-                  )
-                : [],
+        browseId: json["browseId"],
+        thumbnails: json["thumbnails"] == null
+            ? []
+            : List<Thumbnail>.from(
+                json["thumbnails"]!.map((x) => Thumbnail.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "videoId": videoId,
         "title": title,
-        "thumbnail": thumbnail == null
+        "browseId": browseId,
+        "thumbnails": thumbnails == null
             ? []
-            : List<dynamic>.from(thumbnail!.map((x) => x.toJson())),
+            : List<dynamic>.from(thumbnails!.map((x) => x.toJson())),
       };
 }
 

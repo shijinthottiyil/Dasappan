@@ -60,8 +60,8 @@ class NowPlayView extends StatelessWidget {
                                             .url
                                             .toString(),
                                   ),
-                                  width: 350.w,
-                                  height: 350.h,
+                                  width: double.infinity,
+                                  height: 400.h,
                                   fit: BoxFit.fill,
                                 ),
                               ),
@@ -77,6 +77,8 @@ class NowPlayView extends StatelessWidget {
                                         .title
                                         .toString(),
                                 style: AppTypography.kBold24,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                             AppSpacing.gapH52,

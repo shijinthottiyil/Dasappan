@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:icons_plus/icons_plus.dart';
+import 'package:music_stream/utils/constants/constants.dart';
 
 class TestView extends StatelessWidget {
   const TestView({super.key});
@@ -9,9 +11,11 @@ class TestView extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           color: Color(0xff1a73e8),
         ),
+        labelColor: Colors.white,
+        unselectedLabelColor: Colors.black,
         tabs: [
-          Tab(icon: Icon(Icons.call)),
-          Tab(icon: Icon(Icons.message)),
+          Tab(icon: Icon(EvaIcons.search)),
+          Tab(icon: Icon(BoxIcons.bxs_playlist)),
         ],
       );
 
@@ -27,17 +31,32 @@ class TestView extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 15.w),
               child: Container(
                 decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
-                    borderRadius: BorderRadius.circular(8)),
+                  color: Colors.grey.shade200,
+                  borderRadius: BorderRadius.circular(8),
+                ),
                 child: _tabBar,
               ),
             ),
           ),
-          title: const Text('Search'),
+          title: Text(
+            'Search',
+            style: AppTypography.kBold24,
+          ),
         ),
         body: const TabBarView(
           children: [
-            Icon(Icons.directions_car),
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  Text('abc'),
+                  Text('abc'),
+                  Text('abc'),
+                  Text('abc'),
+                  Text('abc'),
+                  Text('abc'),
+                ],
+              ),
+            ),
             Icon(Icons.directions_transit),
           ],
         ),

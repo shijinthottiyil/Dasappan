@@ -14,7 +14,7 @@ import 'package:icons_plus/icons_plus.dart';
 class BottomView extends StatelessWidget {
   BottomView({super.key});
   final _controller = Get.put(BottomController());
-  final _pages = [HomeView(), NowPlayView(), SearchView(), TestView()];
+  final _pages = [HomeView(), NowPlayView(), SearchView()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,11 +61,11 @@ class BottomView extends StatelessWidget {
               color: AppColors.kBlack,
               size: 25,
             ),
-            Icon(
-              Iconsax.setting,
-              color: AppColors.kBlack,
-              size: 25,
-            ),
+            // Icon(
+            //   Iconsax.setting,
+            //   color: AppColors.kBlack,
+            //   size: 25,
+            // ),
           ],
           onTap: (int index) {
             _controller.changeTab(index);

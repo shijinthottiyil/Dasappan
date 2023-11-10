@@ -12,4 +12,6 @@ class SearchService {
       throw Exception();
     }
   }
+
+  // Get playlist songs.
 }
