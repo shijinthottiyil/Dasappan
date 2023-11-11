@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
@@ -37,7 +39,9 @@ class HomeController extends GetxController {
       } on DioException catch (dioError) {
         DioExceptionHandler.dioError(dioError.type);
       } catch (error) {
-        log(error.toString());
+        if (kDebugMode) {
+          log(error.toString());
+        }
       } finally {
         AppPopups.cancelDialog();
       }
@@ -50,73 +54,23 @@ class HomeController extends GetxController {
     AudioHelper.playlistList.clear();
     try {
       AppPopups.showDialog();
-      if (isHome) {
-        audioSource = await AudioHelper.getAudioUri(
-          videoId: home.homeList.elementAt(index).videoId!,
-        );
-        if (audioSource == null) {
-          throw Exception();
-        } else {
-          // await AudioHelper.player.stop();
 
-          // //clear the playlist list if it contains any items
-          // home.playlistList.clear();
-          // home.playlist.value.clear();
-          // await home.playlist.value.add(audioSource);
-          // AudioHelper.player.setAudioSource(home.playlist.value,
-          //     initialIndex: 0, initialPosition: Duration.zero, preload: false);
-          // AudioHelper.player.play();
-          // await getOne(
-          //     videoId: home.homeList.elementAt(index).videoId!, index: index);
+      String? videoId = isHome
+          ? home.homeList[index].videoId
+          : Get.find<SearchCtr>().search.searchList[index].videoId;
 
-          // Get.find<BottomController>().bottom.selectedIndex.value = 1;
-          // AppPopups.cancelDialog();
-          // await getAll(videoId: home.homeList.elementAt(index).videoId!);
-          // // listenPosition();
-          // // listenDuration();
-
-          await getPlaylist(audioSource,
-              home.homeList.elementAt(index).videoId!, index, isHome);
-        }
+      audioSource = await AudioHelper.getAudioUri(videoId: videoId!);
+      if (audioSource == null) {
+        AppPopups.cancelDialog();
+        AppPopups.errorSnackbar(title: "നടക്കൂല!", message: '''ഇത് പാടൂല''');
       } else {
-        audioSource = await AudioHelper.getAudioUri(
-          videoId:
-              Get.find<SearchCtr>().search.searchList.elementAt(index).videoId!,
-        );
-        if (audioSource == null) {
-          throw Exception();
-        } else {
-          // await AudioHelper.player.stop();
-
-          // //clear the playlist list if it contains any items
-          // home.playlistList.clear();
-          // home.playlist.value.clear();
-          // await home.playlist.value.add(audioSource);
-          // AudioHelper.player.setAudioSource(home.playlist.value,
-          //     initialIndex: 0, initialPosition: Duration.zero, preload: false);
-          // AudioHelper.player.play();
-          // await getOne(
-          //     videoId: home.homeList.elementAt(index).videoId!, index: index);
-
-          // Get.find<BottomController>().bottom.selectedIndex.value = 1;
-          // AppPopups.cancelDialog();
-          // await getAll(videoId: home.homeList.elementAt(index).videoId!);
-          // // listenPosition();
-          // // listenDuration();
-
-          await getPlaylist(
-              audioSource,
-              Get.find<SearchCtr>().search.searchList.elementAt(index).videoId!,
-              index,
-              isHome);
-        }
+        await getPlaylist(audioSource, videoId, index, isHome);
       }
     } catch (error) {
       AppPopups.cancelDialog();
-      AppPopups.errorSnackbar(title: "error", message: error.toString());
-      log(error.toString(), name: "listTileTap");
-    } finally {
-      AppPopups.cancelDialog();
+      if (kDebugMode) {
+        log(error.toString(), name: "listTileTap");
+      }
     }
   }
 
@@ -124,173 +78,72 @@ class HomeController extends GetxController {
   Future<void> getPlaylist(
       Uri uri, String? videoId, int index, bool isHome) async {
     Uri? audio;
-    try {
-      // Clearing data
-      await AudioHelper.player.stop();
-      await AudioHelper.playlist.value.clear();
-      AudioHelper.playlistList.clear();
 
-      if (isHome) {
-        // add song data
+    // Clearing data
+    await AudioHelper.player.stop();
+    await AudioHelper.playlist.value.clear();
+    AudioHelper.playlistList.clear();
+
+    dynamic data = isHome
+        ? home.homeList[index]
+        : Get.find<SearchCtr>().search.searchList[index];
+    await AudioHelper.playlist.value.add(
+      AudioSource.uri(
+        uri,
+        tag: MediaItem(
+          id: data.videoId!,
+          title: data.title!,
+          artUri: Uri.parse(data.thumbnails!.last.url!),
+        ),
+      ),
+    );
+    await AudioHelper.player.setAudioSource(AudioHelper.playlist.value,
+        initialIndex: 0, initialPosition: Duration.zero, preload: false);
+
+    // playing song
+    AudioHelper.player.play();
+
+    // call api
+    var response = await service.getPlaylist(videoId: videoId);
+    List tracks = response.data["tracks"];
+    AudioHelper.playlistList.add(PlaylistModel.fromJson(tracks[0]));
+
+    // go now play
+    Get.find<BottomController>().bottom.selectedIndex.value = 1;
+    AppPopups.cancelDialog();
+
+    // add song to queue
+    for (var i = 1; i < tracks.length; i++) {
+      var id = tracks[i]["videoId"];
+
+      audio = await AudioHelper.getAudioUri(videoId: id);
+      if (audio != null) {
+        AudioHelper.playlistList.add(PlaylistModel.fromJson(tracks[i]));
         await AudioHelper.playlist.value.add(
           AudioSource.uri(
-            uri,
-            tag: MediaItem(
-              id: home.homeList.elementAt(index).videoId!,
-              title: home.homeList.elementAt(index).title!,
-            ),
-          ),
-        );
-        await AudioHelper.player.setAudioSource(AudioHelper.playlist.value,
-            initialIndex: 0, initialPosition: Duration.zero, preload: false);
-
-        // playing song
-        AudioHelper.player.play();
-      } else {
-        // add song data
-        await AudioHelper.playlist.value.add(
-          AudioSource.uri(
-            uri,
-            tag: MediaItem(
-              id: Get.find<SearchCtr>()
-                  .search
-                  .searchList
-                  .elementAt(index)
-                  .videoId!,
-              title: Get.find<SearchCtr>()
-                  .search
-                  .searchList
-                  .elementAt(index)
-                  .title!,
-            ),
-          ),
-        );
-        await AudioHelper.player.setAudioSource(AudioHelper.playlist.value,
-            initialIndex: 0, initialPosition: Duration.zero, preload: false);
-
-        // playing song
-        AudioHelper.player.play();
-      }
-
-      // call api
-      var response = await service.getPlaylist(videoId: videoId);
-      List tracks = response.data["tracks"];
-      AudioHelper.playlistList.add(PlaylistModel.fromJson(tracks[0]));
-
-      // go now play
-      Get.find<BottomController>().bottom.selectedIndex.value = 1;
-      AppPopups.cancelDialog();
-
-      // add song to queue
-      for (var i = 1; i < tracks.length; i++) {
-        var id = tracks[i]["videoId"];
-
-        audio = await AudioHelper.getAudioUri(videoId: id);
-        if (audio == null) {
-          throw Exception("getting audio failed");
-        } else {
-          AudioHelper.playlistList.add(PlaylistModel.fromJson(tracks[i]));
-          await AudioHelper.playlist.value.add(AudioSource.uri(
             audio,
             tag: MediaItem(
               id: AudioHelper.playlistList.elementAt(i).videoId!,
               title: AudioHelper.playlistList.elementAt(i).title!,
             ),
-          ));
-        }
+          ),
+        );
       }
-    } catch (error) {
-      throw Exception();
     }
   }
 
-  // Future<void> getOne({required String videoId, required int index}) async {
-  //   // AudioSource? audioSource;
-  //   try {
-  //     var response = await service.getPlaylist(videoId: videoId);
-  //     List tracks = response.data["tracks"];
-  //     home.playlistList.add(PlaylistModel.fromJson(tracks[0]));
-  //     log(home.playlistList.elementAt(0).title.toString(),
-  //         name: "item in the 0 index of playlistList");
-  //   } on DioException catch (dioError) {
-  //     log(dioError.toString());
-  //   } catch (error) {
-  //     log(error.toString());
-  //   } finally {}
-  // }
-
-  // Future<void> getAll({required String videoId}) async {
-  //   AudioSource? audioSource;
-  //   try {
-  //     var response = await service.getPlaylist(videoId: videoId);
-  //     List tracks = response.data["tracks"];
-  //     for (int i = 1; i < tracks.length; i++) {
-  //       var track = tracks[i];
-  //       home.playlistList.add(PlaylistModel.fromJson(track));
-  //     }
-  //     for (var i = 1; i < home.playlistList.length; i++) {
-  //       audioSource = await AudioHelper.getAudioSource(
-  //           videoId: home.playlistList[i].videoId!);
-  //       if (audioSource != null) {
-  //         await home.playlist.value.add(audioSource);
-  //       } else {
-  //         throw Exception("Getting Audio Source Exception");
-  //       }
-  //     }
-  //     // AudioHelper.player.setAudioSource(home.playlist.value,
-  //     //     initialIndex: 1, initialPosition: Duration.zero, preload: false);
-  //     // log(home.playlistList.elementAt(0).title.toString(),
-  //     //     name: "item in the 0 index of playlistList");
-  //   } on DioException catch (dioError) {
-  //     log(dioError.toString());
-  //   } catch (error) {
-  //     log(error.toString());
-  //   } finally {}
-  // }
-
-//   // Listen position stream
-//   void listenPosition() {
-//     AudioHelper.player.positionStream.listen((position) {
-//       home.position.value = position;
-//     });
+// // Call the getQuickpicks method in the onReady -> Get called after widget is rendered on the screen
+//   @override
+//   void onReady() {
+//     getQuickpicks();
+//     super.onReady();
 //   }
 
-// // List duration stream
-//   void listenDuration() {
-//     AudioHelper.player.durationStream.listen((duration) {
-//       home.duration.value = duration!;
-//     });
-//   }
-
-// // Method for playing song when ther user pressed the listtile
-//   Future<void> play({required int index}) async {
-//     try {
-//       AppPopups.showDialog();
-//       await AudioHelper.player.stop();
-//       await AudioHelper.player.setAudioSource(
-//         home.playlist,
-//         initialIndex: index,
-//         initialPosition: Duration.zero,
-//       );
-//       AudioHelper.player.play();
-//     } catch (error) {
-//       log(error.toString());
-//     } finally {
-//       AppPopups.cancelDialog();
-//     }
-//   }
-
-  //Calling getQuickpicks in the onInit gives error
-  // @override
-  // void onInit() {
-  //   getQuickpicks();
-  //   super.onInit();
-  // }
-
-// Call the getQuickpicks method in the onReady -> Get called after widget is rendered on the screen
   @override
-  void onReady() {
-    getQuickpicks();
-    super.onReady();
+  void onInit() {
+    super.onInit();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      getQuickpicks();
+    });
   }
 }

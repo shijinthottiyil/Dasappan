@@ -23,7 +23,7 @@ Future<bool> exitApp() async {
                 padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 32.h)
                     .copyWith(bottom: 0.h),
                 child: Text(
-                  'Are you sure want to Log Out?',
+                  'ശരിക്കും പോവാണോ ?',
                   textAlign: TextAlign.center,
                   style: AppTypography.kBold16.copyWith(
                       color: AppColors.kBrown500,
@@ -39,7 +39,7 @@ Future<bool> exitApp() async {
                   horizontal: 34.w,
                 ),
                 child: Text(
-                  'The player will be closed',
+                  'ദാസപ്പൻ ഓഫ് ആവുംട്ടാ ',
                   style: AppTypography.kMedium14.copyWith(
                       color: AppColors.kBrown400,
                       fontWeight: FontWeight.w600,
@@ -64,7 +64,7 @@ Future<bool> exitApp() async {
                   ),
                   child: Center(
                       child: Text(
-                    "Cancel",
+                    "വേണ്ട",
                     style: AppTypography.kMedium14,
                   ))),
             ),
@@ -76,7 +76,7 @@ Future<bool> exitApp() async {
                 SystemNavigator.pop();
               },
               child: Text(
-                "Exit",
+                "പോട്ടെ",
                 style:
                     AppTypography.kMedium14.copyWith(color: AppColors.kBlack),
               ),

@@ -1,17 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:icons_plus/icons_plus.dart';
-import 'package:music_stream/features/home/controller/home_controller.dart';
-import 'package:music_stream/features/playlist/view/playlist_view.dart';
+
 import 'package:music_stream/features/search/view/search_play.dart';
 import 'package:music_stream/features/search/view/search_song.dart';
 import 'package:music_stream/features/search/view/widgets/search_textfield.dart';
-import 'package:music_stream/utils/constants/constants.dart';
+
 import 'package:music_stream/features/search/controller/search_controller.dart';
+import 'package:music_stream/utils/general_widgets.dart/bg.dart';
 import 'package:music_stream/utils/helpers/exit_app.dart';
-import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 // class SearchView extends StatelessWidget {
 //   SearchView({super.key});
@@ -103,13 +100,13 @@ class SearchView extends StatelessWidget {
   TabBar get _tabBar => TabBar(
         indicator: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: Color(0xff1a73e8),
+          color: const Color(0xff1a73e8),
         ),
         labelColor: Colors.white,
         unselectedLabelColor: Colors.black,
-        tabs: [
-          Tab(icon: Icon(EvaIcons.search)),
-          Tab(icon: Icon(BoxIcons.bxs_playlist)),
+        tabs: const [
+          Tab(icon: Icon(Icons.search_rounded)),
+          Tab(icon: Icon(Icons.queue_music_rounded)),
         ],
       );
 
@@ -120,34 +117,36 @@ class SearchView extends StatelessWidget {
       length: 2,
       child: WillPopScope(
         onWillPop: exitApp,
-        child: Scaffold(
-          appBar: AppBar(
-            titleSpacing: 14.r,
-            bottom: PreferredSize(
-              preferredSize: _tabBar.preferredSize,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15.w),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
-                    borderRadius: BorderRadius.circular(8),
+        child: Bg(
+          child: Scaffold(
+            appBar: AppBar(
+              titleSpacing: 14.r,
+              bottom: PreferredSize(
+                preferredSize: _tabBar.preferredSize,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15.w),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade200,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: _tabBar,
                   ),
-                  child: _tabBar,
                 ),
               ),
+              title: SearchTextField(
+                placeholder: 'എന്താ വേണ്ടേ? ',
+                onSubmitted: (keyWord) {
+                  c.getSearch(keyWord);
+                },
+              ),
             ),
-            title: SearchTextField(
-              placeholder: 'Search Song or Playlist',
-              onSubmitted: (keyWord) {
-                c.getSearch(keyWord);
-              },
+            body: const TabBarView(
+              children: [
+                SearchSong(),
+                SearchPlay(),
+              ],
             ),
-          ),
-          body: TabBarView(
-            children: [
-              SearchSong(),
-              SearchPlay(),
-            ],
           ),
         ),
       ),

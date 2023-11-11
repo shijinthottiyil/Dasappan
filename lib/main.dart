@@ -27,7 +27,11 @@ Future<void> main() async {
       systemNavigationBarColor: Colors.black,
     ),
   );
-  runApp(const MyApp());
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
+    (_) => runApp(
+      const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -77,7 +81,7 @@ class MyApp extends StatelessWidget {
           home: child,
         );
       },
-      child: SplashView(),
+      child: const SplashView(),
     );
   }
 }

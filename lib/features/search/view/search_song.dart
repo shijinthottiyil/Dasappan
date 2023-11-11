@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:icons_plus/icons_plus.dart';
+
 import 'package:music_stream/features/home/controller/home_controller.dart';
 import 'package:music_stream/features/search/controller/search_controller.dart';
-import 'package:music_stream/features/search/view/widgets/search_textfield.dart';
+
 import 'package:music_stream/utils/constants/constants.dart';
 
 class SearchSong extends StatelessWidget {
@@ -60,14 +59,22 @@ class SearchSong extends StatelessWidget {
                       borderRadius: BorderRadius.circular(6).r,
                       child: FadeInImage(
                         placeholder: AssetImage(
-                          AppAssets.kTileLead,
+                          AppAssets.kLenin,
                         ),
                         image: NetworkImage(
                           data.thumbnails!.last.url!,
                         ),
+                        imageErrorBuilder: (context, error, stackTrace) =>
+                            Image.asset(
+                          AppAssets.kLenin,
+                          width: 48.w,
+                          height: 48.w,
+                          fit: BoxFit.cover,
+                        ),
                         width: 48.w,
                         height: 48.w,
                         fit: BoxFit.cover,
+                        placeholderFit: BoxFit.cover,
                       ),
                     ),
                     title: Text(

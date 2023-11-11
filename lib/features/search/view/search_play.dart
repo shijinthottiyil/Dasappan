@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:music_stream/features/home/controller/home_controller.dart';
+
 import 'package:music_stream/features/search/controller/search_controller.dart';
 import 'package:music_stream/features/playlist/view/playlist_view.dart';
 import 'package:music_stream/utils/constants/constants.dart';
@@ -49,9 +49,72 @@ class SearchPlay extends StatelessWidget {
           // AppSpacing.gapH12,
           Obx(
             () => Expanded(
-              child: ListView.builder(
+              // child: ListView.builder(
+              //   itemBuilder: (context, index) {
+              //     var data = c.search.playlistModelList[index];
+              //     return InkWell(
+              //       onTap: () {
+              //         Get.to(
+              //           () => PlaylistView(
+              //             playlistImg: data.thumbnails?.last.url,
+              //             playlistName: data.title,
+              //             playlistId: data.browseId,
+              //           ),
+              //         );
+              //       },
+              //       child: Card(
+              //         color: Colors.transparent,
+              //         child: Container(
+              //           width: double.infinity,
+              //           height: 200.h,
+              //           // color: Colors.white,
+              //           child: Row(
+              //             crossAxisAlignment: CrossAxisAlignment.start,
+              //             children: [
+              //               ClipRRect(
+              //                 borderRadius: BorderRadius.circular(10).r,
+              //                 child: FadeInImage(
+              //                   placeholder: AssetImage(
+              //                     AppAssets.kTileLead,
+              //                   ),
+              //                   image: NetworkImage(
+              //                       data.thumbnails?.last.url ?? ''),
+              //                   imageErrorBuilder:
+              //                       (context, error, stackTrace) =>
+              //                           Icon(Icons.error),
+              //                   width: 200.w,
+              //                   height: double.infinity,
+              //                   fit: BoxFit.cover,
+              //                 ),
+              //               ),
+              //               SizedBox(width: 5.w),
+              //               Expanded(
+              //                 child: Text(
+              //                   data.title ?? '',
+              //                   style: AppTypography.kBold16,
+              //                   softWrap: false,
+              //                   maxLines: 4,
+              //                   overflow: TextOverflow.ellipsis,
+              //                 ),
+              //               )
+              //             ],
+              //           ),
+              //         ),
+              //       ),
+              //     );
+              //   },
+              //   itemCount: c.search.playlistModelList.length,
+              // ),
+              child: GridView.builder(
+                itemCount: c.search.playlistModelList.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  mainAxisSpacing: 10.w,
+                  crossAxisSpacing: 10.h,
+                  crossAxisCount: 2,
+                ),
                 itemBuilder: (context, index) {
                   var data = c.search.playlistModelList[index];
+
                   return InkWell(
                     onTap: () {
                       Get.to(
@@ -62,48 +125,49 @@ class SearchPlay extends StatelessWidget {
                         ),
                       );
                     },
-                    child: Card(
-                      color: Colors.transparent,
-                      child: Container(
-                        width: double.infinity,
-                        height: 200.h,
-                        // color: Colors.white,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(10).r,
-                              child: FadeInImage(
-                                placeholder: AssetImage(
-                                  AppAssets.kTileLead,
-                                ),
-                                image: NetworkImage(
-                                    data.thumbnails?.last.url ?? ''),
-                                imageErrorBuilder:
-                                    (context, error, stackTrace) =>
-                                        Icon(Icons.error),
-                                width: 200.w,
-                                height: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 7,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(4).r,
+                            child: FadeInImage(
+                              placeholder: AssetImage(
+                                AppAssets.kLenin,
+                              ),
+                              image:
+                                  NetworkImage(data.thumbnails?.last.url ?? ''),
+                              imageErrorBuilder: (context, error, stackTrace) =>
+                                  Image.asset(
+                                AppAssets.kLenin,
+                                width: double.infinity,
                                 fit: BoxFit.cover,
                               ),
+                              width: double.infinity,
+                              // height: double.infinity,
+                              fit: BoxFit.cover,
+                              placeholderFit: BoxFit.cover,
                             ),
-                            SizedBox(width: 5.w),
-                            Expanded(
-                              child: Text(
-                                data.title ?? '',
-                                style: AppTypography.kBold16,
-                                softWrap: false,
-                                maxLines: 4,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            )
-                          ],
+                          ),
                         ),
-                      ),
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 5.h),
+                            child: Text(
+                              data.title ?? '',
+                              style: AppTypography.kRegular13
+                                  .copyWith(fontSize: 16.sp),
+                              softWrap: false,
+                              maxLines: 4,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   );
                 },
-                itemCount: c.search.playlistModelList.length,
               ),
             ),
           ),

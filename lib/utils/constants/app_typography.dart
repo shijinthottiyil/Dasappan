@@ -47,4 +47,8 @@ class AppTypography {
     fontWeight: FontWeight.w800,
     fontSize: 24.sp,
   );
+  static TextStyle kExtraBold32 = TextStyle(
+    fontWeight: FontWeight.w800,
+    fontSize: 32.sp,
+  );
 }

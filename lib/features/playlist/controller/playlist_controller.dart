@@ -1,3 +1,5 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
@@ -70,6 +72,7 @@ class PlaylistController extends GetxController {
       AudioHelper.player.play();
       // go now play
       Get.find<BottomController>().bottom.selectedIndex.value = 1;
+      Get.back();
 
       AudioHelper.playlistList.add(playlist.playlistList.first);
 
@@ -92,6 +95,8 @@ class PlaylistController extends GetxController {
           );
         }
       }
+    } else {
+      AppPopups.errorSnackbar(title: 'ഞെക്കണ്ട', message: 'പാടൂല');
     }
   }
 
@@ -128,28 +133,35 @@ class PlaylistController extends GetxController {
       AudioHelper.player.play();
       // go now play
       Get.find<BottomController>().bottom.selectedIndex.value = 1;
+      Get.back();
 
       AudioHelper.playlistList.add(playlist.playlistList[index]);
-    }
 
-    ///Adding the rest of the songs to play.
-    for (var i = 0; i < playlist.playlistList.length && i != index; i++) {
-      var data = playlist.playlistList[i];
-      Uri? _audioSource;
-      _audioSource = await AudioHelper.getAudioUri(videoId: data.videoId!);
-      if (_audioSource != null) {
-        AudioHelper.playlistList.add(data);
-        await AudioHelper.playlist.value.add(
-          AudioSource.uri(
-            _audioSource,
-            tag: MediaItem(
-              id: data.videoId!,
-              title: data.title!,
-              artUri: Uri.parse(data.thumbnail!.last.url!),
+      ///Adding the rest of the songs to play.
+      for (var i = 0; i < playlist.playlistList.length; i++) {
+        if (i == index) {
+          continue;
+        }
+
+        var data = playlist.playlistList[i];
+        Uri? _audioSource;
+        _audioSource = await AudioHelper.getAudioUri(videoId: data.videoId!);
+        if (_audioSource != null) {
+          AudioHelper.playlistList.add(data);
+          await AudioHelper.playlist.value.add(
+            AudioSource.uri(
+              _audioSource,
+              tag: MediaItem(
+                id: data.videoId!,
+                title: data.title!,
+                artUri: Uri.parse(data.thumbnail!.last.url!),
+              ),
             ),
-          ),
-        );
+          );
+        }
       }
+    } else {
+      AppPopups.errorSnackbar(title: 'ഞെക്കണ്ട', message: 'പാടൂല');
     }
   }
 }

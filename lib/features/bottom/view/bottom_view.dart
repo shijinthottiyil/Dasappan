@@ -1,20 +1,17 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_stream/features/bottom/controller/bottom_controller.dart';
 import 'package:music_stream/features/home/view/home_view.dart';
 import 'package:music_stream/features/now_play/view/now_play_view.dart';
 import 'package:music_stream/features/search/view/search_view.dart';
-import 'package:music_stream/features/settings/view/settings_view.dart';
-import 'package:music_stream/features/test/test_view.dart';
+
 import 'package:music_stream/utils/constants/app_colors.dart';
-import 'package:icons_plus/icons_plus.dart';
 
 class BottomView extends StatelessWidget {
   BottomView({super.key});
   final _controller = Get.put(BottomController());
-  final _pages = [HomeView(), NowPlayView(), SearchView()];
+  final _pages = [const HomeView(), const NowPlayView(), const SearchView()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,17 +44,17 @@ class BottomView extends StatelessWidget {
           backgroundColor: Colors.transparent,
           items: const [
             Icon(
-              EvaIcons.home,
+              Icons.home_rounded,
               color: AppColors.kBlack,
               size: 25,
             ),
             Icon(
-              Iconsax.music_play,
+              Icons.play_circle_fill_rounded,
               color: AppColors.kBlack,
               size: 25,
             ),
             Icon(
-              EvaIcons.search,
+              Icons.search_rounded,
               color: AppColors.kBlack,
               size: 25,
             ),

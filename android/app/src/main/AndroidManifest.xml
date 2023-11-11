@@ -9,7 +9,7 @@
 
 
   <application 
-       android:label="Dasappan" 
+       android:label="ദാസപ്പൻ" 
        android:name="${applicationName}"
        android:icon="@mipmap/launcher_icon"
        android:usesCleartextTraffic="true">

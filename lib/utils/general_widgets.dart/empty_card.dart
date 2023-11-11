@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:music_stream/utils/constants/app_assets.dart';
 
 class EmptyCard extends StatelessWidget {
   const EmptyCard({
@@ -8,8 +9,18 @@ class EmptyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: LottieBuilder.asset('assets/lottie/empty.json'),
+    return Padding(
+      padding: const EdgeInsets.all(10).r,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10).r,
+            child: Image.asset(AppAssets.kLenin),
+          ),
+          const Text('വെളിച്ചമേ നയിച്ചാലും')
+        ],
+      ),
     );
   }
 }

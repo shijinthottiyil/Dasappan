@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:icons_plus/icons_plus.dart';
 import 'package:music_stream/utils/constants/constants.dart';
 
 class SearchTextField extends StatelessWidget {
@@ -18,7 +18,7 @@ class SearchTextField extends StatelessWidget {
       prefix: Padding(
         padding: EdgeInsets.only(left: 15.r),
         child: const Icon(
-          EvaIcons.search,
+          Icons.search_rounded,
           color: AppColors.kBrown75,
         ),
       ),
@@ -29,6 +29,7 @@ class SearchTextField extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.kBrown400,
         borderRadius: BorderRadius.circular(8).r,
+        backgroundBlendMode: BlendMode.colorDodge,
       ),
       onSubmitted: onSubmitted,
     );

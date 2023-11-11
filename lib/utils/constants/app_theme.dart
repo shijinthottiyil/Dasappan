@@ -5,13 +5,15 @@ class AppTheme {
   static ThemeData lightTheme = ThemeData(
     primarySwatch: Colors.teal,
     brightness: Brightness.light,
-    scaffoldBackgroundColor: AppColors.kBlack,
+    // scaffoldBackgroundColor: AppColors.kBlack,
+    scaffoldBackgroundColor: Colors.transparent,
     appBarTheme: const AppBarTheme(
       // iconTheme: const IconThemeData(
       //   color: Colors.black,
       // ),
       // titleTextStyle: AppTypography.kBold24.copyWith(color: Colors.black),
-      backgroundColor: AppColors.kBlack,
+      // backgroundColor: AppColors.kBlack,
+      backgroundColor: Colors.transparent,
       elevation: 0,
     ),
 

@@ -2,15 +2,15 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:music_stream/features/playlist/controller/playlist_controller.dart';
-import 'package:music_stream/features/playlist/service/playlist_service.dart';
-import 'package:music_stream/features/search/controller/search_controller.dart';
+
 import 'package:music_stream/utils/constants/constants.dart';
 
 class PlaylistView extends StatefulWidget {
-  PlaylistView({
+  const PlaylistView({
     super.key,
     required this.playlistImg,
     required this.playlistName,
@@ -18,13 +18,13 @@ class PlaylistView extends StatefulWidget {
   });
 
   ///For getting the corresponding playlistImage.
-  String? playlistImg;
+  final String? playlistImg;
 
   ///For getting the corresponding playlistName.
-  String? playlistName;
+  final String? playlistName;
 
   ///For getting the corresponding playlistBrowseId.
-  String? playlistId;
+  final String? playlistId;
 
   @override
   State<PlaylistView> createState() => _PlaylistViewState();
@@ -34,6 +34,10 @@ class _PlaylistViewState extends State<PlaylistView> {
   ///Getx Controllers.
 
   final _playlistC = Get.put(PlaylistController());
+
+  ///Expirementing FAB hiding.
+  bool _showFab = true;
+
   @override
   void initState() {
     super.initState();
@@ -44,35 +48,47 @@ class _PlaylistViewState extends State<PlaylistView> {
 
   @override
   Widget build(BuildContext context) {
+    const duration = Duration(milliseconds: 300);
     // final c = Get.put()
-    return Container(
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          ImageFiltered(
-            imageFilter: ImageFilter.blur(
-              sigmaX: 5,
-              sigmaY: 5,
-            ),
-            child: Image.network(
-              widget.playlistImg ?? '',
-              fit: BoxFit.fill,
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        ImageFiltered(
+          imageFilter: ImageFilter.blur(
+            sigmaX: 5,
+            sigmaY: 5,
+          ),
+          child: Image.network(
+            widget.playlistImg ?? '',
+            fit: BoxFit.fill,
+          ),
+        ),
+        Scaffold(
+          appBar: AppBar(
+            title: Text(widget.playlistName ?? ''),
+            elevation: 0.0,
+            backgroundColor: Colors.transparent,
+            leading: IconButton(
+              onPressed: () {
+                Get.back();
+              },
+              icon: const Icon(CupertinoIcons.back),
             ),
           ),
-          Scaffold(
-            appBar: AppBar(
-              title: Text(widget.playlistName ?? ''),
-              elevation: 0.0,
-              backgroundColor: Colors.transparent,
-              leading: IconButton(
-                onPressed: () {
-                  Get.back();
-                },
-                icon: Icon(CupertinoIcons.back),
-              ),
-            ),
-            backgroundColor: Colors.transparent,
-            body: Obx(
+          backgroundColor: Colors.transparent,
+          body: NotificationListener<UserScrollNotification>(
+            onNotification: (notification) {
+              final ScrollDirection direction = notification.direction;
+              setState(() {
+                if (direction == ScrollDirection.reverse) {
+                  _showFab = false;
+                } else if (direction == ScrollDirection.forward) {
+                  _showFab = true;
+                }
+              });
+              return true;
+            },
+            child: Obx(
               () => ListView.builder(
                 itemBuilder: (context, index) {
                   var data = _playlistC.playlist.playlistList[index];
@@ -92,19 +108,26 @@ class _PlaylistViewState extends State<PlaylistView> {
                           leading: ClipRRect(
                             borderRadius: BorderRadius.circular(10.r),
                             child: FadeInImage(
-                              placeholder: AssetImage(AppAssets.kLogo),
+                              placeholder: AssetImage(AppAssets.kLenin),
                               image:
                                   NetworkImage(data.thumbnail?.last.url ?? ''),
                               imageErrorBuilder: (context, error, stackTrace) =>
-                                  Icon(Icons.error),
+                                  Image.asset(
+                                AppAssets.kLenin,
+                                width: 60.w,
+                                height: 60.w,
+                                fit: BoxFit.cover,
+                              ),
                               fit: BoxFit.cover,
+                              placeholderFit: BoxFit.cover,
                               width: 60.w,
                               height: 60.w,
                             ),
                           ),
                           title: Text(
                             data.title ?? 'title',
-                            style: TextStyle(overflow: TextOverflow.ellipsis),
+                            style: const TextStyle(
+                                overflow: TextOverflow.ellipsis),
                           ),
                         ),
                       ),
@@ -114,16 +137,25 @@ class _PlaylistViewState extends State<PlaylistView> {
                 itemCount: _playlistC.playlist.playlistList.length,
               ),
             ),
-            floatingActionButton: FloatingActionButton.extended(
-              onPressed: () {
-                _playlistC.playAll();
-              },
-              label: Text('Play All'),
-              icon: Icon(Icons.play_arrow_rounded),
+          ),
+          floatingActionButton: AnimatedSlide(
+            duration: duration,
+            offset: _showFab ? Offset.zero : const Offset(0, 2),
+            child: AnimatedOpacity(
+              duration: duration,
+              opacity: _showFab ? 1 : 0,
+              child: FloatingActionButton(
+                elevation: 10,
+                backgroundColor: AppColors.kBlack,
+                onPressed: () {
+                  _playlistC.playAll();
+                },
+                child: const Icon(Icons.play_arrow_rounded),
+              ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
