@@ -43,6 +43,7 @@ class PlaylistController extends GetxController {
 //  ///Method to play all songs in the current playlist one by one when user clicks the FAB.
   Future playAll() async {
     ///Initializing the Player.
+    AppPopups.showDialog();
     await AudioHelper.player.stop();
     await AudioHelper.playlist.value.clear();
     AudioHelper.playlistList.clear();
@@ -70,8 +71,9 @@ class PlaylistController extends GetxController {
       );
 
       AudioHelper.player.play();
+      AppPopups.cancelDialog();
       // go now play
-      Get.find<BottomController>().bottom.selectedIndex.value = 1;
+      // Get.find<BottomController>().bottom.selectedIndex.value = 1;
       Get.back();
 
       AudioHelper.playlistList.add(playlist.playlistList.first);
@@ -103,6 +105,7 @@ class PlaylistController extends GetxController {
   ///Method to play the user selected song first.
   Future playSelected(int index) async {
     ///Initializing the Player.
+    AppPopups.showDialog();
     await AudioHelper.player.stop();
     await AudioHelper.playlist.value.clear();
     AudioHelper.playlistList.clear();
@@ -131,8 +134,9 @@ class PlaylistController extends GetxController {
       );
 
       AudioHelper.player.play();
+      AppPopups.cancelDialog();
       // go now play
-      Get.find<BottomController>().bottom.selectedIndex.value = 1;
+      // Get.find<BottomController>().bottom.selectedIndex.value = 1;
       Get.back();
 
       AudioHelper.playlistList.add(playlist.playlistList[index]);

@@ -4,12 +4,14 @@ import 'package:get/get.dart';
 import 'package:music_stream/features/bottom/view/bottom_view.dart';
 
 import 'package:music_stream/features/splash/view/widgets/random_text_reveal.dart';
+import 'package:music_stream/utils/networking/connection_controller.dart';
 
 class SplashView extends StatelessWidget {
   const SplashView({super.key});
-  // final _controller = Get.put(SplashController());
+
   @override
   Widget build(BuildContext context) {
+    final _controller = Get.put(ConnectionController());
     // final c = Get.put(SplashController());
     return Scaffold(
       body: Center(

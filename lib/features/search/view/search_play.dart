@@ -14,98 +14,44 @@ class SearchPlay extends StatelessWidget {
     var c = Get.put(SearchCtr());
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15.w),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Text("Search", style: AppTypography.kSemiBold32),
-          AppSpacing.gapH12,
-          // CupertinoTextField.borderless(
-          //   padding: EdgeInsets.all(15.r),
-          //   prefix: Padding(
-          //     padding: EdgeInsets.only(left: 15.r),
-          //     child: const Icon(
-          //       EvaIcons.search,
-          //       color: AppColors.kBrown75,
-          //     ),
-          //   ),
-          //   placeholder: "Search Song",
-          //   placeholderStyle:
-          //       AppTypography.kMedium14.copyWith(color: AppColors.kWhite),
-          //   style: AppTypography.kRegular13.copyWith(color: AppColors.kWhite),
-          //   decoration: BoxDecoration(
-          //     color: AppColors.kBrown400,
-          //     borderRadius: BorderRadius.circular(8).r,
-          //   ),
-          //   onSubmitted: (keyword) {
-          //     c.getSearch(keyword);
-          //   },
-          // ),
-          // SearchTextField(
-          //   placeholder: 'Search Song',
-          //   onSubmitted: (keyWord) {
-          //     c.getSearch(keyWord);
-          //   },
-          // ),
-          // AppSpacing.gapH12,
-          Obx(
-            () => Expanded(
-              // child: ListView.builder(
-              //   itemBuilder: (context, index) {
-              //     var data = c.search.playlistModelList[index];
-              //     return InkWell(
-              //       onTap: () {
-              //         Get.to(
-              //           () => PlaylistView(
-              //             playlistImg: data.thumbnails?.last.url,
-              //             playlistName: data.title,
-              //             playlistId: data.browseId,
-              //           ),
-              //         );
-              //       },
-              //       child: Card(
-              //         color: Colors.transparent,
-              //         child: Container(
-              //           width: double.infinity,
-              //           height: 200.h,
-              //           // color: Colors.white,
-              //           child: Row(
-              //             crossAxisAlignment: CrossAxisAlignment.start,
-              //             children: [
-              //               ClipRRect(
-              //                 borderRadius: BorderRadius.circular(10).r,
-              //                 child: FadeInImage(
-              //                   placeholder: AssetImage(
-              //                     AppAssets.kTileLead,
-              //                   ),
-              //                   image: NetworkImage(
-              //                       data.thumbnails?.last.url ?? ''),
-              //                   imageErrorBuilder:
-              //                       (context, error, stackTrace) =>
-              //                           Icon(Icons.error),
-              //                   width: 200.w,
-              //                   height: double.infinity,
-              //                   fit: BoxFit.cover,
-              //                 ),
-              //               ),
-              //               SizedBox(width: 5.w),
-              //               Expanded(
-              //                 child: Text(
-              //                   data.title ?? '',
-              //                   style: AppTypography.kBold16,
-              //                   softWrap: false,
-              //                   maxLines: 4,
-              //                   overflow: TextOverflow.ellipsis,
-              //                 ),
-              //               )
-              //             ],
-              //           ),
-              //         ),
-              //       ),
-              //     );
-              //   },
-              //   itemCount: c.search.playlistModelList.length,
-              // ),
-              child: GridView.builder(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Text("Search", style: AppTypography.kSemiBold32),
+            AppSpacing.gapH12,
+            // CupertinoTextField.borderless(
+            //   padding: EdgeInsets.all(15.r),
+            //   prefix: Padding(
+            //     padding: EdgeInsets.only(left: 15.r),
+            //     child: const Icon(
+            //       EvaIcons.search,
+            //       color: AppColors.kBrown75,
+            //     ),
+            //   ),
+            //   placeholder: "Search Song",
+            //   placeholderStyle:
+            //       AppTypography.kMedium14.copyWith(color: AppColors.kWhite),
+            //   style: AppTypography.kRegular13.copyWith(color: AppColors.kWhite),
+            //   decoration: BoxDecoration(
+            //     color: AppColors.kBrown400,
+            //     borderRadius: BorderRadius.circular(8).r,
+            //   ),
+            //   onSubmitted: (keyword) {
+            //     c.getSearch(keyword);
+            //   },
+            // ),
+            // SearchTextField(
+            //   placeholder: 'Search Song',
+            //   onSubmitted: (keyWord) {
+            //     c.getSearch(keyWord);
+            //   },
+            // ),
+            // AppSpacing.gapH12,
+            Obx(
+              () => GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: c.search.playlistModelList.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   mainAxisSpacing: 10.w,
@@ -170,8 +116,9 @@ class SearchPlay extends StatelessWidget {
                 },
               ),
             ),
-          ),
-        ],
+            SizedBox(height: 165.h),
+          ],
+        ),
       ),
     );
   }

@@ -51,4 +51,7 @@ class AppTypography {
     fontWeight: FontWeight.w800,
     fontSize: 32.sp,
   );
+
+  //Orbitron
+  static TextStyle kSecondary = const TextStyle(fontFamily: 'Orbitron');
 }

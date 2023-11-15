@@ -55,8 +55,8 @@ class _PlaylistViewState extends State<PlaylistView> {
       children: [
         ImageFiltered(
           imageFilter: ImageFilter.blur(
-            sigmaX: 5,
-            sigmaY: 5,
+            sigmaX: 2,
+            sigmaY: 2,
           ),
           child: Image.network(
             widget.playlistImg ?? '',

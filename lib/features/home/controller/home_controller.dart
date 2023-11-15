@@ -62,7 +62,9 @@ class HomeController extends GetxController {
       audioSource = await AudioHelper.getAudioUri(videoId: videoId!);
       if (audioSource == null) {
         AppPopups.cancelDialog();
-        AppPopups.errorSnackbar(title: "നടക്കൂല!", message: '''ഇത് പാടൂല''');
+        AppPopups.errorSnackbar(
+            title: "Something went wrong",
+            message: '''എവിടെയോ എന്തോ ഒരു തകരാറ് പോലെ....''');
       } else {
         await getPlaylist(audioSource, videoId, index, isHome);
       }
@@ -109,7 +111,7 @@ class HomeController extends GetxController {
     AudioHelper.playlistList.add(PlaylistModel.fromJson(tracks[0]));
 
     // go now play
-    Get.find<BottomController>().bottom.selectedIndex.value = 1;
+    // Get.find<BottomController>().bottom.selectedIndex.value = 1;
     AppPopups.cancelDialog();
 
     // add song to queue

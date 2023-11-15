@@ -14,11 +14,11 @@ class Bg extends StatelessWidget {
       children: [
         ImageFiltered(
           imageFilter: ImageFilter.blur(
-            sigmaX: 100,
-            sigmaY: 100,
+            sigmaX: 2,
+            sigmaY: 2,
           ),
           child: Image.asset(
-            AppAssets.kLenin,
+            AppAssets.kBg,
             fit: BoxFit.cover,
           ),
         ),

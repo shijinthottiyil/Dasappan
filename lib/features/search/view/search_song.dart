@@ -15,42 +15,44 @@ class SearchSong extends StatelessWidget {
     var c = Get.put(SearchCtr());
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15.w),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Text("Search", style: AppTypography.kSemiBold32),
-          AppSpacing.gapH12,
-          // CupertinoTextField.borderless(
-          //   padding: EdgeInsets.all(15.r),
-          //   prefix: Padding(
-          //     padding: EdgeInsets.only(left: 15.r),
-          //     child: const Icon(
-          //       EvaIcons.search,
-          //       color: AppColors.kBrown75,
-          //     ),
-          //   ),
-          //   placeholder: "Search Song",
-          //   placeholderStyle:
-          //       AppTypography.kMedium14.copyWith(color: AppColors.kWhite),
-          //   style: AppTypography.kRegular13.copyWith(color: AppColors.kWhite),
-          //   decoration: BoxDecoration(
-          //     color: AppColors.kBrown400,
-          //     borderRadius: BorderRadius.circular(8).r,
-          //   ),
-          //   onSubmitted: (keyword) {
-          //     c.getSearch(keyword);
-          //   },
-          // ),
-          // SearchTextField(
-          //   placeholder: 'Search Song',
-          //   onSubmitted: (keyWord) {
-          //     c.getSearch(keyWord);
-          //   },
-          // ),
-          // AppSpacing.gapH12,
-          Obx(
-            () => Expanded(
-              child: ListView.builder(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Text("Search", style: AppTypography.kSemiBold32),
+            AppSpacing.gapH12,
+            // CupertinoTextField.borderless(
+            //   padding: EdgeInsets.all(15.r),
+            //   prefix: Padding(
+            //     padding: EdgeInsets.only(left: 15.r),
+            //     child: const Icon(
+            //       EvaIcons.search,
+            //       color: AppColors.kBrown75,
+            //     ),
+            //   ),
+            //   placeholder: "Search Song",
+            //   placeholderStyle:
+            //       AppTypography.kMedium14.copyWith(color: AppColors.kWhite),
+            //   style: AppTypography.kRegular13.copyWith(color: AppColors.kWhite),
+            //   decoration: BoxDecoration(
+            //     color: AppColors.kBrown400,
+            //     borderRadius: BorderRadius.circular(8).r,
+            //   ),
+            //   onSubmitted: (keyword) {
+            //     c.getSearch(keyword);
+            //   },
+            // ),
+            // SearchTextField(
+            //   placeholder: 'Search Song',
+            //   onSubmitted: (keyWord) {
+            //     c.getSearch(keyWord);
+            //   },
+            // ),
+            // AppSpacing.gapH12,
+            Obx(
+              () => ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
                   var data = c.search.searchList[index];
                   return ListTile(
@@ -94,8 +96,9 @@ class SearchSong extends StatelessWidget {
                 itemCount: c.search.searchList.length,
               ),
             ),
-          ),
-        ],
+            SizedBox(height: 150.h),
+          ],
+        ),
       ),
     );
   }

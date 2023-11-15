@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:music_stream/features/bottom/controller/bottom_controller.dart';
 
 import 'package:music_stream/features/search/view/search_play.dart';
 import 'package:music_stream/features/search/view/search_song.dart';
@@ -116,7 +117,10 @@ class SearchView extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: WillPopScope(
-        onWillPop: exitApp,
+        onWillPop: () async {
+          Get.find<BottomController>().bottom.selectedIndex.value = 1;
+          return false;
+        },
         child: Bg(
           child: Scaffold(
             appBar: AppBar(

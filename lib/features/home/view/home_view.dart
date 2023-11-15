@@ -22,152 +22,92 @@ class HomeView extends StatelessWidget {
       onWillPop: exitApp,
       child: Bg(
         child: Scaffold(
-          body: Padding(
-            padding: EdgeInsets.only(left: 17.w, top: 120.h),
-            child: RefreshIndicator(
-              onRefresh: c.getQuickpicks,
-              color: AppColors.kBlack,
-              backgroundColor: AppColors.kWhite,
-              strokeWidth: 4.0,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    "ഹലോ BOSS",
-                    style: AppTypography.kExtraBold32,
-                  ),
-                  Expanded(
-                      child: Obx(
-                    () => ListView.builder(
-                      itemCount: c.home.homeList.length,
-                      itemBuilder: (context, index) {
-                        var data = c.home.homeList[index];
-                        return ListTile(
-                          contentPadding: EdgeInsets.zero,
-                          leading: ClipRRect(
-                            borderRadius: BorderRadius.circular(6).r,
-                            //       ),
-                            child: FadeInImage(
-                              placeholder: AssetImage(
-                                AppAssets.kLenin,
-                              ),
-                              image: NetworkImage(
-                                data.thumbnails!.last.url!,
-                              ),
-                              imageErrorBuilder: (context, error, stackTrace) =>
-                                  Image.asset(
-                                AppAssets.kLenin,
-                                width: 48.w,
-                                height: 48.w,
-                                fit: BoxFit.cover,
-                              ),
-                              width: 48.w,
-                              height: 48.w,
-                              fit: BoxFit.cover,
-                              placeholderFit: BoxFit.cover,
-                            ),
-                          ),
-                          title: Text(
-                            data.title ?? "Name",
-                            style: AppTypography.kSemiBold14,
-                          ),
-                          subtitle: Text(
-                            data.artists?[0].name ?? "subtitle",
-                            style: AppTypography.kRegular13,
-                          ),
-                          onTap: () {
-                            c.listTileTap(index: index, isHome: true);
-                          },
-                        );
-                      },
-                    ),
-                  ))
-                ],
+          appBar: AppBar(
+            title: Text(
+              "DASAPPAN",
+              style: TextStyle(
+                fontFamily: 'Orbitron',
+                fontWeight: FontWeight.bold,
+                fontSize: 32,
+                letterSpacing: 2,
               ),
-              // child: CustomScrollView(
-              //   slivers: [
-              //     SliverAppBar(
-              //       pinned: true,
-              //       floating: true,
-              //       expandedHeight: 120.h,
-              //       flexibleSpace: FlexibleSpaceBar(
-              //         titlePadding: EdgeInsets.zero,
-              //         title: Padding(
-              //           padding: EdgeInsets.symmetric(vertical: 5.w),
-              //           child: Text(
-              //             "ഹലോ BOSS",
-              //             style: AppTypography.kExtraBold24,
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //     Obx(
-              //       () => SliverList.builder(
-              //         itemBuilder: (context, index) {
-              //           var data = _controller.home.homeList[index];
-              //           return ListTile(
-              //             contentPadding: EdgeInsets.zero,
-              //             leading: ClipRRect(
-              //               borderRadius: BorderRadius.circular(6).r,
-              //               // child: data.thumbnails?.last.url != null
-              //               //     ? Image.network(
-              //               //         data.thumbnails!.last.url!,
-              //               //         width: 48.w,
-              //               //         height: 48.w,
-              //               //         fit: BoxFit.cover,
-              //               //       )
-              //               //     : Image.asset(
-              //               //         AppAssets.kTileLead,
-              //               //         width: 48.w,
-              //               //         height: 48.w,
-              //               //         fit: BoxFit.cover,
-              //               //       ),
-              //               child: FadeInImage(
-              //                 placeholder: AssetImage(
-              //                   AppAssets.kLenin,
-              //                 ),
-              //                 image: NetworkImage(
-              //                   data.thumbnails!.last.url!,
-              //                 ),
-              //                 imageErrorBuilder: (context, error, stackTrace) =>
-              //                     Image.asset(
-              //                   AppAssets.kLenin,
-              //                   width: 48.w,
-              //                   height: 48.w,
-              //                   fit: BoxFit.cover,
-              //                 ),
-              //                 width: 48.w,
-              //                 height: 48.w,
-              //                 fit: BoxFit.cover,
-              //                 placeholderFit: BoxFit.cover,
-              //               ),
-              //             ),
-              //             title: Text(
-              //               data.title ?? "Name",
-              //               style: AppTypography.kSemiBold14,
-              //             ),
-              //             subtitle: Text(
-              //               data.artists?[0].name ?? "subtitle",
-              //               style: AppTypography.kRegular13,
-              //             ),
-              //             onTap: () {
-              //               _controller.listTileTap(index: index, isHome: true);
-              //             },
-              //           );
-              //         },
-              //         // separatorBuilder: (context, index) {
-              //         //   return Divider(
-              //         //     color: AppColors.kWhite,
-              //         //     thickness: 0.5,
-              //         //     indent: 65.w,
-              //         //   );
-              //         // },
-              //         itemCount: _controller.home.homeList.length,
-              //       ),
-              //     ),
-              //   ],
-              // ),
+            ),
+          ),
+          body: RefreshIndicator(
+            onRefresh: c.getQuickpicks,
+            color: AppColors.kBlack,
+            backgroundColor: AppColors.kWhite,
+            strokeWidth: 4.0,
+            child: Padding(
+              padding: EdgeInsets.only(left: 17.w, top: 10.h),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Quickpicks',
+                      style: AppTypography.kSecondary,
+                    ),
+                    Obx(
+                      () => SizedBox(
+                        height: 400,
+                        child: GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            mainAxisSpacing: 5.w,
+                            crossAxisCount: 5,
+                            mainAxisExtent: 325.w,
+                          ),
+                          physics: BouncingScrollPhysics(),
+                          itemCount: c.home.homeList.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            var data = c.home.homeList[index];
+                            return ListTile(
+                              contentPadding: EdgeInsets.zero,
+                              leading: ClipRRect(
+                                borderRadius: BorderRadius.circular(6).r,
+                                //       ),
+                                child: FadeInImage(
+                                  placeholder: AssetImage(
+                                    AppAssets.kLenin,
+                                  ),
+                                  image: NetworkImage(
+                                    data.thumbnails!.last.url!,
+                                  ),
+                                  imageErrorBuilder:
+                                      (context, error, stackTrace) =>
+                                          Image.asset(
+                                    AppAssets.kLenin,
+                                    width: 48.w,
+                                    height: 48.w,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  width: 48.w,
+                                  height: 48.w,
+                                  fit: BoxFit.cover,
+                                  placeholderFit: BoxFit.cover,
+                                ),
+                              ),
+                              title: Text(
+                                data.title ?? "Name",
+                                style: AppTypography.kSemiBold14,
+                              ),
+                              subtitle: Text(
+                                data.artists?[0].name ?? "subtitle",
+                                style: AppTypography.kRegular13,
+                              ),
+                              onTap: () {
+                                c.listTileTap(index: index, isHome: true);
+                              },
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
         ),
