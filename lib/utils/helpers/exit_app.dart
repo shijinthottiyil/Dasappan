@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:music_stream/utils/constants/app_colors.dart';
 import 'package:music_stream/utils/constants/app_typography.dart';
 
-Future<bool> exitApp() async {
+Future exitApp() async {
   await Get.dialog(BackdropFilter(
     filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
     child: Dialog(
@@ -89,5 +89,5 @@ Future<bool> exitApp() async {
       ),
     ),
   ));
-  return false;
+  // return false;
 }

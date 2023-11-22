@@ -101,8 +101,8 @@ class SearchPlay extends StatelessWidget {
                           child: Padding(
                             padding: EdgeInsets.only(top: 5.h),
                             child: Text(
-                              data.title ?? '',
-                              style: AppTypography.kRegular13
+                              data.title ?? AppTexts.kLoading,
+                              style: AppTypography.kSecondary
                                   .copyWith(fontSize: 16.sp),
                               softWrap: false,
                               maxLines: 4,
@@ -116,7 +116,7 @@ class SearchPlay extends StatelessWidget {
                 },
               ),
             ),
-            SizedBox(height: 165.h),
+            AppSpacing.gapH250,
           ],
         ),
       ),

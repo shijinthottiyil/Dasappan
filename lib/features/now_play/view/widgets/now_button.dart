@@ -7,9 +7,11 @@ class NowButton extends StatelessWidget {
     super.key,
     required this.icon,
     required this.onPressed,
+    this.size = 0,
   });
   final IconData? icon;
   final void Function()? onPressed;
+  final double? size;
   @override
   Widget build(BuildContext context) {
     return IconButton(
@@ -19,7 +21,7 @@ class NowButton extends StatelessWidget {
       icon: Icon(
         icon,
         color: AppColors.kWhite,
-        size: 56.h,
+        size: size == 0 ? 56.h : size,
       ),
     );
   }

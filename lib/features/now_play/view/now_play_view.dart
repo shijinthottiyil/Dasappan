@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:music_stream/features/bottom/controller/bottom_controller.dart';
+import 'package:music_stream/features/bottom/view/bottom_view.dart';
 
 import 'package:music_stream/features/home/controller/home_controller.dart';
 import 'package:music_stream/features/now_play/view/widgets/now_button.dart';
@@ -20,82 +20,68 @@ class NowPlayView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeController = Get.put(HomeController());
-    return WillPopScope(
-      onWillPop: () async {
-        Get.find<BottomController>().bottom.selectedIndex.value = 0;
-        return false;
-      },
-      child: Bg(
-        child: Scaffold(
-          body: SafeArea(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.w),
-              child: StreamBuilder(
-                stream: AudioHelper.player.currentIndexStream,
-                builder: (context, currentIndex) {
-                  if (currentIndex.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // Container(
-                      //   width: 50.w,
-                      //   height: 10.h,
-                      //   decoration: BoxDecoration(
-                      //     color: AppColors.kWhite,
-                      //     borderRadius: BorderRadius.circular(5).r,
-                      //   ),
-                      // ),
-                      AppSpacing.gapH4,
+    // bool _isShuffle = false;
+    // final homeController = Get.put(HomeController());
+    return Bg(
+      child: Scaffold(
+        appBar: AppBar(
+            leading: IconButton(
+          onPressed: pc.close,
+          icon: Icon(
+            Icons.expand_more_rounded,
+            color: pc.isPanelOpen ? AppColors.kWhite : Colors.transparent,
+          ),
+        )),
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24.w),
+          child: StreamBuilder(
+              stream: AudioHelper.player.currentIndexStream,
+              builder: (context, currentIndex) {
+                if (currentIndex.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (AudioHelper.playlistList.isNotEmpty) ...[
                       Obx(
                         () => ClipRRect(
-                          borderRadius: BorderRadius.circular(8).r,
+                          // borderRadius: BorderRadius.circular(30).r,
                           child: FadeInImage(
                             placeholder: AssetImage(
                               AppAssets.kLenin,
                             ),
                             image: NetworkImage(
-                              AudioHelper.playlistList.isEmpty
-                                  ? AudioHelper.playlistList
-                                      .elementAt(0)
-                                      .thumbnail!
-                                      .last
-                                      .url
-                                      .toString()
-                                  : AudioHelper.playlistList
-                                      .elementAt(currentIndex.data!)
-                                      .thumbnail!
-                                      .last
-                                      .url
-                                      .toString(),
+                              AudioHelper.playlistList
+                                  .elementAt(currentIndex.data!)
+                                  .thumbnail!
+                                  .last
+                                  .url
+                                  .toString(),
                             ),
-                            width: double.infinity,
-                            height: 400.h,
+                            width: 380.w,
+                            height: 380.w,
                             fit: BoxFit.fill,
                             placeholderFit: BoxFit.fill,
                           ),
                         ),
                       ),
 
-                      AppSpacing.gapH100,
+                      AppSpacing.gapH40,
                       Obx(
                         () => Text(
-                          AudioHelper.playlistList.isEmpty
-                              ? "Sia_-_Chandelier"
-                              : AudioHelper.playlistList
-                                  .elementAt(currentIndex.data!)
-                                  .title
-                                  .toString(),
-                          style: AppTypography.kBold24,
+                          AudioHelper.playlistList
+                              .elementAt(currentIndex.data!)
+                              .title
+                              .toString(),
+                          style: AppTypography.kBold16,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      AppSpacing.gapH52,
+                      AppSpacing.gapH20,
                       // Obx(
                       //   () => Row(
                       //     children: [
@@ -139,10 +125,11 @@ class NowPlayView extends StatelessWidget {
                                     return Row(
                                       children: [
                                         Text(
-                                            AudioHelper.position
-                                                .toString()
-                                                .substring(2, 7),
-                                            style: AppTypography.kBold12),
+                                          AudioHelper.position
+                                              .toString()
+                                              .substring(2, 7),
+                                          style: AppTypography.kBold12,
+                                        ),
                                         Expanded(
                                           child: CupertinoSlider(
                                             min: const Duration(microseconds: 0)
@@ -169,10 +156,11 @@ class NowPlayView extends StatelessWidget {
                                           ),
                                         ),
                                         Text(
-                                            AudioHelper.duration
-                                                .toString()
-                                                .substring(2, 7),
-                                            style: AppTypography.kBold12),
+                                          AudioHelper.duration
+                                              .toString()
+                                              .substring(2, 7),
+                                          style: AppTypography.kBold12,
+                                        ),
                                       ],
                                     );
                                   } else {
@@ -186,8 +174,49 @@ class NowPlayView extends StatelessWidget {
                           }),
                       AppSpacing.gapH52,
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          ///Experimenting shuffle and repeat.
+                          StreamBuilder<bool>(
+                            stream: AudioHelper.player.shuffleModeEnabledStream,
+                            builder: (context, snapshot) {
+                              final isShuffle = snapshot.data;
+                              if (isShuffle == true) {
+                                return NowButton(
+                                  size: 25.h,
+                                  icon: Icons.shuffle_on_rounded,
+                                  onPressed: () {
+                                    AudioHelper.player
+                                        .setShuffleModeEnabled(false)
+                                        .then(
+                                          (_) => Get.snackbar(
+                                            snackPosition: SnackPosition.BOTTOM,
+                                            'ദാസപ്പൻ',
+                                            'Shuffle off.',
+                                          ),
+                                        );
+                                  },
+                                );
+                              } else {
+                                return NowButton(
+                                  size: 25.h,
+                                  icon: Icons.shuffle_rounded,
+                                  onPressed: () {
+                                    AudioHelper.player
+                                        .setShuffleModeEnabled(true)
+                                        .then(
+                                          (_) => Get.snackbar(
+                                            snackPosition: SnackPosition.BOTTOM,
+                                            'ദാസപ്പൻ',
+                                            'Shuffle on.',
+                                          ),
+                                        );
+                                  },
+                                );
+                              }
+                            },
+                          ),
                           NowButton(
                             icon: Icons.skip_previous_rounded,
                             onPressed: () {
@@ -212,7 +241,16 @@ class NowPlayView extends StatelessWidget {
                             stream: AudioHelper.player.playerStateStream,
                             builder: (_, snapshot) {
                               final playerState = snapshot.data;
-                              return PlayPauseButton(playerState: playerState);
+                              return Container(
+                                width: 70.w,
+                                height: 70.w,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: AppColors.kGreen,
+                                ),
+                                child:
+                                    PlayPauseButton(playerState: playerState),
+                              );
                             },
                           ),
                           NowButton(
@@ -223,50 +261,90 @@ class NowPlayView extends StatelessWidget {
                               }
                             },
                           ),
+
+                          ///Experimenting shuffle and repeat.
+                          StreamBuilder<LoopMode>(
+                            stream: AudioHelper.player.loopModeStream,
+                            builder: (context, snapshot) {
+                              final loopMode = snapshot.data;
+                              if (loopMode == LoopMode.off) {
+                                return NowButton(
+                                  size: 25.h,
+                                  icon: Icons.repeat_rounded,
+                                  onPressed: () {
+                                    AudioHelper.player
+                                        .setLoopMode(LoopMode.one)
+                                        .then(
+                                          (_) => Get.snackbar(
+                                            snackPosition: SnackPosition.BOTTOM,
+                                            'ദാസപ്പൻ',
+                                            'Repeat on.',
+                                          ),
+                                        );
+                                  },
+                                );
+                              } else {
+                                return NowButton(
+                                  size: 25.h,
+                                  icon: Icons.repeat_one_rounded,
+                                  onPressed: () {
+                                    AudioHelper.player
+                                        .setLoopMode(LoopMode.off)
+                                        .then(
+                                          (_) => Get.snackbar(
+                                            snackPosition: SnackPosition.BOTTOM,
+                                            'ദാസപ്പൻ',
+                                            'Repeat off.',
+                                          ),
+                                        );
+                                  },
+                                );
+                              }
+                            },
+                          ),
                         ],
                       ),
-                      // AppSpacing.gapH52,
-                      // Row(
-                      //   children: [
-                      //     IconButton(
-                      //       onPressed: () {},
-                      //       icon: Icon(CupertinoIcons.volume_down),
-                      //     ),
-                      //     Expanded(
-                      //       child: CupertinoSlider(
-                      //         // min: const Duration(microseconds: 0).inSeconds.toDouble(),
-                      //         // max: 1,
-                      //         // value: 10,
-                      //         min: 0,
-                      //         max: 100,
+                    ]
 
-                      //         value: 10,
-                      //         activeColor: AppColors.kWhite,
-                      //         onChanged: ((value) {
-                      //           // setState(() {
-                      //           //   changeToSeconds(value.toInt());
-                      //           //   value = value;
-                      //           // });
-                      //           // provider.onChanged(value);
-                      //         }),
-                      //         // activeColor: Colors.white,
+                    // AppSpacing.gapH52,
+                    // Row(
+                    //   children: [
+                    //     IconButton(
+                    //       onPressed: () {},
+                    //       icon: Icon(CupertinoIcons.volume_down),
+                    //     ),
+                    //     Expanded(
+                    //       child: CupertinoSlider(
+                    //         // min: const Duration(microseconds: 0).inSeconds.toDouble(),
+                    //         // max: 1,
+                    //         // value: 10,
+                    //         min: 0,
+                    //         max: 100,
 
-                      //         // inactiveColor: Colors.white.withOpacity(0.3),
-                      //         // thumbColor: Colors.white,
-                      //       ),
-                      //     ),
-                      //     IconButton(
-                      //       onPressed: () {},
-                      //       icon: Icon(CupertinoIcons.volume_up),
-                      //     ),
-                      //   ],
-                      // ),
-                    ],
-                  );
-                },
-              ),
-            ),
-          ),
+                    //         value: 10,
+                    //         activeColor: AppColors.kWhite,
+                    //         onChanged: ((value) {
+                    //           // setState(() {
+                    //           //   changeToSeconds(value.toInt());
+                    //           //   value = value;
+                    //           // });
+                    //           // provider.onChanged(value);
+                    //         }),
+                    //         // activeColor: Colors.white,
+
+                    //         // inactiveColor: Colors.white.withOpacity(0.3),
+                    //         // thumbColor: Colors.white,
+                    //       ),
+                    //     ),
+                    //     IconButton(
+                    //       onPressed: () {},
+                    //       icon: Icon(CupertinoIcons.volume_up),
+                    //     ),
+                    //   ],
+                    // ),
+                  ],
+                );
+              }),
         ),
       ),
     );

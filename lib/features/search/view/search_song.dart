@@ -96,7 +96,7 @@ class SearchSong extends StatelessWidget {
                 itemCount: c.search.searchList.length,
               ),
             ),
-            SizedBox(height: 150.h),
+            AppSpacing.gapH250,
           ],
         ),
       ),

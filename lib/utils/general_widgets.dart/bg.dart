@@ -14,8 +14,8 @@ class Bg extends StatelessWidget {
       children: [
         ImageFiltered(
           imageFilter: ImageFilter.blur(
-            sigmaX: 2,
-            sigmaY: 2,
+            sigmaX: 1,
+            sigmaY: 1,
           ),
           child: Image.asset(
             AppAssets.kBg,

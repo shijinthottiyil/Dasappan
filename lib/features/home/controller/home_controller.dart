@@ -7,14 +7,17 @@ import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:music_stream/features/bottom/controller/bottom_controller.dart';
+import 'package:music_stream/features/bottom/view/bottom_view.dart';
 import 'package:music_stream/features/home/model/home.dart';
 import 'package:music_stream/features/home/model/home_model.dart';
 import 'package:music_stream/features/home/model/playlist_model.dart';
 import 'package:music_stream/features/home/service/home_service.dart';
+import 'package:music_stream/features/home/view/home_view.dart';
 import 'package:music_stream/features/search/controller/search_controller.dart';
 import 'package:music_stream/utils/helpers/audio_helper.dart';
 import 'package:music_stream/utils/networking/app_popups.dart';
 import 'package:music_stream/utils/networking/dio_exception_handler.dart';
+import 'package:music_stream/utils/networking/logger.dart';
 
 class HomeController extends GetxController {
   // Variables
@@ -24,18 +27,26 @@ class HomeController extends GetxController {
   var service = HomeService();
 
   // Get List of HomeModel
-  Future<void> getQuickpicks() async {
+  Future<void> getQuickpicks({bool isSplash = false}) async {
     if (!Get.isSnackbarOpen) {
       try {
-        AppPopups.showDialog();
+        // AppPopups.showDialog();
 
         var response = await service.getQuickpicks();
-        AppPopups.cancelDialog();
+        if (isSplash) {
+          Get.offAll(() => BottomView());
+        }
+        // AppPopups.cancelDialog();
         home.homeList.clear();
-        List songList = response.data[0]["contents"];
-        for (var song in songList) {
+        List songList = response.data;
+        // logger.i(songList.length,
+        //     error: 'HomeController getQuickpicks() songList');
+        for (int i = 0; i < songList.length; i++) {
+          var song = songList[i];
           home.homeList.add(HomeModel.fromJson(song));
         }
+        // logger.i(home.homeList.first.title,
+        //     error: 'HomeController getQuickpicks() homeList');
       } on DioException catch (dioError) {
         DioExceptionHandler.dioError(dioError.type);
       } catch (error) {
@@ -54,9 +65,10 @@ class HomeController extends GetxController {
     AudioHelper.playlistList.clear();
     try {
       AppPopups.showDialog();
-
+      logger.i(home.homeList[0].contents?.elementAt(index).videoId,
+          error: index);
       String? videoId = isHome
-          ? home.homeList[index].videoId
+          ? home.homeList[0].contents?.elementAt(index).videoId
           : Get.find<SearchCtr>().search.searchList[index].videoId;
 
       audioSource = await AudioHelper.getAudioUri(videoId: videoId!);
@@ -70,6 +82,7 @@ class HomeController extends GetxController {
       }
     } catch (error) {
       AppPopups.cancelDialog();
+      logger.e(error.toString(), error: 'HomeController listTileTap()');
       if (kDebugMode) {
         log(error.toString(), name: "listTileTap");
       }
@@ -87,7 +100,7 @@ class HomeController extends GetxController {
     AudioHelper.playlistList.clear();
 
     dynamic data = isHome
-        ? home.homeList[index]
+        ? home.homeList[0].contents![index]
         : Get.find<SearchCtr>().search.searchList[index];
     await AudioHelper.playlist.value.add(
       AudioSource.uri(
@@ -127,6 +140,8 @@ class HomeController extends GetxController {
             tag: MediaItem(
               id: AudioHelper.playlistList.elementAt(i).videoId!,
               title: AudioHelper.playlistList.elementAt(i).title!,
+              artUri: Uri.parse(
+                  AudioHelper.playlistList.elementAt(i).thumbnail!.last.url!),
             ),
           ),
         );
@@ -145,7 +160,7 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      getQuickpicks();
+      getQuickpicks(isSplash: true);
     });
   }
 }

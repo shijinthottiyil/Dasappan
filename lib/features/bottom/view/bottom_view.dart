@@ -18,112 +18,143 @@ import 'package:music_stream/utils/constants/app_typography.dart';
 import 'package:music_stream/utils/general_widgets.dart/slide_up_panel/panel.dart';
 import 'package:music_stream/utils/helpers/audio_helper.dart';
 
-class BottomView extends StatelessWidget {
+///PanelController this is used with SlidingUpPanel.
+///Here we use this to hide BottomNavigation when the panel is Opened.
+final PanelController pc = PanelController();
+
+class BottomView extends StatefulWidget {
   BottomView({super.key});
+
+  @override
+  State<BottomView> createState() => _BottomViewState();
+}
+
+class _BottomViewState extends State<BottomView> {
   final _controller = Get.put(BottomController());
+
   final _pages = [const HomeView(), const SearchView(), SettingsView()];
+
+  ///Variable to keep track if the SlidePanel is opend or closed.
+  bool isClosed = false;
+
+  ///Expirementing MiniPlayer hiding.
+  bool _showMini = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Obx(
         () => SlidingUpPanel(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10).r, topRight: Radius.circular(10).r),
+          renderPanelSheet: false,
+          controller: pc,
+          onPanelClosed: () {
+            setState(() {
+              if (pc.isPanelClosed) {
+                isClosed = false;
+              }
+            });
+          },
+          onPanelOpened: () {
+            setState(() {
+              if (pc.isPanelOpen) {
+                isClosed = true;
+              }
+            });
+          },
+          margin: !isClosed ? EdgeInsets.all(15).r : null,
+          // border: Border.all(color: AppColors.kWhite),
+          // borderRadius: !isClosed ? BorderRadius.circular(20).r : null,
           maxHeight: MediaQuery.sizeOf(context).height,
           minHeight: AudioHelper.playlistList.isEmpty ? 0 : 70,
           parallaxEnabled: true,
           body: _pages[_controller.bottom.selectedIndex.value],
-          collapsed: ClipRRect(
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 15.0, sigmaY: 15.0),
+          collapsed: GestureDetector(
+            onTap: pc.open,
+            child: ClipRRect(
               child: Container(
-                decoration: new BoxDecoration(
-                  color: Colors.grey.shade200.withOpacity(0.5),
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10).r,
-                      topRight: Radius.circular(10).r),
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  // borderRadius: BorderRadius.circular(15).r,
+                  border: Border.all(color: AppColors.kWhite),
                 ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5.w),
-                  child: StreamBuilder(
-                    stream: AudioHelper.player.currentIndexStream,
-                    builder: (context, currentIndex) {
-                      if (currentIndex.connectionState ==
-                          ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                      return Obx(
-                        () => Row(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(10).r,
-                              child: FadeInImage(
-                                placeholder: AssetImage(
-                                  AppAssets.kLenin,
-                                ),
-                                image: NetworkImage(
-                                  AudioHelper.playlistList.isEmpty
-                                      ? AudioHelper.playlistList
-                                          .elementAt(0)
-                                          .thumbnail!
-                                          .last
-                                          .url
-                                          .toString()
-                                      : AudioHelper.playlistList
+                child: AudioHelper.playlistList.isEmpty
+                    ? null
+                    : Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 7.w),
+                        child: StreamBuilder(
+                          stream: AudioHelper.player.currentIndexStream,
+                          builder: (context, currentIndex) {
+                            if (currentIndex.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                            return Obx(
+                              () => Row(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(10).r,
+                                    child: FadeInImage(
+                                      placeholder: AssetImage(
+                                        AppAssets.kLenin,
+                                      ),
+                                      image: NetworkImage(
+                                        AudioHelper.playlistList
+                                            .elementAt(currentIndex.data!)
+                                            .thumbnail!
+                                            .last
+                                            .url
+                                            .toString(),
+                                      ),
+                                      imageErrorBuilder:
+                                          (context, error, stackTrace) =>
+                                              Image.asset(
+                                        AppAssets.kLenin,
+                                        width: 60.w,
+                                        height: 60.w,
+                                        fit: BoxFit.cover,
+                                      ),
+                                      width: 60.w,
+                                      height: 60.w,
+                                      fit: BoxFit.cover,
+                                      placeholderFit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  SizedBox(width: 5.w),
+                                  Expanded(
+                                    child: Text(
+                                      AudioHelper.playlistList
                                           .elementAt(currentIndex.data!)
-                                          .thumbnail!
-                                          .last
-                                          .url
+                                          .title
                                           .toString(),
-                                ),
-                                imageErrorBuilder:
-                                    (context, error, stackTrace) => Image.asset(
-                                  AppAssets.kLenin,
-                                  width: 60.w,
-                                  height: 60.w,
-                                  fit: BoxFit.cover,
-                                ),
-                                width: 60.w,
-                                height: 60.w,
-                                fit: BoxFit.cover,
-                                placeholderFit: BoxFit.cover,
+                                      style: AppTypography.kBold12,
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.topRight,
+                                    child: StreamBuilder<PlayerState>(
+                                      stream:
+                                          AudioHelper.player.playerStateStream,
+                                      builder: (_, snapshot) {
+                                        final playerState = snapshot.data;
+                                        return PlayPauseButton(
+                                            playerState: playerState);
+                                      },
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                            SizedBox(width: 5.w),
-                            Text(
-                              AudioHelper.playlistList
-                                  .elementAt(currentIndex.data!)
-                                  .title
-                                  .toString(),
-                              style: AppTypography.kBold12,
-                            ),
-                            Spacer(),
-                            Align(
-                              alignment: Alignment.topRight,
-                              child: StreamBuilder<PlayerState>(
-                                stream: AudioHelper.player.playerStateStream,
-                                builder: (_, snapshot) {
-                                  final playerState = snapshot.data;
-                                  return PlayPauseButton(
-                                      playerState: playerState);
-                                },
-                              ),
-                            ),
-                          ],
+                            );
+                          },
                         ),
-                      );
-                    },
-                  ),
-                ),
+                      ),
               ),
             ),
           ),
-          panel: Padding(
-            padding: const EdgeInsets.only(bottom: 75),
-            child: NowPlayView(),
-          ),
+          panel: const NowPlayView(),
         ),
       ),
       // bottomNavigationBar: Obx(
@@ -149,37 +180,39 @@ class BottomView extends StatelessWidget {
       //   ),
       // ),
 
-      bottomNavigationBar: Obx(
-        () => CurvedNavigationBar(
-          backgroundColor: Colors.transparent,
-          items: const [
-            Icon(
-              Icons.home_rounded,
-              color: AppColors.kBlack,
-              size: 25,
+      bottomNavigationBar: isClosed
+          ? null
+          : Obx(
+              () => CurvedNavigationBar(
+                backgroundColor: Colors.transparent,
+                items: const [
+                  Icon(
+                    Icons.home_rounded,
+                    color: AppColors.kBlack,
+                    size: 25,
+                  ),
+                  // Icon(
+                  //   Icons.play_circle_fill_rounded,
+                  //   color: AppColors.kBlack,
+                  //   size: 25,
+                  // ),
+                  Icon(
+                    Icons.search_rounded,
+                    color: AppColors.kBlack,
+                    size: 25,
+                  ),
+                  Icon(
+                    Icons.settings_rounded,
+                    color: AppColors.kBlack,
+                    size: 25,
+                  ),
+                ],
+                onTap: (int index) {
+                  _controller.changeTab(index);
+                },
+                index: _controller.bottom.selectedIndex.value,
+              ),
             ),
-            // Icon(
-            //   Icons.play_circle_fill_rounded,
-            //   color: AppColors.kBlack,
-            //   size: 25,
-            // ),
-            Icon(
-              Icons.search_rounded,
-              color: AppColors.kBlack,
-              size: 25,
-            ),
-            Icon(
-              Icons.settings_rounded,
-              color: AppColors.kBlack,
-              size: 25,
-            ),
-          ],
-          onTap: (int index) {
-            _controller.changeTab(index);
-          },
-          index: _controller.bottom.selectedIndex.value,
-        ),
-      ),
     );
   }
 }

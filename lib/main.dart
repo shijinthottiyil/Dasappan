@@ -15,18 +15,18 @@ Future<void> main() async {
     androidNotificationChannelName: 'Audio playback',
     androidNotificationOngoing: true,
   );
-  SystemChrome.setSystemUIOverlayStyle(
-    // <========== OLDER COLOR FOR MP3 CONVERTER ==================>
-    // SystemUiOverlayStyle.dark.copyWith(
-    //   statusBarColor: Colors.grey.shade300,
-    //   systemNavigationBarColor: Colors.grey.shade300,
-    // ),
+  // SystemChrome.setSystemUIOverlayStyle(
+  //   // <========== OLDER COLOR FOR MP3 CONVERTER ==================>
+  //   // SystemUiOverlayStyle.dark.copyWith(
+  //   //   statusBarColor: Colors.grey.shade300,
+  //   //   systemNavigationBarColor: Colors.grey.shade300,
+  //   // ),
 
-    SystemUiOverlayStyle.light.copyWith(
-      statusBarColor: Colors.black,
-      systemNavigationBarColor: Colors.black,
-    ),
-  );
+  //   SystemUiOverlayStyle.light.copyWith(
+  //     statusBarColor: Colors.black,
+  //     systemNavigationBarColor: Colors.black,
+  //   ),
+  // );
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
     (_) => runApp(
       const MyApp(),
