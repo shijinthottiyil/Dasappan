@@ -72,6 +72,10 @@ dependencies:
   google_nav_bar: ^5.0.6
 
 
+  #Get Storage for storing Audio Quality Locally.
+  get_storage: ^2.1.1
+
+
 
 
 dev_dependencies:

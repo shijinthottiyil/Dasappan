@@ -174,7 +174,7 @@ class _BottomViewState extends State<BottomView> {
               opacity: !isClosed ? 1 : 0,
               child: Align(
                 alignment: Alignment.bottomCenter,
-                child: ClipRect(
+                child: ClipRRect(
                   child: BackdropFilter(
                     filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
                     child: Container(
