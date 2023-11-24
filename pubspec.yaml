@@ -68,6 +68,9 @@ dependencies:
   # Logging
   logger: ^2.0.2+1
 
+  #BottomNavigationBar
+  google_nav_bar: ^5.0.6
+
 
 
 

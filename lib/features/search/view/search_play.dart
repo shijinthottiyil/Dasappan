@@ -102,8 +102,7 @@ class SearchPlay extends StatelessWidget {
                             padding: EdgeInsets.only(top: 5.h),
                             child: Text(
                               data.title ?? AppTexts.kLoading,
-                              style: AppTypography.kSecondary
-                                  .copyWith(fontSize: 16.sp),
+                              style: AppTypography.kSecondary,
                               softWrap: false,
                               maxLines: 4,
                               overflow: TextOverflow.ellipsis,

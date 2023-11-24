@@ -10,9 +10,14 @@ import 'package:music_stream/utils/general_widgets.dart/bg.dart';
 import 'package:music_stream/utils/helpers/exit_app.dart';
 import 'package:music_stream/utils/networking/connection_controller.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
   // @override
   @override
   Widget build(BuildContext context) {
@@ -43,7 +48,13 @@ class HomeView extends StatelessWidget {
             ),
           ),
           body: RefreshIndicator(
-            onRefresh: c.getQuickpicks,
+            onRefresh: () async {
+              await Future.wait([
+                c.getWallpaper(),
+                c.getQuickpicks(),
+              ]);
+              setState(() {});
+            },
             color: AppColors.kBlack,
             backgroundColor: AppColors.kWhite,
             strokeWidth: 4.0,

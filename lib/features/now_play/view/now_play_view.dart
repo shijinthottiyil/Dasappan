@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
@@ -9,15 +8,21 @@ import 'package:music_stream/features/bottom/view/bottom_view.dart';
 import 'package:music_stream/features/home/controller/home_controller.dart';
 import 'package:music_stream/features/now_play/view/widgets/now_button.dart';
 import 'package:music_stream/features/now_play/view/widgets/play_pause_button.dart';
+import 'package:music_stream/features/now_play/view/widgets/queue_container.dart';
 import 'package:music_stream/utils/constants/constants.dart';
 import 'package:music_stream/utils/general_widgets.dart/bg.dart';
 import 'package:music_stream/utils/general_widgets.dart/empty_card.dart';
 import 'package:music_stream/utils/helpers/audio_helper.dart';
 import 'package:music_stream/utils/helpers/exit_app.dart';
 
-class NowPlayView extends StatelessWidget {
+class NowPlayView extends StatefulWidget {
   const NowPlayView({super.key});
 
+  @override
+  State<NowPlayView> createState() => _NowPlayViewState();
+}
+
+class _NowPlayViewState extends State<NowPlayView> {
   @override
   Widget build(BuildContext context) {
     // bool _isShuffle = false;
@@ -25,13 +30,62 @@ class NowPlayView extends StatelessWidget {
     return Bg(
       child: Scaffold(
         appBar: AppBar(
-            leading: IconButton(
-          onPressed: pc.close,
-          icon: Icon(
-            Icons.expand_more_rounded,
-            color: pc.isPanelOpen ? AppColors.kWhite : Colors.transparent,
+          leading: IconButton(
+            onPressed: pc.close,
+            icon: Icon(
+              Icons.expand_more_rounded,
+              color: pc.isPanelOpen ? AppColors.kWhite : Colors.transparent,
+            ),
           ),
-        )),
+          actions: [
+            pc.isPanelOpen
+                ? MenuAnchor(
+                    style: MenuStyle(
+                      backgroundColor:
+                          MaterialStatePropertyAll<Color>(AppColors.kWhite),
+                      elevation: MaterialStatePropertyAll<double>(0),
+                      padding: MaterialStatePropertyAll<EdgeInsetsGeometry>(
+                          EdgeInsets.only(right: 10.w)),
+                    ),
+                    builder: (context, controller, child) {
+                      return IconButton(
+                        onPressed: () {
+                          if (controller.isOpen) {
+                            controller.close();
+                          } else {
+                            controller.open();
+                          }
+                        },
+                        icon: const Icon(Icons.more_vert_rounded),
+                        // tooltip: 'Show menu',
+                      );
+                    },
+                    menuChildren: List<MenuItemButton>.generate(
+                      1,
+                      (int index) => MenuItemButton(
+                        onPressed: () {
+                          Get.bottomSheet(
+                            QueueContainer(),
+                          );
+                        },
+                        leadingIcon: Icon(
+                          Icons.queue_music_rounded,
+                          color: AppColors.kBlack,
+                        ),
+                        // style: ButtonStyle(
+                        //   backgroundColor:
+                        //       MaterialStatePropertyAll<Color>(Colors.green),
+                        // ),
+                        child: Text(
+                          'Show queue',
+                          style: AppTypography.kRegular13,
+                        ),
+                      ),
+                    ),
+                  )
+                : SizedBox.shrink(),
+          ],
+        ),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
           child: StreamBuilder(
@@ -47,25 +101,22 @@ class NowPlayView extends StatelessWidget {
                   children: [
                     if (AudioHelper.playlistList.isNotEmpty) ...[
                       Obx(
-                        () => ClipRRect(
-                          // borderRadius: BorderRadius.circular(30).r,
-                          child: FadeInImage(
-                            placeholder: AssetImage(
-                              AppAssets.kLenin,
-                            ),
-                            image: NetworkImage(
-                              AudioHelper.playlistList
-                                  .elementAt(currentIndex.data!)
-                                  .thumbnail!
-                                  .last
-                                  .url
-                                  .toString(),
-                            ),
-                            width: 380.w,
-                            height: 380.w,
-                            fit: BoxFit.fill,
-                            placeholderFit: BoxFit.fill,
+                        () => FadeInImage(
+                          placeholder: AssetImage(
+                            AppAssets.kLenin,
                           ),
+                          image: NetworkImage(
+                            AudioHelper.playlistList
+                                .elementAt(currentIndex.data!)
+                                .thumbnail!
+                                .last
+                                .url
+                                .toString(),
+                          ),
+                          width: 380.w,
+                          height: 380.w,
+                          fit: BoxFit.fill,
+                          placeholderFit: BoxFit.fill,
                         ),
                       ),
 
@@ -76,7 +127,7 @@ class NowPlayView extends StatelessWidget {
                               .elementAt(currentIndex.data!)
                               .title
                               .toString(),
-                          style: AppTypography.kBold16,
+                          style: AppTypography.kSecondary,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -128,7 +179,8 @@ class NowPlayView extends StatelessWidget {
                                           AudioHelper.position
                                               .toString()
                                               .substring(2, 7),
-                                          style: AppTypography.kBold12,
+                                          style: AppTypography.kSecondary
+                                              .copyWith(fontSize: 12.sp),
                                         ),
                                         Expanded(
                                           child: CupertinoSlider(
@@ -159,7 +211,8 @@ class NowPlayView extends StatelessWidget {
                                           AudioHelper.duration
                                               .toString()
                                               .substring(2, 7),
-                                          style: AppTypography.kBold12,
+                                          style: AppTypography.kSecondary
+                                              .copyWith(fontSize: 12.sp),
                                         ),
                                       ],
                                     );
