@@ -24,8 +24,10 @@ class SearchTextField extends StatelessWidget {
       ),
       placeholder: placeholder,
       placeholderStyle:
-          AppTypography.kMedium14.copyWith(color: AppColors.kWhite),
-      style: AppTypography.kRegular13.copyWith(color: AppColors.kWhite),
+          AppTypography.kMedium14.copyWith(color: AppColors.kBrown),
+      style: AppTypography.kRegular13.copyWith(color: AppColors.kBrown),
+      // placeholderStyle: AppTypography.kMedium14,
+      // style: AppTypography.kRegular13,
       decoration: BoxDecoration(
         color: AppColors.kBrown400,
         borderRadius: BorderRadius.circular(8).r,

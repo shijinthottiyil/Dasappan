@@ -31,6 +31,7 @@ class AudioHelper {
       return Uri.parse(audioUrl);
     } catch (e) {
       // log(e.toString());
+
       return null;
     }
   }

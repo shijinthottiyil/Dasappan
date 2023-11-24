@@ -1,10 +1,14 @@
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:music_stream/features/home/model/home_model.dart';
+import 'package:music_stream/features/home/model/wallpaper_model.dart';
 
 class Home {
 // List of HomeModel
   var homeList = List<HomeModel>.empty(growable: true).obs;
+
+  //Instance of WallpaperModel.
+  var wallpaperModel = WallpaperModel().obs;
 
   // // Playlist List
   // var playlistList = List<PlaylistModel>.empty(growable: true).obs;

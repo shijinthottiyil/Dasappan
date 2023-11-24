@@ -11,6 +11,7 @@ import 'package:music_stream/features/bottom/view/bottom_view.dart';
 import 'package:music_stream/features/home/model/home.dart';
 import 'package:music_stream/features/home/model/home_model.dart';
 import 'package:music_stream/features/home/model/playlist_model.dart';
+import 'package:music_stream/features/home/model/wallpaper_model.dart';
 import 'package:music_stream/features/home/service/home_service.dart';
 import 'package:music_stream/features/home/view/home_view.dart';
 import 'package:music_stream/features/search/controller/search_controller.dart';
@@ -149,6 +150,23 @@ class HomeController extends GetxController {
     }
   }
 
+  ///Get wallpaper from Unsplash Api.
+  ///
+  Future getWallpaper() async {
+    try {
+      var response = await service.getWallpaper();
+      // logger.d(response, error: 'HomeController getWallpaper() response');
+      home.wallpaperModel.value = WallpaperModel.fromJson(response.data);
+      // update();
+      // logger.d(home.wallpaperModel.value.urls?.full,
+      //     error: 'HomeController getWallpaper() wallpaper data');
+    } on DioException catch (dioError) {
+      logger.f(dioError, error: 'HomeController getWallpaper() DioException');
+    } catch (error) {
+      logger.f(error, error: 'HomeController getWallpaper() catch');
+    }
+  }
+
 // // Call the getQuickpicks method in the onReady -> Get called after widget is rendered on the screen
 //   @override
 //   void onReady() {
@@ -160,7 +178,10 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      getQuickpicks(isSplash: true);
+      Future.wait([
+        getWallpaper(),
+        getQuickpicks(isSplash: true),
+      ]);
     });
   }
 }
