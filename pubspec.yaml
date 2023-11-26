@@ -76,6 +76,12 @@ dependencies:
   get_storage: ^2.1.1
 
 
+  #Speech to Text Package for exprimening voice search functionality.
+  speech_to_text: ^6.4.1
+
+  # 
+
+
 
 
 dev_dependencies:

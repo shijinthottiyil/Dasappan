@@ -6,6 +6,7 @@ import 'package:music_stream/features/home/controller/home_controller.dart';
 import 'package:music_stream/features/splash/view/widgets/random_text_reveal.dart';
 import 'package:music_stream/utils/constants/app_assets.dart';
 import 'package:music_stream/utils/constants/app_spacing.dart';
+import 'package:music_stream/utils/constants/constants.dart';
 import 'package:music_stream/utils/general_widgets.dart/bg.dart';
 import 'package:music_stream/utils/networking/connection_controller.dart';
 
@@ -48,45 +49,81 @@ class _SplashViewState extends State<SplashView>
     return Bg(
       child: Scaffold(
         body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Pulse animation for the image
-              FadeTransition(
-                opacity:
-                    Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
-                  parent: _pulseController,
-                  curve: Curves.linear,
-                )),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20).r,
-                  child: Image.asset(
-                    AppAssets.kLenin,
-                    width: 200.w,
-                    height: 200.w,
-                  ),
-                ),
+          child: FadeTransition(
+            opacity: Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
+              parent: _pulseController,
+              curve: Curves.linear,
+            )),
+            child: Text(
+              AppTexts.kIntro,
+              style: TextStyle(
+                fontFamily: 'Orbitron',
+                fontSize: 24.sp,
+                fontWeight: FontWeight.w700,
+                letterSpacing: 2,
+                color: AppColors.kWhite,
               ),
-              AppSpacing.gapH12,
-              // Pulse animation for the text
-              FadeTransition(
-                opacity:
-                    Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
-                  parent: _pulseController,
-                  curve: Curves.linear,
-                )),
-                child: Text(
-                  'DASAPPAN',
-                  style: const TextStyle(
-                    fontFamily: 'Orbitron',
-                    fontSize: 28,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 10,
-                  ),
-                ),
-              ),
-            ],
+            ),
+            // child: Text(
+            //   AppTexts.kIntro,
+            //   style: AppTypography.kExtraBold24
+            //       .copyWith(color: AppColors.kBlack),
+            // ),
           ),
+
+          // Column(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: [
+          //     // Pulse animation for the image
+          //     FadeTransition(
+          //       opacity:
+          //           Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
+          //         parent: _pulseController,
+          //         curve: Curves.linear,
+          //       )),
+          //       child: Container(
+          //         // borderRadius: BorderRadius.circular(20).r,
+          //         width: 150.w,
+          //         height: 150.w,
+          //         decoration: BoxDecoration(
+          //           shape: BoxShape.circle,
+          //           image: DecorationImage(
+          //             image: AssetImage(AppAssets.kLenin),
+          //           ),
+          //         ),
+          //         // child: Image.asset(
+          //         //   AppAssets.kLenin,
+          //         //   // width: 200.w,
+          //         //   // height: 200.w,
+          //         // ),
+          //       ),
+          //     ),
+          //     AppSpacing.gapH12,
+          //     // Pulse animation for the text
+          //     FadeTransition(
+          //       opacity:
+          //           Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
+          //         parent: _pulseController,
+          //         curve: Curves.linear,
+          //       )),
+          //       child: Text(
+          //         AppTexts.kIntro,
+          //         style: TextStyle(
+          //           fontFamily: 'Orbitron',
+          //           fontSize: 24.sp,
+          //           fontWeight: FontWeight.w700,
+          //           letterSpacing: 2,
+          //           color: AppColors.kWhite,
+          //         ),
+          //       ),
+          //       // child: Text(
+          //       //   AppTexts.kIntro,
+          //       //   style: AppTypography.kExtraBold24
+          //       //       .copyWith(color: AppColors.kBlack),
+          //       // ),
+          //     ),
+          //   ],
+          // ),
         ),
       ),
     );

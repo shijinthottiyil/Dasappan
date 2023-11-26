@@ -1,16 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:music_stream/features/search/controller/search_controller.dart';
 import 'package:music_stream/utils/constants/constants.dart';
+import 'package:music_stream/utils/helpers/exit_app.dart';
 
 class SearchTextField extends StatelessWidget {
   const SearchTextField({
     super.key,
     required this.placeholder,
     required this.onSubmitted,
+    required this.suffix,
   });
   final String? placeholder;
   final void Function(String)? onSubmitted;
+  final Widget? suffix;
   @override
   Widget build(BuildContext context) {
     return CupertinoTextField.borderless(
@@ -22,6 +27,7 @@ class SearchTextField extends StatelessWidget {
           color: AppColors.kBrown75,
         ),
       ),
+      suffix: suffix,
       placeholder: placeholder,
       placeholderStyle:
           AppTypography.kMedium14.copyWith(color: AppColors.kBrown),

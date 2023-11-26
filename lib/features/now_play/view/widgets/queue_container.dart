@@ -85,9 +85,17 @@ class QueueContainer extends StatelessWidget {
                             builder: (context, snapshot) {
                               if (snapshot.hasData) {
                                 if (index == snapshot.data) {
-                                  return Icon(
-                                    Icons.play_circle_rounded,
-                                    color: AppColors.kBlack,
+                                  return Container(
+                                    width: 30.w,
+                                    height: 30.w,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.kGreen,
+                                      borderRadius: BorderRadius.circular(5).r,
+                                    ),
+                                    child: Icon(
+                                      Icons.play_circle_rounded,
+                                      color: AppColors.kBlack,
+                                    ),
                                   );
                                 }
                               }
@@ -95,7 +103,7 @@ class QueueContainer extends StatelessWidget {
                                 index: index,
                                 child: const Icon(
                                   Icons.drag_handle_rounded,
-                                  color: AppColors.kBlack,
+                                  color: AppColors.kWhite,
                                 ),
                               );
                             },

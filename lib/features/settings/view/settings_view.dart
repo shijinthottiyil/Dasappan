@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:music_stream/features/bottom/controller/bottom_controller.dart';
+import 'package:music_stream/features/bottom/view/bottom_view.dart';
 import 'package:music_stream/features/settings/view/theme_view.dart';
 import 'package:music_stream/features/settings/view/widgets/color_icon.dart';
 import 'package:music_stream/utils/constants/app_colors.dart';
 import 'package:music_stream/utils/constants/app_typography.dart';
+import 'package:music_stream/utils/constants/constants.dart';
 import 'package:music_stream/utils/constants/enums.dart';
 import 'package:music_stream/utils/general_widgets.dart/common_scaffold.dart';
 import 'package:music_stream/utils/helpers/audio_helper.dart';
@@ -22,6 +25,12 @@ class _SettingsViewState extends State<SettingsView> {
   Widget build(BuildContext context) {
     return CommonScaffold(
       onWillPop: () async {
+        if (pc.isPanelOpen) {
+          pc.close();
+        } else {
+          Get.find<BottomController>().bottom.selectedIndex.value = 1;
+        }
+
         return false;
       },
       appBarTitle: 'Settings',
@@ -49,7 +58,7 @@ class _SettingsViewState extends State<SettingsView> {
               children: [
                 RadioListTile<String>(
                   title: const Text('High'),
-                  value: 'high',
+                  value: AppTexts.kHigh,
                   groupValue: quality,
                   onChanged:
                       // (AudioQuality? value) {
@@ -67,7 +76,7 @@ class _SettingsViewState extends State<SettingsView> {
                 ),
                 RadioListTile<String>(
                   title: const Text('Medium'),
-                  value: 'medium',
+                  value: AppTexts.kMedium,
                   groupValue: quality,
                   onChanged:
                       // (AudioQuality? value) {
@@ -85,7 +94,7 @@ class _SettingsViewState extends State<SettingsView> {
                 ),
                 RadioListTile<String>(
                   title: const Text('Low'),
-                  value: 'low',
+                  value: AppTexts.kLow,
                   groupValue: quality,
                   onChanged:
                       // (AudioQuality? value) {

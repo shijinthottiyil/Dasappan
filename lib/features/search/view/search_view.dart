@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -10,8 +12,12 @@ import 'package:music_stream/features/search/view/widgets/search_textfield.dart'
 
 import 'package:music_stream/features/search/controller/search_controller.dart';
 import 'package:music_stream/utils/constants/constants.dart';
+import 'package:music_stream/utils/general_widgets.dart/avatar_glow.dart';
 import 'package:music_stream/utils/general_widgets.dart/bg.dart';
 import 'package:music_stream/utils/helpers/exit_app.dart';
+import 'package:music_stream/utils/networking/logger.dart';
+import 'package:speech_to_text/speech_recognition_result.dart';
+import 'package:speech_to_text/speech_to_text.dart';
 
 // class SearchView extends StatelessWidget {
 //   SearchView({super.key});
@@ -98,8 +104,18 @@ import 'package:music_stream/utils/helpers/exit_app.dart';
 //   }
 // }
 
-class SearchView extends StatelessWidget {
+class SearchView extends StatefulWidget {
   const SearchView({super.key});
+
+  @override
+  State<SearchView> createState() => _SearchViewState();
+}
+
+class _SearchViewState extends State<SearchView> {
+  ///Controllers.
+  ///
+  var c = Get.put(SearchCtr());
+
   TabBar get _tabBar => TabBar(
         indicator: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
@@ -115,7 +131,6 @@ class SearchView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var c = Get.put(SearchCtr());
     return DefaultTabController(
       length: 2,
       child: WillPopScope(
@@ -166,6 +181,26 @@ class SearchView extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.w),
                   child: SearchTextField(
+                    // suffix: IconButton(
+                    //   // onPressed: () {
+                    //   //   Get.find<SearchCtr>().voiceSearchTap();
+                    //   // },
+                    //   onPressed: _speechToText.isNotListening
+                    //       ? _startListening
+                    //       : _stopListening,
+                    //   icon: Icon(_speechToText.isNotListening
+                    //       ? Icons.mic_off_rounded
+                    //       : Icons.mic_rounded),
+                    // ),
+                    suffix: IconButton(
+                      onPressed: () async {
+                        c.voiceSearchTap();
+                      },
+                      icon: Icon(
+                        Icons.mic_rounded,
+                      ),
+                    ),
+
                     placeholder: 'എന്താ വേണ്ടേ? ',
                     onSubmitted: (keyWord) {
                       c.getSearch(keyWord);
@@ -191,6 +226,40 @@ class SearchView extends StatelessWidget {
                     ],
                   ),
                 ),
+
+                // BackdropFilter(
+                //   filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                //   child: Dialog(
+                //     shape: RoundedRectangleBorder(
+                //         borderRadius: BorderRadius.circular(20.r)),
+                //     backgroundColor: Colors.transparent,
+                //     child: Container(
+                //       decoration: BoxDecoration(
+                //           borderRadius: BorderRadius.circular(20.r)),
+                //       width: 300,
+                //       height: 300,
+                //       child: Column(
+                //         // mainAxisSize: MainAxisSize.min,
+                //         mainAxisAlignment: MainAxisAlignment.center,
+                //         children: [
+                //           AvatarGlow(
+                //             glowRadiusFactor: 0.7,
+                //             animate: isListening,
+                //             glowColor: AppColors.kRed,
+                //             child: GestureDetector(
+                //               onTap: () {},
+                //               child: Icon(
+                //                 Icons.mic_rounded,
+                //                 color: AppColors.kBlack,
+                //                 size: 75.sp,
+                //               ),
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),

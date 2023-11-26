@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:music_stream/features/home/model/playlist_model.dart';
+import 'package:music_stream/utils/constants/app_texts.dart';
 import 'package:music_stream/utils/constants/enums.dart';
 import 'package:music_stream/utils/networking/logger.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
@@ -18,7 +19,8 @@ class AudioHelper {
 
   ///Variable keep track of User Selected AudioQuality.
   ///
-  static String audioQuality = audioBox.read('audioQuality') ?? 'medium';
+  static String audioQuality =
+      audioBox.read(AppTexts.kStrorageKey) ?? AppTexts.kMedium;
   // Playlist
   static var playlist = ConcatenatingAudioSource(
     useLazyPreparation: true,
@@ -37,7 +39,8 @@ class AudioHelper {
 
     ///Reading the User Selected AudioQuality.
     ///
-    String audioQuality = audioBox.read('audioQuality') ?? "medium";
+    String audioQuality =
+        audioBox.read(AppTexts.kStrorageKey) ?? AppTexts.kMedium;
     try {
       final StreamManifest manifest =
           await youtubeExplode.videos.streamsClient.getManifest(videoId);
@@ -45,9 +48,9 @@ class AudioHelper {
       ///New Code After AudioQuality Change Functionality.
       ///
       List<AudioOnlyStreamInfo> audios = manifest.audioOnly.sortByBitrate();
-      int audioNumber = audioQuality == 'high'
+      int audioNumber = audioQuality == AppTexts.kHigh
           ? audios.length - 1
-          : (audioQuality == 'low' ? 0 : (audios.length / 2).floor());
+          : (audioQuality == AppTexts.kLow ? 0 : (audios.length / 2).floor());
       audioUrl = manifest.audioOnly.sortByBitrate()[audioNumber].url.toString();
       return Uri.parse(audioUrl);
     } catch (e) {
@@ -63,22 +66,22 @@ class AudioHelper {
     String? _quality;
 
     switch (quality) {
-      case 'high':
-        _quality = 'high';
+      case AppTexts.kHigh:
+        _quality = AppTexts.kHigh;
         // selectAudioQuality = AudioQuality.high;
         // audioQuality = 'high';
         break;
-      case 'medium':
-        _quality = 'medium';
+      case AppTexts.kMedium:
+        _quality = AppTexts.kMedium;
         // selectAudioQuality = AudioQuality.medium;
         break;
-      case 'low':
-        _quality = 'low';
+      case AppTexts.kLow:
+        _quality = AppTexts.kLow;
       // selectAudioQuality = AudioQuality.low;
       default:
         break;
     }
-    audioBox.write('audioQuality', _quality);
+    audioBox.write(AppTexts.kStrorageKey, _quality);
     // logger.i(audioBox.read('audioQuality'),
     //     error: 'AudioHelper changeAudioQuality audioQuality box value');
   }
