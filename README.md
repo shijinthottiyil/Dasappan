@@ -8,26 +8,36 @@ A Flutter application for streaming music from YouTube Music.
 - Play (almost) any song or video from YouTube Music.
 - High quality audio.
 - Ad free.
+- No subscription.
 - Background playback.
-- Simple and elegant UI.
+- Glass Morphic Ui.
+- Mini Player.
+- Voice search.
+- Toggle audio quality.
+- Reorderable Queue.
+- Dynamic wallpaper from Unsplash api.
 - Search for songs and playlists.
 - Neet and clean code.
 
 
 ## Screenshots
+![Screenshot_20231127-141112](https://github.com/shijinthottiyil/Dasappan/assets/115061533/ae7afd2e-fe84-4426-b8ef-7d65fb8745ff)
 
-![lenin](https://github.com/shijinthottiyil/flutter-music-stream-app/assets/115061533/d51fcf1d-eb04-48de-9e54-88da365fb475)
+![Screenshot_20231127-141127](https://github.com/shijinthottiyil/Dasappan/assets/115061533/e3c9897a-bd3e-47e9-a99d-4402b0bf4b10)
+![Screenshot_20231127-141415](https://github.com/shijinthottiyil/Dasappan/assets/115061533/8016e0d8-e666-4a66-908b-9080b151bb9b)
 
-![Screenshot_2023-11-12-13-29-47-986_com example music_stream](https://github.com/shijinthottiyil/flutter-music-stream-app/assets/115061533/e3582ca7-5a9c-4250-98a4-793f10cc3aa0)
+![Screenshot_20231127-141424](https://github.com/shijinthottiyil/Dasappan/assets/115061533/b50bfb1f-3f8d-4d75-9460-840a48bcef2c)
 
-![Screenshot_2023-11-12-13-29-55-518_com example music_stream](https://github.com/shijinthottiyil/flutter-music-stream-app/assets/115061533/a269cf61-1caa-4d0c-8df6-413d8944a38a)
+![Screenshot_20231127-141433](https://github.com/shijinthottiyil/Dasappan/assets/115061533/1da8265c-6e40-448f-b612-3081587de956)
+
+![Screenshot_20231127-141453](https://github.com/shijinthottiyil/Dasappan/assets/115061533/97c3f2c5-fcff-43a0-9205-3c6d419dad6e)
+
+![Screenshot_20231127-141521](https://github.com/shijinthottiyil/Dasappan/assets/115061533/b8da3aaa-19fd-4b2d-83c1-149ae13d3728)
+![Screenshot_20231127-141601](https://github.com/shijinthottiyil/Dasappan/assets/115061533/d55f1a24-5b8d-4ba9-be02-b25963cac3be)
 
 
+![Screenshot_20231127-141612](https://github.com/shijinthottiyil/Dasappan/assets/115061533/9ba96f29-dc6d-4afa-b1a3-d70ea5057134)
 
-![Screenshot_2023-11-12-13-30-05-792_com example music_stream](https://github.com/shijinthottiyil/flutter-music-stream-app/assets/115061533/292e7dcc-fae9-4d3e-9752-4fa99752e5e3)
-![Screenshot_2023-11-12-13-30-25-689_com example music_stream](https://github.com/shijinthottiyil/flutter-music-stream-app/assets/115061533/174a7135-4615-4427-9f7a-73015ed6a827)
-![Screenshot_2023-11-12-13-31-15-217_com example music_stream](https://github.com/shijinthottiyil/flutter-music-stream-app/assets/115061533/7c620f6b-65ad-4e0f-ad2a-6c896c185c82)
-![Screenshot_2023-11-12-13-31-22-417_com example music_stream](https://github.com/shijinthottiyil/flutter-music-stream-app/assets/115061533/9db22e61-de33-45c8-a4ed-299de0777e92)
-![Screenshot_2023-11-12-13-31-53-061_com example music_stream](https://github.com/shijinthottiyil/flutter-music-stream-app/assets/115061533/88b4522d-3f24-4dad-b475-d09e9123d5c7)
-![Screenshot_2023-11-12-13-32-10-227_com example music_stream](https://github.com/shijinthottiyil/flutter-music-stream-app/assets/115061533/6069a5a9-a814-4658-840b-ae031a36b72a)
+![Screenshot_20231127-141632](https://github.com/shijinthottiyil/Dasappan/assets/115061533/a1950fb4-2a87-4853-a7c5-12594632ca2c)
+![Screenshot_20231127-141647](https://github.com/shijinthottiyil/Dasappan/assets/115061533/eb3c0edb-cede-4126-8dc5-32c59b728927)
 
