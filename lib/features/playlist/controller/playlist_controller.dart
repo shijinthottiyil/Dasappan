@@ -3,7 +3,7 @@
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
-import 'package:music_stream/features/bottom/controller/bottom_controller.dart';
+
 import 'package:music_stream/features/playlist/model/playlist.dart';
 import 'package:music_stream/features/playlist/service/playlist_service.dart';
 import 'package:music_stream/utils/constants/app_texts.dart';
@@ -80,7 +80,7 @@ class PlaylistController extends GetxController {
       ///Show snackbar on success.
       Get.snackbar(
         AppTexts.kTitle,
-        'Started Playing Selected Playlist',
+        'Playing this Playlist',
         snackPosition: SnackPosition.BOTTOM,
       );
 
@@ -150,7 +150,7 @@ class PlaylistController extends GetxController {
       ///Show snackbar on success.
       Get.snackbar(
         AppTexts.kTitle,
-        'Started Playing Selected Song',
+        'Playing Selected Song',
         snackPosition: SnackPosition.BOTTOM,
       );
 
@@ -180,7 +180,7 @@ class PlaylistController extends GetxController {
         }
       }
     } else {
-      AppPopups.errorSnackbar(title: 'ഞെക്കണ്ട', message: 'പാടൂല');
+      AppPopups.errorSnackbar(title: AppTexts.kTitle, message: 'Sorry');
     }
   }
 }

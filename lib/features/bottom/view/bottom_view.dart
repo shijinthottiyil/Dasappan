@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -24,7 +23,7 @@ import 'package:music_stream/utils/helpers/audio_helper.dart';
 final PanelController pc = PanelController();
 
 class BottomView extends StatefulWidget {
-  BottomView({super.key});
+  const BottomView({super.key});
 
   @override
   State<BottomView> createState() => _BottomViewState();
@@ -33,13 +32,13 @@ class BottomView extends StatefulWidget {
 class _BottomViewState extends State<BottomView> {
   final _controller = Get.put(BottomController());
 
-  final _pages = [const HomeView(), const SearchView(), SettingsView()];
+  final _pages = [const HomeView(), const SearchView(), const SettingsView()];
 
   ///Variable to keep track if the SlidePanel is opend or closed.
   bool isClosed = false;
 
   ///Expirementing MiniPlayer hiding.
-  bool _showMini = true;
+  // bool _showMini = true;
 
   @override
   Widget build(BuildContext context) {
@@ -174,7 +173,7 @@ class _BottomViewState extends State<BottomView> {
               opacity: !isClosed ? 1 : 0,
               child: Align(
                 alignment: Alignment.bottomCenter,
-                child: ClipRect(
+                child: ClipRRect(
                   child: BackdropFilter(
                     filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
                     child: Container(

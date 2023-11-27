@@ -17,8 +17,8 @@ class Bg extends StatelessWidget {
       children: [
         ImageFiltered(
           imageFilter: ImageFilter.blur(
-            sigmaX: 2,
-            sigmaY: 2,
+            sigmaX: 5,
+            sigmaY: 5,
           ),
           child: FadeInImage(
             placeholder: AssetImage(

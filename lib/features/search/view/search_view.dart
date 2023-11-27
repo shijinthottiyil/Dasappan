@@ -9,8 +9,9 @@ import 'package:music_stream/features/search/view/search_song.dart';
 import 'package:music_stream/features/search/view/widgets/search_textfield.dart';
 
 import 'package:music_stream/features/search/controller/search_controller.dart';
+import 'package:music_stream/utils/constants/constants.dart';
+
 import 'package:music_stream/utils/general_widgets.dart/bg.dart';
-import 'package:music_stream/utils/helpers/exit_app.dart';
 
 // class SearchView extends StatelessWidget {
 //   SearchView({super.key});
@@ -97,8 +98,18 @@ import 'package:music_stream/utils/helpers/exit_app.dart';
 //   }
 // }
 
-class SearchView extends StatelessWidget {
+class SearchView extends StatefulWidget {
   const SearchView({super.key});
+
+  @override
+  State<SearchView> createState() => _SearchViewState();
+}
+
+class _SearchViewState extends State<SearchView> {
+  ///Controllers.
+  ///
+  var c = Get.put(SearchCtr());
+
   TabBar get _tabBar => TabBar(
         indicator: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
@@ -114,7 +125,6 @@ class SearchView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var c = Get.put(SearchCtr());
     return DefaultTabController(
       length: 2,
       child: WillPopScope(
@@ -130,11 +140,63 @@ class SearchView extends StatelessWidget {
         child: Bg(
           child: Scaffold(
             appBar: AppBar(
-              titleSpacing: 14.r,
-              bottom: PreferredSize(
-                preferredSize: _tabBar.preferredSize,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15.w),
+              // titleSpacing: 14.r,
+              // bottom: PreferredSize(
+              //   preferredSize: _tabBar.preferredSize,
+              //   child: Padding(
+              //     padding: EdgeInsets.symmetric(horizontal: 15.w),
+              //     child: Container(
+              //       decoration: BoxDecoration(
+              //         color: Colors.grey.shade200,
+              //         borderRadius: BorderRadius.circular(8),
+              //       ),
+              //       child: _tabBar,
+              //     ),
+              //   ),
+              // ),
+              // title: SearchTextField(
+              //   placeholder: 'എന്താ വേണ്ടേ? ',
+              //   onSubmitted: (keyWord) {
+              //     c.getSearch(keyWord);
+              //   },
+              // ),
+              title: const Text(
+                'Search',
+                style: TextStyle(
+                  fontFamily: 'Orbitron',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  letterSpacing: 2,
+                ),
+              ),
+            ),
+            body: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+                  child: SearchTextField(
+                    // suffix: IconButton(
+                    //   // onPressed: () {
+                    //   //   Get.find<SearchCtr>().voiceSearchTap();
+                    //   // },
+                    //   onPressed: _speechToText.isNotListening
+                    //       ? _startListening
+                    //       : _stopListening,
+                    //   icon: Icon(_speechToText.isNotListening
+                    //       ? Icons.mic_off_rounded
+                    //       : Icons.mic_rounded),
+                    // ),
+                    onTap: c.voiceSearchTap,
+
+                    placeholder: 'എന്താ വേണ്ടേ? ',
+                    onSubmitted: (keyWord) {
+                      c.getSearch(keyWord);
+                    },
+                  ),
+                ),
+                AppSpacing.gapH8,
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.w),
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.grey.shade200,
@@ -143,18 +205,48 @@ class SearchView extends StatelessWidget {
                     child: _tabBar,
                   ),
                 ),
-              ),
-              title: SearchTextField(
-                placeholder: 'എന്താ വേണ്ടേ? ',
-                onSubmitted: (keyWord) {
-                  c.getSearch(keyWord);
-                },
-              ),
-            ),
-            body: const TabBarView(
-              children: [
-                SearchSong(),
-                SearchPlay(),
+                const Expanded(
+                  child: TabBarView(
+                    children: [
+                      SearchSong(),
+                      SearchPlay(),
+                    ],
+                  ),
+                ),
+
+                // BackdropFilter(
+                //   filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                //   child: Dialog(
+                //     shape: RoundedRectangleBorder(
+                //         borderRadius: BorderRadius.circular(20.r)),
+                //     backgroundColor: Colors.transparent,
+                //     child: Container(
+                //       decoration: BoxDecoration(
+                //           borderRadius: BorderRadius.circular(20.r)),
+                //       width: 300,
+                //       height: 300,
+                //       child: Column(
+                //         // mainAxisSize: MainAxisSize.min,
+                //         mainAxisAlignment: MainAxisAlignment.center,
+                //         children: [
+                //           AvatarGlow(
+                //             glowRadiusFactor: 0.7,
+                //             animate: isListening,
+                //             glowColor: AppColors.kRed,
+                //             child: GestureDetector(
+                //               onTap: () {},
+                //               child: Icon(
+                //                 Icons.mic_rounded,
+                //                 color: AppColors.kBlack,
+                //                 size: 75.sp,
+                //               ),
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),

@@ -11,7 +11,7 @@ class SplashController extends GetxController {
     //   ),
     // );
 
-    Get.offAll(BottomView());
+    Get.offAll(const BottomView());
   }
 
   // @override

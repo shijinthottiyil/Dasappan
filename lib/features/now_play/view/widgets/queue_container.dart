@@ -9,7 +9,6 @@ import 'package:music_stream/utils/constants/app_colors.dart';
 import 'package:music_stream/utils/constants/app_texts.dart';
 import 'package:music_stream/utils/constants/app_typography.dart';
 import 'package:music_stream/utils/helpers/audio_helper.dart';
-import 'package:music_stream/utils/networking/logger.dart';
 
 class QueueContainer extends StatelessWidget {
   const QueueContainer({Key? key}) : super(key: key);
@@ -85,9 +84,17 @@ class QueueContainer extends StatelessWidget {
                             builder: (context, snapshot) {
                               if (snapshot.hasData) {
                                 if (index == snapshot.data) {
-                                  return Icon(
-                                    Icons.play_circle_rounded,
-                                    color: AppColors.kBlack,
+                                  return Container(
+                                    width: 30.w,
+                                    height: 30.w,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.kGreen,
+                                      borderRadius: BorderRadius.circular(5).r,
+                                    ),
+                                    child: const Icon(
+                                      Icons.play_circle_rounded,
+                                      color: AppColors.kBlack,
+                                    ),
                                   );
                                 }
                               }
@@ -95,7 +102,7 @@ class QueueContainer extends StatelessWidget {
                                 index: index,
                                 child: const Icon(
                                   Icons.drag_handle_rounded,
-                                  color: AppColors.kBlack,
+                                  color: AppColors.kWhite,
                                 ),
                               );
                             },

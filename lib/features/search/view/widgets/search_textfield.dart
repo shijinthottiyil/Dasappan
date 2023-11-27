@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:music_stream/utils/constants/constants.dart';
 
 class SearchTextField extends StatelessWidget {
@@ -8,9 +9,11 @@ class SearchTextField extends StatelessWidget {
     super.key,
     required this.placeholder,
     required this.onSubmitted,
+    required this.onTap,
   });
   final String? placeholder;
   final void Function(String)? onSubmitted;
+  final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
     return CupertinoTextField.borderless(
@@ -19,7 +22,25 @@ class SearchTextField extends StatelessWidget {
         padding: EdgeInsets.only(left: 15.r),
         child: const Icon(
           Icons.search_rounded,
-          color: AppColors.kBrown75,
+          color: AppColors.kWhite,
+        ),
+      ),
+      suffix: GestureDetector(
+        onTap: onTap,
+        child: Padding(
+          padding: EdgeInsets.only(right: 15.r),
+          child: Container(
+            width: 30.w,
+            height: 30.w,
+            decoration: BoxDecoration(
+              color: AppColors.kBlack,
+              borderRadius: BorderRadius.circular(5).r,
+            ),
+            child: Icon(
+              size: 20.w,
+              Icons.mic_rounded,
+            ),
+          ),
         ),
       ),
       placeholder: placeholder,
