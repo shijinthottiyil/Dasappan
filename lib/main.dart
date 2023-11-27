@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:music_stream/features/splash/view/splash_view.dart';
-import 'package:music_stream/features/test/test_view.dart';
+
 import 'package:music_stream/utils/constants/constants.dart';
 
 // Migrating to Getx
@@ -88,7 +88,7 @@ class MyApp extends StatelessWidget {
           home: child,
         );
       },
-      child: SplashView(),
+      child: const SplashView(),
     );
   }
 }

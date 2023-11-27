@@ -3,12 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:music_stream/features/bottom/controller/bottom_controller.dart';
 import 'package:music_stream/features/bottom/view/bottom_view.dart';
-import 'package:music_stream/features/settings/view/theme_view.dart';
-import 'package:music_stream/features/settings/view/widgets/color_icon.dart';
-import 'package:music_stream/utils/constants/app_colors.dart';
-import 'package:music_stream/utils/constants/app_typography.dart';
+
 import 'package:music_stream/utils/constants/constants.dart';
-import 'package:music_stream/utils/constants/enums.dart';
+
 import 'package:music_stream/utils/general_widgets.dart/common_scaffold.dart';
 import 'package:music_stream/utils/helpers/audio_helper.dart';
 
@@ -47,7 +44,7 @@ class _SettingsViewState extends State<SettingsView> {
                     color: AppColors.kGreen,
                     borderRadius: BorderRadius.circular(5).r,
                   ),
-                  child: Icon(
+                  child: const Icon(
                     Icons.music_note_rounded,
                     color: AppColors.kWhite,
                   )),

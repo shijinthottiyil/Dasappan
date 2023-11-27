@@ -9,7 +9,6 @@ import 'package:music_stream/utils/constants/app_colors.dart';
 import 'package:music_stream/utils/constants/app_texts.dart';
 import 'package:music_stream/utils/constants/app_typography.dart';
 import 'package:music_stream/utils/helpers/audio_helper.dart';
-import 'package:music_stream/utils/networking/logger.dart';
 
 class QueueContainer extends StatelessWidget {
   const QueueContainer({Key? key}) : super(key: key);
@@ -92,7 +91,7 @@ class QueueContainer extends StatelessWidget {
                                       color: AppColors.kGreen,
                                       borderRadius: BorderRadius.circular(5).r,
                                     ),
-                                    child: Icon(
+                                    child: const Icon(
                                       Icons.play_circle_rounded,
                                       color: AppColors.kBlack,
                                     ),

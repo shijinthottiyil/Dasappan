@@ -1,23 +1,16 @@
 import 'dart:developer';
-import 'dart:ui';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:get/get.dart';
 import 'package:music_stream/features/search/model/playlist_model.dart';
 import 'package:music_stream/features/search/model/search.dart';
 import 'package:music_stream/features/search/model/search_model.dart';
 import 'package:music_stream/features/search/service/search_service.dart';
-import 'package:music_stream/utils/constants/app_colors.dart';
-import 'package:music_stream/utils/constants/app_typography.dart';
-import 'package:music_stream/utils/general_widgets.dart/avatar_glow.dart';
+
 import 'package:music_stream/utils/networking/app_popups.dart';
 import 'package:music_stream/utils/networking/dio_exception_handler.dart';
 import 'package:music_stream/utils/networking/logger.dart';
-import 'package:speech_to_text/speech_recognition_result.dart';
 
 class SearchCtr extends GetxController {
   // variables
@@ -76,7 +69,8 @@ class SearchCtr extends GetxController {
           //   logger.i(search.speechData.value);
           //   getSearch(search.speechData.value);
           // }
-          if (search.speechToText.isNotListening) {
+          if (search.speechToText.isNotListening &&
+              search.speechData.value.isNotEmpty) {
             logger.i(search.speechData.value);
             getSearch(search.speechData.value);
           }

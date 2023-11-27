@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -172,7 +170,7 @@ class _PlaylistViewState extends State<PlaylistView> {
               children: [
                 ClipPath(
                   clipper: MyCustomClipper(),
-                  child: Container(
+                  child: SizedBox(
                     width: double.infinity,
                     height: MediaQuery.sizeOf(context).height / 2.5,
                     child: FadeInImage(

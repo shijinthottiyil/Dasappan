@@ -20,37 +20,40 @@ Future exitApp() async {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 50.w, vertical: 32.h)
-                          .copyWith(bottom: 0.h),
-                  child: Text(
-                    'ശരിക്കും പോവാണോ ?',
-                    textAlign: TextAlign.center,
-                    style: AppTypography.kBold16.copyWith(
-                        color: AppColors.kBrown500,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18.sp),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 50.w, vertical: 32.h)
+                            .copyWith(bottom: 0.h),
+                    child: Text(
+                      'പോവണോ ?',
+                      textAlign: TextAlign.center,
+                      style: AppTypography.kBold16.copyWith(
+                          color: AppColors.kBrown500,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18.sp),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 24.h,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 34.w,
-                  ),
-                  child: Text(
-                    'ദാസപ്പൻ ഓഫ് ആവുംട്ടാ ',
-                    style: AppTypography.kMedium14.copyWith(
-                        color: AppColors.kBrown400,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14.sp),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ]),
+                  // SizedBox(
+                  //   height: 24.h,
+                  // ),
+                  // Padding(
+                  //   padding: EdgeInsets.symmetric(
+                  //     horizontal: 34.w,
+                  //   ),
+                  //   child: Text(
+                  //     'ദാസപ്പൻ ഓഫ് ആവുംട്ടാ ',
+                  //     style: AppTypography.kMedium14.copyWith(
+                  //         color: AppColors.kBrown400,
+                  //         fontWeight: FontWeight.w600,
+                  //         fontSize: 14.sp),
+                  //     textAlign: TextAlign.center,
+                  //   ),
+                  // ),
+                ],
+              ),
               SizedBox(
                 height: 36.h,
               ),

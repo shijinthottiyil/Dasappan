@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:music_stream/features/bottom/view/bottom_view.dart';
+
 import 'package:music_stream/features/home/controller/home_controller.dart';
-import 'package:music_stream/features/splash/view/widgets/random_text_reveal.dart';
-import 'package:music_stream/utils/constants/app_assets.dart';
-import 'package:music_stream/utils/constants/app_spacing.dart';
+
 import 'package:music_stream/utils/constants/constants.dart';
 import 'package:music_stream/utils/general_widgets.dart/bg.dart';
-import 'package:music_stream/utils/networking/connection_controller.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({Key? key}) : super(key: key);
@@ -27,7 +24,7 @@ class _SplashViewState extends State<SplashView>
     super.initState();
 
     _pulseController = AnimationController(
-      duration: Duration(seconds: 1),
+      duration: const Duration(seconds: 1),
       vsync: this,
     );
 
@@ -54,15 +51,30 @@ class _SplashViewState extends State<SplashView>
               parent: _pulseController,
               curve: Curves.linear,
             )),
-            child: Text(
-              AppTexts.kIntro,
-              style: TextStyle(
-                fontFamily: 'Orbitron',
-                fontSize: 24.sp,
-                fontWeight: FontWeight.w700,
-                letterSpacing: 2,
-                color: AppColors.kWhite,
-              ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  AppTexts.kTitleEng,
+                  style: TextStyle(
+                    fontFamily: 'Orbitron',
+                    fontSize: 28.sp,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 2,
+                    color: AppColors.kWhite,
+                  ),
+                ),
+                Text(
+                  AppTexts.kIntro,
+                  style: TextStyle(
+                    fontFamily: 'Orbitron',
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 2,
+                    color: AppColors.kWhite,
+                  ),
+                ),
+              ],
             ),
             // child: Text(
             //   AppTexts.kIntro,

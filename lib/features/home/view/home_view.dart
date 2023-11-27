@@ -5,7 +5,7 @@ import 'package:music_stream/features/bottom/view/bottom_view.dart';
 import 'package:music_stream/features/home/controller/home_controller.dart';
 import 'package:music_stream/features/playlist/view/playlist_view.dart';
 import 'package:music_stream/utils/constants/constants.dart';
-import 'package:music_stream/utils/general_widgets.dart/bg.dart';
+
 import 'package:music_stream/utils/general_widgets.dart/common_scaffold.dart';
 
 import 'package:music_stream/utils/helpers/exit_app.dart';
@@ -287,7 +287,7 @@ class _HomeViewState extends State<HomeView> {
         backgroundColor: AppColors.kWhite,
         strokeWidth: 4.0,
         child: Padding(
-          padding: EdgeInsets.only(left: 17.w, top: 10.h),
+          padding: EdgeInsets.only(left: 17.w, top: 10.h, right: 17.w),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -323,7 +323,7 @@ class _HomeViewState extends State<HomeView> {
                             crossAxisCount: 5,
                             mainAxisExtent: 325.w,
                           ),
-                          physics: BouncingScrollPhysics(),
+                          physics: const BouncingScrollPhysics(),
                           itemCount: c.home.homeList[0].contents?.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
@@ -383,7 +383,7 @@ class _HomeViewState extends State<HomeView> {
                             crossAxisCount: 2,
                             mainAxisExtent: 200.w,
                           ),
-                          physics: BouncingScrollPhysics(),
+                          physics: const BouncingScrollPhysics(),
                           itemCount: c.home.homeList[i].contents?.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {

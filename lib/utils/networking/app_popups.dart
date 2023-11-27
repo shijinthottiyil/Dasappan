@@ -41,7 +41,7 @@ class AppPopups {
         ),
         onWillPop: () => Future.value(false),
       ),
-      barrierDismissible: false,
+      barrierDismissible: true,
       barrierColor: AppColors.kBlack.withOpacity(0.3),
       useSafeArea: true,
     );

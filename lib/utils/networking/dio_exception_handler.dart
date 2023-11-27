@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:music_stream/utils/constants/constants.dart';
 import 'package:music_stream/utils/networking/app_popups.dart';
 
 class DioExceptionHandler {
@@ -38,28 +39,32 @@ class DioExceptionHandler {
 
       ///-----------------------------------NEW--------------------------------------------
       case DioExceptionType.connectionTimeout:
-        AppPopups.errorSnackbar(title: 'ഞെക്കണ്ട', message: 'കിട്ടൂല');
+        AppPopups.errorSnackbar(
+            title: AppTexts.kTitle, message: 'connectionTimeout');
         break;
       case DioExceptionType.sendTimeout:
-        AppPopups.errorSnackbar(title: 'ഞെക്കണ്ട', message: 'കിട്ടൂല');
+        AppPopups.errorSnackbar(title: AppTexts.kTitle, message: 'sendTimeout');
         break;
       case DioExceptionType.receiveTimeout:
-        AppPopups.errorSnackbar(title: 'ഞെക്കണ്ട', message: 'കിട്ടൂല');
+        AppPopups.errorSnackbar(
+            title: AppTexts.kTitle, message: 'receiveTimeout');
         break;
       case DioExceptionType.badCertificate:
-        AppPopups.errorSnackbar(title: 'ഞെക്കണ്ട', message: 'കിട്ടൂല');
+        AppPopups.errorSnackbar(
+            title: AppTexts.kTitle, message: 'badCertificate');
         break;
       case DioExceptionType.badResponse:
-        AppPopups.errorSnackbar(title: 'DioException', message: 'കിട്ടൂല');
+        AppPopups.errorSnackbar(title: AppTexts.kTitle, message: 'badResponse');
         break;
       case DioExceptionType.cancel:
-        AppPopups.errorSnackbar(title: 'ഞെക്കണ്ട', message: 'കിട്ടൂല');
+        AppPopups.errorSnackbar(title: AppTexts.kTitle, message: 'cancel');
         break;
       case DioExceptionType.connectionError:
-        AppPopups.errorSnackbar(title: 'ഞെക്കണ്ട', message: 'കിട്ടൂല');
+        AppPopups.errorSnackbar(
+            title: AppTexts.kTitle, message: 'connectionError');
         break;
       case DioExceptionType.unknown:
-        AppPopups.errorSnackbar(title: 'ഞെക്കണ്ട', message: 'കിട്ടൂല');
+        AppPopups.errorSnackbar(title: AppTexts.kTitle, message: 'unknown');
         break;
     }
   }

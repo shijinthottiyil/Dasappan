@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -12,12 +10,8 @@ import 'package:music_stream/features/search/view/widgets/search_textfield.dart'
 
 import 'package:music_stream/features/search/controller/search_controller.dart';
 import 'package:music_stream/utils/constants/constants.dart';
-import 'package:music_stream/utils/general_widgets.dart/avatar_glow.dart';
+
 import 'package:music_stream/utils/general_widgets.dart/bg.dart';
-import 'package:music_stream/utils/helpers/exit_app.dart';
-import 'package:music_stream/utils/networking/logger.dart';
-import 'package:speech_to_text/speech_recognition_result.dart';
-import 'package:speech_to_text/speech_to_text.dart';
 
 // class SearchView extends StatelessWidget {
 //   SearchView({super.key});
@@ -192,14 +186,7 @@ class _SearchViewState extends State<SearchView> {
                     //       ? Icons.mic_off_rounded
                     //       : Icons.mic_rounded),
                     // ),
-                    suffix: IconButton(
-                      onPressed: () async {
-                        c.voiceSearchTap();
-                      },
-                      icon: Icon(
-                        Icons.mic_rounded,
-                      ),
-                    ),
+                    onTap: c.voiceSearchTap,
 
                     placeholder: 'എന്താ വേണ്ടേ? ',
                     onSubmitted: (keyWord) {
@@ -218,8 +205,8 @@ class _SearchViewState extends State<SearchView> {
                     child: _tabBar,
                   ),
                 ),
-                Expanded(
-                  child: const TabBarView(
+                const Expanded(
+                  child: TabBarView(
                     children: [
                       SearchSong(),
                       SearchPlay(),

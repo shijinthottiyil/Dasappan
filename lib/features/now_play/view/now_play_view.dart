@@ -5,15 +5,13 @@ import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:music_stream/features/bottom/view/bottom_view.dart';
 
-import 'package:music_stream/features/home/controller/home_controller.dart';
 import 'package:music_stream/features/now_play/view/widgets/now_button.dart';
 import 'package:music_stream/features/now_play/view/widgets/play_pause_button.dart';
 import 'package:music_stream/features/now_play/view/widgets/queue_container.dart';
 import 'package:music_stream/utils/constants/constants.dart';
 import 'package:music_stream/utils/general_widgets.dart/bg.dart';
-import 'package:music_stream/utils/general_widgets.dart/empty_card.dart';
+
 import 'package:music_stream/utils/helpers/audio_helper.dart';
-import 'package:music_stream/utils/helpers/exit_app.dart';
 
 class NowPlayView extends StatefulWidget {
   const NowPlayView({super.key});
@@ -41,9 +39,9 @@ class _NowPlayViewState extends State<NowPlayView> {
             pc.isPanelOpen
                 ? MenuAnchor(
                     style: MenuStyle(
-                      backgroundColor:
-                          MaterialStatePropertyAll<Color>(AppColors.kWhite),
-                      elevation: MaterialStatePropertyAll<double>(0),
+                      backgroundColor: const MaterialStatePropertyAll<Color>(
+                          AppColors.kWhite),
+                      elevation: const MaterialStatePropertyAll<double>(0),
                       padding: MaterialStatePropertyAll<EdgeInsetsGeometry>(
                           EdgeInsets.only(right: 10.w)),
                     ),
@@ -65,10 +63,10 @@ class _NowPlayViewState extends State<NowPlayView> {
                       (int index) => MenuItemButton(
                         onPressed: () {
                           Get.bottomSheet(
-                            QueueContainer(),
+                            const QueueContainer(),
                           );
                         },
-                        leadingIcon: Icon(
+                        leadingIcon: const Icon(
                           Icons.queue_music_rounded,
                           color: AppColors.kBlack,
                         ),
@@ -83,7 +81,7 @@ class _NowPlayViewState extends State<NowPlayView> {
                       ),
                     ),
                   )
-                : SizedBox.shrink(),
+                : const SizedBox.shrink(),
           ],
         ),
         body: Padding(
@@ -297,7 +295,7 @@ class _NowPlayViewState extends State<NowPlayView> {
                               return Container(
                                 width: 70.w,
                                 height: 70.w,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   shape: BoxShape.circle,
                                   color: AppColors.kGreen,
                                 ),
