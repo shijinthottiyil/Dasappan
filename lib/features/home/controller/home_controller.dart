@@ -35,7 +35,10 @@ class HomeController extends GetxController {
 
         var response = await service.getQuickpicks();
         if (isSplash) {
-          Get.offAll(() => const BottomView());
+          Get.offAll(
+            () => const BottomView(),
+            transition: Transition.leftToRight,
+          );
         }
         // AppPopups.cancelDialog();
         home.homeList.clear();

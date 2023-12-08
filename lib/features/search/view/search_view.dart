@@ -111,6 +111,7 @@ class _SearchViewState extends State<SearchView> {
   var c = Get.put(SearchCtr());
 
   TabBar get _tabBar => TabBar(
+        indicatorColor: Colors.red,
         indicator: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           color: const Color(0xff1a73e8),
