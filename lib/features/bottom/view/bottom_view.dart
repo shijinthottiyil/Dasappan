@@ -173,55 +173,60 @@ class _BottomViewState extends State<BottomView> {
               opacity: !isClosed ? 1 : 0,
               child: Align(
                 alignment: Alignment.bottomCenter,
-                child: ClipRRect(
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                    child: Container(
-                      margin: const EdgeInsets.only(
-                          left: 15, right: 15, bottom: 10),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
-                      decoration: BoxDecoration(
-                        color: AppColors.kWhite.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(40).r,
-                      ),
-                      child: Obx(
-                        () => GNav(
-                          selectedIndex: _controller.bottom.selectedIndex.value,
-                          onTabChange: (int index) {
-                            // setState(() {
-                            //   currentIndex = value;
-                            //   // log(currentIndex.toString());
-                            // });
-                            _controller.changeTab(index);
-                          },
-                          // backgroundColor: AppColors.kBlue1.withOpacity(0.1),
-                          activeColor: AppColors.kWhite,
-                          color: AppColors.kGreen,
-                          tabBackgroundColor: AppColors.kBlack,
-                          padding: const EdgeInsets.all(15),
-                          iconSize: 24,
-                          gap: 8,
-                          tabs: const [
-                            GButton(
-                              icon: Icons.home_rounded,
-                              iconSize: 25,
-                              iconColor: AppColors.kBlack,
-                              text: "Home",
-                            ),
-                            GButton(
-                              icon: Icons.search_rounded,
-                              iconSize: 25,
-                              iconColor: AppColors.kBlack,
-                              text: "Search",
-                            ),
-                            GButton(
-                              icon: Icons.settings_rounded,
-                              iconSize: 25,
-                              iconColor: AppColors.kBlack,
-                              text: "Settings",
-                            ),
-                          ],
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(40.r),
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                      child: Container(
+                        // margin: const EdgeInsets.only(
+                        //     left: 15, right: 15, bottom: 10),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 10),
+                        decoration: BoxDecoration(
+                          color: AppColors.kWhite.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(40).r,
+                        ),
+                        child: Obx(
+                          () => GNav(
+                            selectedIndex:
+                                _controller.bottom.selectedIndex.value,
+                            onTabChange: (int index) {
+                              // setState(() {
+                              //   currentIndex = value;
+                              //   // log(currentIndex.toString());
+                              // });
+                              _controller.changeTab(index);
+                            },
+                            // backgroundColor: AppColors.kBlue1.withOpacity(0.1),
+                            activeColor: AppColors.kWhite,
+                            color: AppColors.kGreen,
+                            tabBackgroundColor: AppColors.kBlack,
+                            padding: const EdgeInsets.all(15),
+                            iconSize: 24,
+                            gap: 8,
+                            tabs: const [
+                              GButton(
+                                icon: Icons.home_rounded,
+                                iconSize: 25,
+                                iconColor: AppColors.kBlack,
+                                text: "Home",
+                              ),
+                              GButton(
+                                icon: Icons.search_rounded,
+                                iconSize: 25,
+                                iconColor: AppColors.kBlack,
+                                text: "Search",
+                              ),
+                              GButton(
+                                icon: Icons.settings_rounded,
+                                iconSize: 25,
+                                iconColor: AppColors.kBlack,
+                                text: "Settings",
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

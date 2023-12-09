@@ -54,7 +54,10 @@ class _NowPlayViewState extends State<NowPlayView> {
                             controller.open();
                           }
                         },
-                        icon: const Icon(Icons.more_vert_rounded),
+                        icon: const Icon(
+                          Icons.more_vert_rounded,
+                          color: AppColors.kWhite,
+                        ),
                         // tooltip: 'Show menu',
                       );
                     },
@@ -226,7 +229,7 @@ class _NowPlayViewState extends State<NowPlayView> {
                       AppSpacing.gapH52,
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           ///Experimenting shuffle and repeat.
                           StreamBuilder<bool>(

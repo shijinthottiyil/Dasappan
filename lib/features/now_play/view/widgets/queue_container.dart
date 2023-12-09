@@ -16,10 +16,9 @@ class QueueContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = Get.put(NowController());
-    return ClipRRect(
-      // borderRadius: BorderRadius.circular(10.0), // Adjust the radius as needed
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+    return BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+      child: ClipRRect(
         child: Container(
           margin: EdgeInsets.only(left: 10.w, right: 10.w, bottom: 10.w),
           decoration: BoxDecoration(

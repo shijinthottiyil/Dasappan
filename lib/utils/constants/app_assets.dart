@@ -4,7 +4,7 @@ class AppAssets {
   // static String kTileLead = 'assets/images/tile_leading.png';
   // static String kNowplay = 'assets/images/nowplay.png';
   static String kLenin = 'assets/images/lenin.png';
-  static String kBg = 'assets/images/messi.jpg';
+  static String kBg = 'assets/images/bg.jpg';
 
   // Icons
   // static String kRewind = 'assets/icons/Rewind.png';
