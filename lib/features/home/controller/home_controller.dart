@@ -155,7 +155,7 @@ class HomeController extends GetxController {
 
   ///Get wallpaper from Unsplash Api.
   ///
-  Future getWallpaper() async {
+  /* Future getWallpaper() async {
     try {
       var response = await service.getWallpaper();
       // logger.d(response, error: 'HomeController getWallpaper() response');
@@ -169,6 +169,7 @@ class HomeController extends GetxController {
       logger.f(error, error: 'HomeController getWallpaper() catch');
     }
   }
+  */
 
 // // Call the getQuickpicks method in the onReady -> Get called after widget is rendered on the screen
 //   @override
@@ -182,7 +183,7 @@ class HomeController extends GetxController {
     super.onInit();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.wait([
-        getWallpaper(),
+        // getWallpaper(),
         getQuickpicks(isSplash: true),
       ]);
     });

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:music_stream/utils/constants/constants.dart';
 
 class NowButton extends StatelessWidget {
   const NowButton({
@@ -20,7 +19,7 @@ class NowButton extends StatelessWidget {
       onPressed: onPressed,
       icon: Icon(
         icon,
-        color: AppColors.kWhite,
+        // color: AppColors.kWhite,
         size: size == 0 ? 56.h : size,
       ),
     );

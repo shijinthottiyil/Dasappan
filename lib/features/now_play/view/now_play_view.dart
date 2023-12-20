@@ -25,69 +25,71 @@ class _NowPlayViewState extends State<NowPlayView> {
   Widget build(BuildContext context) {
     // bool _isShuffle = false;
     // final homeController = Get.put(HomeController());
-    return Bg(
-      child: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            onPressed: pc.close,
-            icon: Icon(
-              Icons.expand_more_rounded,
-              color: pc.isPanelOpen ? AppColors.kWhite : Colors.transparent,
-            ),
-          ),
-          actions: [
-            pc.isPanelOpen
-                ? MenuAnchor(
-                    style: MenuStyle(
-                      backgroundColor: const MaterialStatePropertyAll<Color>(
-                          AppColors.kWhite),
-                      elevation: const MaterialStatePropertyAll<double>(0),
-                      padding: MaterialStatePropertyAll<EdgeInsetsGeometry>(
-                          EdgeInsets.only(right: 10.w)),
-                    ),
-                    builder: (context, controller, child) {
-                      return IconButton(
-                        onPressed: () {
-                          if (controller.isOpen) {
-                            controller.close();
-                          } else {
-                            controller.open();
-                          }
-                        },
-                        icon: const Icon(
-                          Icons.more_vert_rounded,
-                          color: AppColors.kWhite,
-                        ),
-                        // tooltip: 'Show menu',
-                      );
-                    },
-                    menuChildren: List<MenuItemButton>.generate(
-                      1,
-                      (int index) => MenuItemButton(
-                        onPressed: () {
-                          Get.bottomSheet(
-                            const QueueContainer(),
-                          );
-                        },
-                        leadingIcon: const Icon(
-                          Icons.queue_music_rounded,
-                          color: AppColors.kBlack,
-                        ),
-                        // style: ButtonStyle(
-                        //   backgroundColor:
-                        //       MaterialStatePropertyAll<Color>(Colors.green),
-                        // ),
-                        child: Text(
-                          'Show queue',
-                          style: AppTypography.kRegular13,
-                        ),
-                      ),
-                    ),
-                  )
-                : const SizedBox.shrink(),
-          ],
-        ),
-        body: Padding(
+    return Scaffold(
+      // appBar: AppBar(
+      //   leading: IconButton(
+      //     onPressed: pc.close,
+      //     icon: Icon(
+      //       Icons.expand_more_rounded,
+      //       color: pc.isPanelShown ? AppColors.kWhite : Colors.transparent,
+      //     ),
+      //   ),
+      //   actions: [
+      //     pc.isPanelOpen
+      //         ? MenuAnchor(
+      //             style: MenuStyle(
+      //               backgroundColor:
+      //                   const MaterialStatePropertyAll<Color>(AppColors.kWhite),
+      //               elevation: const MaterialStatePropertyAll<double>(0),
+      //               padding: MaterialStatePropertyAll<EdgeInsetsGeometry>(
+      //                   EdgeInsets.only(right: 10.w)),
+      //             ),
+      //             builder: (context, controller, child) {
+      //               return IconButton(
+      //                 onPressed: () {
+      //                   if (controller.isOpen) {
+      //                     controller.close();
+      //                   } else {
+      //                     controller.open();
+      //                   }
+      //                 },
+      //                 icon: Icon(
+      //                   Icons.more_vert_rounded,
+      //                   color: pc.isPanelShown
+      //                       ? AppColors.kWhite
+      //                       : Colors.transparent,
+      //                 ),
+      //                 // tooltip: 'Show menu',
+      //               );
+      //             },
+      //             menuChildren: List<MenuItemButton>.generate(
+      //               1,
+      //               (int index) => MenuItemButton(
+      //                 onPressed: () {
+      //                   Get.bottomSheet(
+      //                     const QueueContainer(),
+      //                   );
+      //                 },
+      //                 leadingIcon: const Icon(
+      //                   Icons.queue_music_rounded,
+      //                   color: AppColors.kBlack,
+      //                 ),
+      //                 // style: ButtonStyle(
+      //                 //   backgroundColor:
+      //                 //       MaterialStatePropertyAll<Color>(Colors.green),
+      //                 // ),
+      //                 child: Text(
+      //                   'Show queue',
+      //                   style: AppTypography.kRegular13,
+      //                 ),
+      //               ),
+      //             ),
+      //           )
+      //         : const SizedBox.shrink(),
+      //   ],
+      // ),
+      body: SafeArea(
+        child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
           child: StreamBuilder(
               stream: AudioHelper.player.currentIndexStream,

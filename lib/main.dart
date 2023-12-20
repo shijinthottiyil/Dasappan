@@ -76,12 +76,9 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
-          theme: AppTheme.lightTheme.copyWith(
-            textTheme: Theme.of(context).textTheme.apply(
-                  bodyColor: AppColors.kWhite,
-                  displayColor: AppColors.kWhite,
-                ),
-          ),
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkThemd,
+          themeMode: ThemeMode.system,
           scrollBehavior: const ScrollBehavior()
               .copyWith(physics: const BouncingScrollPhysics()),
           defaultTransition: Transition.fadeIn,

@@ -138,118 +138,116 @@ class _SearchViewState extends State<SearchView> {
 
           return false;
         },
-        child: Bg(
-          child: Scaffold(
-            appBar: AppBar(
-              // titleSpacing: 14.r,
-              // bottom: PreferredSize(
-              //   preferredSize: _tabBar.preferredSize,
-              //   child: Padding(
-              //     padding: EdgeInsets.symmetric(horizontal: 15.w),
+        child: Scaffold(
+          appBar: AppBar(
+            // titleSpacing: 14.r,
+            // bottom: PreferredSize(
+            //   preferredSize: _tabBar.preferredSize,
+            //   child: Padding(
+            //     padding: EdgeInsets.symmetric(horizontal: 15.w),
+            //     child: Container(
+            //       decoration: BoxDecoration(
+            //         color: Colors.grey.shade200,
+            //         borderRadius: BorderRadius.circular(8),
+            //       ),
+            //       child: _tabBar,
+            //     ),
+            //   ),
+            // ),
+            // title: SearchTextField(
+            //   placeholder: 'എന്താ വേണ്ടേ? ',
+            //   onSubmitted: (keyWord) {
+            //     c.getSearch(keyWord);
+            //   },
+            // ),
+            title: const Text(
+              'Search',
+              style: TextStyle(
+                fontFamily: 'Orbitron',
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                letterSpacing: 2,
+              ),
+            ),
+          ),
+          body: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                child: SearchTextField(
+                  // suffix: IconButton(
+                  //   // onPressed: () {
+                  //   //   Get.find<SearchCtr>().voiceSearchTap();
+                  //   // },
+                  //   onPressed: _speechToText.isNotListening
+                  //       ? _startListening
+                  //       : _stopListening,
+                  //   icon: Icon(_speechToText.isNotListening
+                  //       ? Icons.mic_off_rounded
+                  //       : Icons.mic_rounded),
+                  // ),
+                  onTap: c.voiceSearchTap,
+
+                  placeholder: 'എന്താ വേണ്ടേ? ',
+                  onSubmitted: (keyWord) {
+                    c.getSearch(keyWord);
+                  },
+                ),
+              ),
+              AppSpacing.gapH8,
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: _tabBar,
+                ),
+              ),
+              const Expanded(
+                child: TabBarView(
+                  children: [
+                    SearchSong(),
+                    SearchPlay(),
+                  ],
+                ),
+              ),
+
+              // BackdropFilter(
+              //   filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              //   child: Dialog(
+              //     shape: RoundedRectangleBorder(
+              //         borderRadius: BorderRadius.circular(20.r)),
+              //     backgroundColor: Colors.transparent,
               //     child: Container(
               //       decoration: BoxDecoration(
-              //         color: Colors.grey.shade200,
-              //         borderRadius: BorderRadius.circular(8),
+              //           borderRadius: BorderRadius.circular(20.r)),
+              //       width: 300,
+              //       height: 300,
+              //       child: Column(
+              //         // mainAxisSize: MainAxisSize.min,
+              //         mainAxisAlignment: MainAxisAlignment.center,
+              //         children: [
+              //           AvatarGlow(
+              //             glowRadiusFactor: 0.7,
+              //             animate: isListening,
+              //             glowColor: AppColors.kRed,
+              //             child: GestureDetector(
+              //               onTap: () {},
+              //               child: Icon(
+              //                 Icons.mic_rounded,
+              //                 color: AppColors.kBlack,
+              //                 size: 75.sp,
+              //               ),
+              //             ),
+              //           ),
+              //         ],
               //       ),
-              //       child: _tabBar,
               //     ),
               //   ),
               // ),
-              // title: SearchTextField(
-              //   placeholder: 'എന്താ വേണ്ടേ? ',
-              //   onSubmitted: (keyWord) {
-              //     c.getSearch(keyWord);
-              //   },
-              // ),
-              title: const Text(
-                'Search',
-                style: TextStyle(
-                  fontFamily: 'Orbitron',
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                  letterSpacing: 2,
-                ),
-              ),
-            ),
-            body: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w),
-                  child: SearchTextField(
-                    // suffix: IconButton(
-                    //   // onPressed: () {
-                    //   //   Get.find<SearchCtr>().voiceSearchTap();
-                    //   // },
-                    //   onPressed: _speechToText.isNotListening
-                    //       ? _startListening
-                    //       : _stopListening,
-                    //   icon: Icon(_speechToText.isNotListening
-                    //       ? Icons.mic_off_rounded
-                    //       : Icons.mic_rounded),
-                    // ),
-                    onTap: c.voiceSearchTap,
-
-                    placeholder: 'എന്താ വേണ്ടേ? ',
-                    onSubmitted: (keyWord) {
-                      c.getSearch(keyWord);
-                    },
-                  ),
-                ),
-                AppSpacing.gapH8,
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: _tabBar,
-                  ),
-                ),
-                const Expanded(
-                  child: TabBarView(
-                    children: [
-                      SearchSong(),
-                      SearchPlay(),
-                    ],
-                  ),
-                ),
-
-                // BackdropFilter(
-                //   filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                //   child: Dialog(
-                //     shape: RoundedRectangleBorder(
-                //         borderRadius: BorderRadius.circular(20.r)),
-                //     backgroundColor: Colors.transparent,
-                //     child: Container(
-                //       decoration: BoxDecoration(
-                //           borderRadius: BorderRadius.circular(20.r)),
-                //       width: 300,
-                //       height: 300,
-                //       child: Column(
-                //         // mainAxisSize: MainAxisSize.min,
-                //         mainAxisAlignment: MainAxisAlignment.center,
-                //         children: [
-                //           AvatarGlow(
-                //             glowRadiusFactor: 0.7,
-                //             animate: isListening,
-                //             glowColor: AppColors.kRed,
-                //             child: GestureDetector(
-                //               onTap: () {},
-                //               child: Icon(
-                //                 Icons.mic_rounded,
-                //                 color: AppColors.kBlack,
-                //                 size: 75.sp,
-                //               ),
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //     ),
-                //   ),
-                // ),
-              ],
-            ),
+            ],
           ),
         ),
       ),

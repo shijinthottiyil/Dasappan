@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:music_stream/features/search/controller/search_controller.dart';
 import 'package:music_stream/features/playlist/view/playlist_view.dart';
 import 'package:music_stream/utils/constants/constants.dart';
+import 'package:music_stream/utils/helpers/audio_helper.dart';
 
 class SearchPlay extends StatelessWidget {
   const SearchPlay({super.key});
@@ -211,7 +212,11 @@ class SearchPlay extends StatelessWidget {
                 );
               },
             ),
-            AppSpacing.gapH250,
+            Obx(
+              () => AudioHelper.playlistList.isNotEmpty
+                  ? AppSpacing.gapH200
+                  : AppSpacing.gapH100,
+            ),
           ],
         ),
       ),
