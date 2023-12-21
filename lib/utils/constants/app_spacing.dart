@@ -39,5 +39,7 @@ class AppSpacing {
   static final gapH60 = SizedBox(height: 60.h);
   static final gapH64 = SizedBox(height: 64.h);
   static final gapH100 = SizedBox(height: 100.h);
+  static final gapH125 = SizedBox(height: 125.h);
+  static final gapH200 = SizedBox(height: 200.h);
   static final gapH250 = SizedBox(height: 250.h);
 }

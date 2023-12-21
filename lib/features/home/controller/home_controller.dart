@@ -6,14 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
-
 import 'package:music_stream/features/bottom/view/bottom_view.dart';
 import 'package:music_stream/features/home/model/home.dart';
 import 'package:music_stream/features/home/model/home_model.dart';
 import 'package:music_stream/features/home/model/playlist_model.dart';
-import 'package:music_stream/features/home/model/wallpaper_model.dart';
 import 'package:music_stream/features/home/service/home_service.dart';
-
 import 'package:music_stream/features/search/controller/search_controller.dart';
 import 'package:music_stream/utils/helpers/audio_helper.dart';
 import 'package:music_stream/utils/networking/app_popups.dart';
@@ -35,7 +32,10 @@ class HomeController extends GetxController {
 
         var response = await service.getQuickpicks();
         if (isSplash) {
-          Get.offAll(() => const BottomView());
+          Get.offAll(
+            () => const BottomView(),
+            transition: Transition.leftToRight,
+          );
         }
         // AppPopups.cancelDialog();
         home.homeList.clear();
@@ -152,7 +152,7 @@ class HomeController extends GetxController {
 
   ///Get wallpaper from Unsplash Api.
   ///
-  Future getWallpaper() async {
+  /* Future getWallpaper() async {
     try {
       var response = await service.getWallpaper();
       // logger.d(response, error: 'HomeController getWallpaper() response');
@@ -166,6 +166,7 @@ class HomeController extends GetxController {
       logger.f(error, error: 'HomeController getWallpaper() catch');
     }
   }
+  */
 
 // // Call the getQuickpicks method in the onReady -> Get called after widget is rendered on the screen
 //   @override
@@ -179,7 +180,7 @@ class HomeController extends GetxController {
     super.onInit();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.wait([
-        getWallpaper(),
+        // getWallpaper(),
         getQuickpicks(isSplash: true),
       ]);
     });

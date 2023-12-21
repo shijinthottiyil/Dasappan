@@ -6,6 +6,7 @@ import 'package:music_stream/features/home/controller/home_controller.dart';
 import 'package:music_stream/features/search/controller/search_controller.dart';
 
 import 'package:music_stream/utils/constants/constants.dart';
+import 'package:music_stream/utils/helpers/audio_helper.dart';
 
 class SearchSong extends StatelessWidget {
   const SearchSong({super.key});
@@ -96,7 +97,11 @@ class SearchSong extends StatelessWidget {
                 itemCount: c.search.searchList.length,
               ),
             ),
-            AppSpacing.gapH250,
+            Obx(
+              () => AudioHelper.playlistList.isNotEmpty
+                  ? AppSpacing.gapH200
+                  : AppSpacing.gapH100,
+            ),
           ],
         ),
       ),

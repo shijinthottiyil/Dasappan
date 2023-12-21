@@ -10,4 +10,8 @@ class AppTexts {
   static const String kHigh = 'high';
   static const String kMedium = 'medium';
   static const String kLow = 'low';
+
+  ///--------------------------------------------
+
+  static const String kFontFamily = 'Orbitron';
 }

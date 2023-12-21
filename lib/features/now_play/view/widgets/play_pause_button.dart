@@ -13,6 +13,10 @@ class PlayPauseButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var platformBrightness = MediaQuery.platformBrightnessOf(context);
+    var color = platformBrightness == Brightness.light
+        ? AppColors.kBlack
+        : AppColors.kWhite;
     final processingState = playerState?.processingState;
     if (processingState == ProcessingState.loading ||
         processingState == ProcessingState.buffering) {
@@ -20,8 +24,8 @@ class PlayPauseButton extends StatelessWidget {
         margin: const EdgeInsets.all(8).r,
         width: 56.h,
         height: 56.h,
-        child: LoadingAnimationWidget.threeArchedCircle(
-          color: AppColors.kWhite,
+        child: LoadingAnimationWidget.beat(
+          color: color,
           size: 50.r,
         ),
       );
