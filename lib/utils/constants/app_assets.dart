@@ -29,4 +29,8 @@ class AppAssets {
   static const kPoovi = 'assets/images/poovi.jpg';
   static const kRanam = 'assets/images/ranam.jpg';
   static const kAnimal = 'assets/images/animal.jpg';
+
+  //Network Image.
+  static const String kNetworkImage =
+      'https://play-lh.googleusercontent.com/l_Lm4yidvp_sfTkoDRdkF0lODJu72jkP4RfPqfPBlrk2X7b2qb0q88BUwt_7QzKSaLY';
 }

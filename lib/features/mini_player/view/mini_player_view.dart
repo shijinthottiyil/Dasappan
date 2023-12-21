@@ -11,75 +11,78 @@ class MiniPlayerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: context.theme.scaffoldBackgroundColor,
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 7.w),
-        child: StreamBuilder(
-          stream: AudioHelper.player.currentIndexStream,
-          builder: (context, currentIndex) {
-            if (currentIndex.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            return Obx(
-              () => Row(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10).r,
-                    child: FadeInImage(
-                      placeholder: AssetImage(
-                        AppAssets.kLenin,
-                      ),
-                      image: NetworkImage(
-                        AudioHelper.playlistList
-                            .elementAt(currentIndex.data!)
-                            .thumbnail!
-                            .last
-                            .url
-                            .toString(),
-                      ),
-                      imageErrorBuilder: (context, error, stackTrace) =>
-                          Image.asset(
-                        AppAssets.kLenin,
-                        width: 60.w,
-                        height: 60.w,
-                        fit: BoxFit.cover,
-                      ),
-                      width: 60.w,
-                      height: 60.w,
-                      fit: BoxFit.cover,
-                      placeholderFit: BoxFit.cover,
-                    ),
-                  ),
-                  SizedBox(width: 5.w),
-                  Expanded(
-                    child: Text(
-                      AudioHelper.playlistList
-                          .elementAt(currentIndex.data!)
-                          .title
-                          .toString(),
-                      style: AppTypography.kBold12,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: StreamBuilder<PlayerState>(
-                      stream: AudioHelper.player.playerStateStream,
-                      builder: (_, snapshot) {
-                        final playerState = snapshot.data;
-                        return PlayPauseButton(playerState: playerState);
-                      },
-                    ),
-                  ),
-                ],
+    return Obx(
+      () => Container(
+        color: context.theme.scaffoldBackgroundColor,
+        child: AudioHelper.playlistList.isEmpty
+            ? null
+            : Padding(
+                padding: EdgeInsets.symmetric(horizontal: 7.w),
+                child: StreamBuilder(
+                  stream: AudioHelper.player.currentIndexStream,
+                  builder: (context, currentIndex) {
+                    if (currentIndex.connectionState ==
+                        ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    return Row(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10).r,
+                          child: FadeInImage(
+                            placeholder: AssetImage(
+                              AppAssets.kLenin,
+                            ),
+                            image: NetworkImage(
+                              AudioHelper.playlistList
+                                  .elementAt(currentIndex.data!)
+                                  .thumbnail!
+                                  .last
+                                  .url
+                                  .toString(),
+                            ),
+                            imageErrorBuilder: (context, error, stackTrace) =>
+                                Image.asset(
+                              AppAssets.kLenin,
+                              width: 60.w,
+                              height: 60.w,
+                              fit: BoxFit.cover,
+                            ),
+                            width: 60.w,
+                            height: 60.w,
+                            fit: BoxFit.cover,
+                            placeholderFit: BoxFit.cover,
+                          ),
+                        ),
+                        SizedBox(width: 5.w),
+                        Expanded(
+                          child: Text(
+                            AudioHelper.playlistList
+                                .elementAt(currentIndex.data!)
+                                .title
+                                .toString(),
+                            style: AppTypography.kBold12,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: StreamBuilder<PlayerState>(
+                            stream: AudioHelper.player.playerStateStream,
+                            builder: (_, snapshot) {
+                              final playerState = snapshot.data;
+                              return PlayPauseButton(playerState: playerState);
+                            },
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
               ),
-            );
-          },
-        ),
       ),
     );
   }

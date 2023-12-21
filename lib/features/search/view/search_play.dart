@@ -52,74 +52,75 @@ class SearchPlay extends StatelessWidget {
             // AppSpacing.gapH12,
             Obx(
               () {
-                //   return GridView.builder(
-                //   shrinkWrap: true,
-                //   physics: const NeverScrollableScrollPhysics(),
-                //   itemCount: c.search.playlistModelList.length,
-                //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                //     mainAxisSpacing: 10.w,
-                //     crossAxisSpacing: 10.h,
-                //     crossAxisCount: 2,
-                //   ),
-                //   itemBuilder: (context, index) {
-                //     var data = c.search.playlistModelList[index];
+                return GridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: c.search.playlistModelList.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    mainAxisSpacing: 15.w,
+                    crossAxisSpacing: 10.h,
+                    crossAxisCount: 2,
+                  ),
+                  itemBuilder: (context, index) {
+                    var data = c.search.playlistModelList[index];
 
-                //     return InkWell(
-                //       onTap: () {
-                //         Get.to(
-                //           () => PlaylistView(
-                //             playlistImg: data.thumbnails?.last.url,
-                //             playlistName: data.title,
-                //             playlistId: data.browseId,
-                //           ),
-                //         );
-                //       },
-                //       child: Column(
-                //         crossAxisAlignment: CrossAxisAlignment.start,
-                //         children: [
-                //           Expanded(
-                //             flex: 7,
-                //             child: ClipRRect(
-                //               borderRadius: BorderRadius.circular(4).r,
-                //               child: FadeInImage(
-                //                 placeholder: AssetImage(
-                //                   AppAssets.kLenin,
-                //                 ),
-                //                 image:
-                //                     NetworkImage(data.thumbnails?.last.url ?? ''),
-                //                 imageErrorBuilder: (context, error, stackTrace) =>
-                //                     Image.asset(
-                //                   AppAssets.kLenin,
-                //                   width: double.infinity,
-                //                   fit: BoxFit.cover,
-                //                 ),
-                //                 width: double.infinity,
-                //                 // height: double.infinity,
-                //                 fit: BoxFit.cover,
-                //                 placeholderFit: BoxFit.cover,
-                //               ),
-                //             ),
-                //           ),
-                //           Expanded(
-                //             child: Padding(
-                //               padding: EdgeInsets.only(top: 5.h),
-                //               child: Text(
-                //                 data.title ?? AppTexts.kLoading,
-                //                 style: AppTypography.kSecondary,
-                //                 softWrap: false,
-                //                 maxLines: 4,
-                //                 overflow: TextOverflow.ellipsis,
-                //               ),
-                //             ),
-                //           )
-                //         ],
-                //       ),
-                //     );
-                //   },
-                // );
+                    return InkWell(
+                      onTap: () {
+                        Get.to(
+                          () => PlaylistView(
+                            playlistImg: data.thumbnails?.last.url,
+                            playlistName: data.title,
+                            playlistId: data.browseId,
+                          ),
+                        );
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            flex: 7,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(4).r,
+                              child: FadeInImage(
+                                placeholder: AssetImage(
+                                  AppAssets.kLenin,
+                                ),
+                                image: NetworkImage(
+                                    data.thumbnails?.last.url ?? ''),
+                                imageErrorBuilder:
+                                    (context, error, stackTrace) => Image.asset(
+                                  AppAssets.kLenin,
+                                  width: double.infinity,
+                                  fit: BoxFit.cover,
+                                ),
+                                width: double.infinity,
+                                // height: double.infinity,
+                                fit: BoxFit.cover,
+                                placeholderFit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.only(top: 5.h),
+                              child: Text(
+                                data.title ?? AppTexts.kLoading,
+                                style: AppTypography.kSecondary,
+                                softWrap: false,
+                                maxLines: 4,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    );
+                  },
+                );
 
                 ///Trying out new PlayList View.
                 ///
+                /*
                 return GridView.custom(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -210,6 +211,7 @@ class SearchPlay extends StatelessWidget {
                     },
                   ),
                 );
+                */
               },
             ),
             Obx(
