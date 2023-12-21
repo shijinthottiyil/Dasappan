@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:music_stream/utils/general_widgets.dart/bg.dart';
 
 class CommonScaffold extends StatelessWidget {
   const CommonScaffold({

@@ -6,14 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
-
 import 'package:music_stream/features/bottom/view/bottom_view.dart';
 import 'package:music_stream/features/home/model/home.dart';
 import 'package:music_stream/features/home/model/home_model.dart';
 import 'package:music_stream/features/home/model/playlist_model.dart';
-import 'package:music_stream/features/home/model/wallpaper_model.dart';
 import 'package:music_stream/features/home/service/home_service.dart';
-
 import 'package:music_stream/features/search/controller/search_controller.dart';
 import 'package:music_stream/utils/helpers/audio_helper.dart';
 import 'package:music_stream/utils/networking/app_popups.dart';

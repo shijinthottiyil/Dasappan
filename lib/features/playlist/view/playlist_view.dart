@@ -50,7 +50,6 @@ class _PlaylistViewState extends State<PlaylistView> {
     const duration = Duration(milliseconds: 300);
 
     return Scaffold(
-      // backgroundColor: AppColors.kWhite,
       body: Stack(
         children: [
           Column(

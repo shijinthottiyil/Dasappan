@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 import 'package:music_stream/utils/constants/constants.dart';
 
@@ -16,13 +17,17 @@ class SearchTextField extends StatelessWidget {
   final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
+    var platformBrightness = MediaQuery.platformBrightnessOf(context);
+    var color = platformBrightness == Brightness.light
+        ? AppColors.kBlack.withOpacity(0.5)
+        : AppColors.kBrown400;
     return CupertinoTextField.borderless(
       padding: EdgeInsets.all(15.r),
       prefix: Padding(
         padding: EdgeInsets.only(left: 15.r),
         child: const Icon(
           Icons.search_rounded,
-          color: AppColors.kWhite,
+          // color: AppColors.kWhite,
         ),
       ),
       suffix: GestureDetector(
@@ -39,20 +44,20 @@ class SearchTextField extends StatelessWidget {
             child: Icon(
               size: 20.w,
               Icons.mic_rounded,
+              color: AppColors.kWhite,
             ),
           ),
         ),
       ),
       placeholder: placeholder,
-      placeholderStyle:
-          AppTypography.kMedium14.copyWith(color: AppColors.kBrown),
-      style: AppTypography.kRegular13.copyWith(color: AppColors.kBrown),
+      placeholderStyle: AppTypography.kMedium14,
+      style: AppTypography.kRegular13,
       // placeholderStyle: AppTypography.kMedium14,
       // style: AppTypography.kRegular13,
       decoration: BoxDecoration(
-        color: AppColors.kBrown400,
+        color: color,
         borderRadius: BorderRadius.circular(8).r,
-        backgroundBlendMode: BlendMode.colorDodge,
+        // backgroundBlendMode: BlendMode.,
       ),
       onSubmitted: onSubmitted,
     );
