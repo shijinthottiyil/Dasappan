@@ -24,7 +24,7 @@ class PlayPauseButton extends StatelessWidget {
         margin: const EdgeInsets.all(8).r,
         width: 56.h,
         height: 56.h,
-        child: LoadingAnimationWidget.threeArchedCircle(
+        child: LoadingAnimationWidget.beat(
           color: color,
           size: 50.r,
         ),

@@ -52,7 +52,7 @@ class NowPlayView extends StatelessWidget {
                 stream: AudioHelper.player.currentIndexStream,
                 builder: (_, currentIndexSnapshot) {
                   if (currentIndexSnapshot.hasError) {
-                    return Text(AppTexts.kLoading);
+                    return const Text(AppTexts.kLoading);
                   } else {
                     return Obx(
                       () => Text(
@@ -118,7 +118,7 @@ class NowPlayView extends StatelessWidget {
                 stream: AudioHelper.player.durationStream,
                 builder: (_, currentDurationStream) {
                   if (currentDurationStream.hasError) {
-                    return DurationTextErrorWidget();
+                    return const DurationTextErrorWidget();
                   } else {
                     AudioHelper.duration =
                         currentDurationStream.data ?? Duration.zero;
@@ -136,7 +136,7 @@ class NowPlayView extends StatelessWidget {
                                 AudioHelper.duration.toString().substring(2, 7),
                           );
                         } else {
-                          return DurationTextErrorWidget();
+                          return const DurationTextErrorWidget();
                         }
                       },
                     );
@@ -155,7 +155,7 @@ class NowPlayView extends StatelessWidget {
                     stream: AudioHelper.player.shuffleModeEnabledStream,
                     builder: (context, currentShuffleModeEnabledStream) {
                       if (currentShuffleModeEnabledStream.hasError) {
-                        return Icon(Icons.error_outline_rounded);
+                        return const Icon(Icons.error_outline_rounded);
                       } else {
                         final isShuffle = currentShuffleModeEnabledStream.data;
                         if (isShuffle == true) {
@@ -171,7 +171,7 @@ class NowPlayView extends StatelessWidget {
                                     ),
                                   );
                             },
-                            child: Icon(
+                            child: const Icon(
                               Icons.shuffle_on_rounded,
                             ),
                           );
@@ -188,7 +188,7 @@ class NowPlayView extends StatelessWidget {
                                     ),
                                   );
                             },
-                            child: Icon(
+                            child: const Icon(
                               Icons.shuffle_rounded,
                             ),
                           );
@@ -204,7 +204,7 @@ class NowPlayView extends StatelessWidget {
                         AudioHelper.player.seekToPrevious();
                       }
                     },
-                    child: Icon(Icons.skip_previous_rounded),
+                    child: const Icon(Icons.skip_previous_rounded),
                   ),
                   //-------------------------------
 
@@ -213,7 +213,7 @@ class NowPlayView extends StatelessWidget {
                     stream: AudioHelper.player.playerStateStream,
                     builder: (_, currentPlayerStateSnapshot) {
                       if (currentPlayerStateSnapshot.hasError) {
-                        return PlayErrorWidget();
+                        return const PlayErrorWidget();
                       } else {
                         return PlayPauseWidget(
                             playerState: currentPlayerStateSnapshot.data);
@@ -228,7 +228,7 @@ class NowPlayView extends StatelessWidget {
                         AudioHelper.player.seekToNext();
                       }
                     },
-                    child: Icon(Icons.skip_next_rounded),
+                    child: const Icon(Icons.skip_next_rounded),
                   ),
                   //-------------------------------
                   //Shuffle Button.
@@ -236,7 +236,7 @@ class NowPlayView extends StatelessWidget {
                     stream: AudioHelper.player.loopModeStream,
                     builder: (_, currentLoopModeStreamSnapshot) {
                       if (currentLoopModeStreamSnapshot.hasError) {
-                        return Icon(Icons.error_outline_rounded);
+                        return const Icon(Icons.error_outline_rounded);
                       } else {
                         final loopMode = currentLoopModeStreamSnapshot.data;
                         if (loopMode == LoopMode.off) {
@@ -250,7 +250,7 @@ class NowPlayView extends StatelessWidget {
                                     ),
                                   );
                             },
-                            child: Icon(
+                            child: const Icon(
                               Icons.repeat_rounded,
                             ),
                           );
@@ -265,7 +265,7 @@ class NowPlayView extends StatelessWidget {
                                     ),
                                   );
                             },
-                            child: Icon(
+                            child: const Icon(
                               Icons.repeat_one_rounded,
                             ),
                           );
@@ -294,7 +294,7 @@ class NowPlayView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       textDirection: TextDirection.ltr,
                       children: [
-                        Icon(Icons.queue_music_rounded),
+                        const Icon(Icons.queue_music_rounded),
                         Text(
                           'Music Queue',
                           style: TextStyle(fontSize: 8.sp),
