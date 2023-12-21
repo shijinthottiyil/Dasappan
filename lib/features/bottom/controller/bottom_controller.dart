@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_stream/features/bottom/model/bottom_model.dart';
 import 'package:music_stream/features/bottom/view/bottom_view.dart';

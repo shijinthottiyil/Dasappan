@@ -17,7 +17,7 @@ class ImageLoadingWidget extends StatelessWidget {
             color: AppColors.kRed,
           ),
         ),
-        child: Center(
+        child: const Center(
           child: CircularProgressIndicator(),
         ),
       ),

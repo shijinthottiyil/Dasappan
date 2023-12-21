@@ -14,7 +14,7 @@ class PlayPauseWidget extends StatelessWidget {
     return Container(
       width: 70.w,
       height: 70.w,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         shape: BoxShape.circle,
         color: AppColors.kGreen,
       ),

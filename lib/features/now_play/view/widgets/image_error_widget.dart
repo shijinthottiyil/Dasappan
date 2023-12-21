@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:music_stream/utils/constants/app_colors.dart';
 
 class ImageErrorWidget extends StatelessWidget {
@@ -18,7 +17,7 @@ class ImageErrorWidget extends StatelessWidget {
             color: AppColors.kRed,
           ),
         ),
-        child: Center(
+        child: const Center(
           child: Icon(Icons.error_rounded),
         ),
       ),
