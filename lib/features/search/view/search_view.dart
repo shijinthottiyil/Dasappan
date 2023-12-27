@@ -38,12 +38,12 @@ class SearchView extends StatelessWidget {
           appBar: AppBar(
             title: const Text(
               'Search',
-              style: TextStyle(
-                fontFamily: 'Orbitron',
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-                letterSpacing: 2,
-              ),
+              // style: TextStyle(
+              //   fontFamily: 'Orbitron',
+              //   fontWeight: FontWeight.bold,
+              //   fontSize: 20,
+              //   letterSpacing: 2,
+              // ),
             ),
           ),
           body: Column(

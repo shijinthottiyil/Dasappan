@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:music_stream/utils/constants/app_colors.dart';
 import 'package:music_stream/utils/constants/app_typography.dart';
+import 'package:music_stream/utils/helpers/audio_helper.dart';
 
 Future exitApp() async {
   await Get.dialog(
@@ -79,6 +80,10 @@ Future exitApp() async {
               ),
               InkWell(
                 onTap: () {
+                  AudioHelper.player.dispose();
+                  AudioHelper.playlist.value.clear();
+                  AudioHelper.playlistList.clear();
+
                   SystemNavigator.pop();
                 },
                 child: Text(

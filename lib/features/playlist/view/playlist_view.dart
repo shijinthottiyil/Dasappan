@@ -170,8 +170,7 @@ class _PlaylistViewState extends State<PlaylistView> {
                 Expanded(
                   child: Text(
                     widget.playlistName ?? AppTexts.kLoading,
-                    style: AppTypography.kSecondary.copyWith(
-                      fontSize: 20.sp,
+                    style: AppTypography.kBold24.copyWith(
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),

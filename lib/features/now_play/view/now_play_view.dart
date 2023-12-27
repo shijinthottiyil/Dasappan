@@ -29,9 +29,7 @@ class NowPlayView extends StatelessWidget {
               StreamBuilder(
                 stream: AudioHelper.player.currentIndexStream,
                 builder: (_, currentIndexSnapshot) {
-                  if (currentIndexSnapshot.hasError) {
-                    return const ImageErrorWidget();
-                  } else {
+                  if (currentIndexSnapshot.hasData) {
                     return Obx(
                       () => ImageWidget(
                         url: AudioHelper.playlistList
@@ -42,6 +40,8 @@ class NowPlayView extends StatelessWidget {
                             .toString(),
                       ),
                     );
+                  } else {
+                    return const ImageErrorWidget();
                   }
                 },
               ),
@@ -51,9 +51,7 @@ class NowPlayView extends StatelessWidget {
               StreamBuilder(
                 stream: AudioHelper.player.currentIndexStream,
                 builder: (_, currentIndexSnapshot) {
-                  if (currentIndexSnapshot.hasError) {
-                    return const Text(AppTexts.kLoading);
-                  } else {
+                  if (currentIndexSnapshot.hasData) {
                     return Obx(
                       () => Text(
                         AudioHelper.playlistList
@@ -64,6 +62,8 @@ class NowPlayView extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                     );
+                  } else {
+                    return const Text(AppTexts.kLoading);
                   }
                 },
               ),
@@ -82,9 +82,7 @@ class NowPlayView extends StatelessWidget {
                     return StreamBuilder(
                       stream: AudioHelper.player.positionStream,
                       builder: (_, currentPositionStream) {
-                        if (currentPositionStream.hasError) {
-                          return const SizedBox.shrink();
-                        } else {
+                        if (currentPositionStream.hasData) {
                           return SizedBox(
                             width: double.infinity,
                             child: CupertinoSlider(
@@ -104,6 +102,8 @@ class NowPlayView extends StatelessWidget {
                               }),
                             ),
                           );
+                        } else {
+                          return const SizedBox.shrink();
                         }
                       },
                     );
