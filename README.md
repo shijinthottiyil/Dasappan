@@ -9,14 +9,15 @@ A Flutter application for streaming music from YouTube Music.
 - Ad free.
 - No subscription.
 - Background playback.
-- Glass Morphic Ui.
+- Dark,Light theme based on System settings.
 - Mini Player.
 - Voice search.
 - Toggle audio quality.
 - Reorderable Queue.
-- Dynamic wallpaper from Unsplash api.
+- Sleep Timer
 - Search for songs and playlists.
 - Neat and clean code.
+- App close bug fixed.
 
 
 
