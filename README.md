@@ -2,7 +2,6 @@
 
 A Flutter application for streaming music from YouTube Music.
 
-
 ## Features
 
 - Play (almost) any song or video from YouTube Music.
@@ -17,27 +16,54 @@ A Flutter application for streaming music from YouTube Music.
 - Reorderable Queue.
 - Dynamic wallpaper from Unsplash api.
 - Search for songs and playlists.
-- Neet and clean code.
+- Neat and clean code.
+
+
+
+
+
 
 
 ## Screenshots
-![Screenshot_20231127-141112](https://github.com/shijinthottiyil/Dasappan/assets/115061533/ae7afd2e-fe84-4426-b8ef-7d65fb8745ff)
+### Light Theme
+<table>
+  <tr>
+    <td><img src="https://github.com/shijinthottiyil/Dasappan/assets/115061533/b24f8fed-c08e-4345-9333-f0b36b3a84ab" alt="Screenshot 1" width="200"/></td>
+    <td><img src="https://github.com/shijinthottiyil/Dasappan/assets/115061533/95d1bc5b-1a97-4b15-a757-1d122ad0e2e7" alt="Screenshot 2" width="200"/></td>
+    <td><img src="https://github.com/shijinthottiyil/Dasappan/assets/115061533/7da52a34-65e6-46be-850a-b41d37d05768" alt="Screenshot 3" width="200"/></td>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/shijinthottiyil/Dasappan/assets/115061533/12a49073-63f6-4879-9be2-bc21ef5ab106" alt="Screenshot 4" width="200"/></td>
+    <td><img src="https://github.com/shijinthottiyil/Dasappan/assets/115061533/94343de5-a783-42a3-a340-18e4a7fb91e3" alt="Screenshot 5" width="200"/></td>
+     <td><img src="https://github.com/shijinthottiyil/Dasappan/assets/115061533/5d1f6514-a58c-4144-a196-2f027d597c64" alt="Screenshot 5" width="200"/></td>
+  </tr>
+ 
+</table>
 
-![Screenshot_20231127-141127](https://github.com/shijinthottiyil/Dasappan/assets/115061533/e3c9897a-bd3e-47e9-a99d-4402b0bf4b10)
-![Screenshot_20231127-141415](https://github.com/shijinthottiyil/Dasappan/assets/115061533/8016e0d8-e666-4a66-908b-9080b151bb9b)
+### Dark Theme
 
-![Screenshot_20231127-141424](https://github.com/shijinthottiyil/Dasappan/assets/115061533/b50bfb1f-3f8d-4d75-9460-840a48bcef2c)
+<table>
+  <tr>
+    <td><img src="https://github.com/shijinthottiyil/Dasappan/assets/115061533/ffe64a22-df87-409e-9df1-3593009a6169" alt="Screenshot 1" width="200"/></td>
+    <td><img src="https://github.com/shijinthottiyil/Dasappan/assets/115061533/c468c960-c99f-4c55-b949-486312ec0def" alt="Screenshot 2" width="200"/></td>
+    <td><img src="https://github.com/shijinthottiyil/Dasappan/assets/115061533/e08a82cd-a92d-42d1-b077-671319107f54" alt="Screenshot 3" width="200"/></td>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/shijinthottiyil/Dasappan/assets/115061533/d4d51c0b-b35a-4603-ac07-8f728c8aec98" alt="Screenshot 4" width="200"/></td>
+    <td><img src="https://github.com/shijinthottiyil/Dasappan/assets/115061533/88373dfd-b466-4481-b9b0-3f09b066772f" alt="Screenshot 5" width="200"/></td>
+     <td><img src="https://github.com/shijinthottiyil/Dasappan/assets/115061533/731cf609-5d73-4f4d-9f48-1b5afb7bd421" alt="Screenshot 5" width="200"/></td>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/shijinthottiyil/Dasappan/assets/115061533/a154fa2b-a461-4461-b02d-f6999abfb6bc" alt="Screenshot 4" width="200"/></td>
+    <td><img src="https://github.com/shijinthottiyil/Dasappan/assets/115061533/76578a51-3549-463c-b476-6123895c8217" alt="Screenshot 5" width="200"/></td>
+    
+  </tr>
+</table>
 
-![Screenshot_20231127-141433](https://github.com/shijinthottiyil/Dasappan/assets/115061533/1da8265c-6e40-448f-b612-3081587de956)
-
-![Screenshot_20231127-141453](https://github.com/shijinthottiyil/Dasappan/assets/115061533/97c3f2c5-fcff-43a0-9205-3c6d419dad6e)
-
-![Screenshot_20231127-141521](https://github.com/shijinthottiyil/Dasappan/assets/115061533/b8da3aaa-19fd-4b2d-83c1-149ae13d3728)
-![Screenshot_20231127-141601](https://github.com/shijinthottiyil/Dasappan/assets/115061533/d55f1a24-5b8d-4ba9-be02-b25963cac3be)
 
 
-![Screenshot_20231127-141612](https://github.com/shijinthottiyil/Dasappan/assets/115061533/9ba96f29-dc6d-4afa-b1a3-d70ea5057134)
 
-![Screenshot_20231127-141632](https://github.com/shijinthottiyil/Dasappan/assets/115061533/a1950fb4-2a87-4853-a7c5-12594632ca2c)
-![Screenshot_20231127-141647](https://github.com/shijinthottiyil/Dasappan/assets/115061533/eb3c0edb-cede-4126-8dc5-32c59b728927)
+
+
+
 
