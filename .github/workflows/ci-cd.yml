@@ -1,4 +1,6 @@
 name: CI/CD
+permissions:
+    contents: write
 
 on:
   pull_request:
