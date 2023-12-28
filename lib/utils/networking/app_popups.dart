@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:music_stream/utils/constants/constants.dart';
@@ -31,13 +33,38 @@ class AppPopups {
 
   // Loader
   static Future<void> showDialog() async {
+    const color = AppColors.kWhite;
+    final size = 50.r;
+// Define all your loading animations here
+    var loadingAnimationsList = [
+      LoadingAnimationWidget.beat(color: color, size: size),
+      LoadingAnimationWidget.bouncingBall(color: color, size: size),
+      LoadingAnimationWidget.discreteCircle(color: color, size: size),
+      LoadingAnimationWidget.dotsTriangle(color: color, size: size),
+      LoadingAnimationWidget.fallingDot(color: color, size: size),
+      LoadingAnimationWidget.halfTriangleDot(color: color, size: size),
+      LoadingAnimationWidget.hexagonDots(color: color, size: size),
+      LoadingAnimationWidget.horizontalRotatingDots(color: color, size: size),
+      LoadingAnimationWidget.inkDrop(color: color, size: size),
+      LoadingAnimationWidget.newtonCradle(color: color, size: size),
+      LoadingAnimationWidget.prograssiveDots(color: color, size: size),
+      LoadingAnimationWidget.staggeredDotsWave(color: color, size: size),
+      LoadingAnimationWidget.stretchedDots(color: color, size: size),
+      LoadingAnimationWidget.threeArchedCircle(color: color, size: size),
+      LoadingAnimationWidget.threeRotatingDots(color: color, size: size),
+      LoadingAnimationWidget.twoRotatingArc(color: color, size: size),
+      LoadingAnimationWidget.waveDots(color: color, size: size),
+    ];
+
+    // Randomly choose a loading animation
+    final random = Random();
+    final randomLoadingAnimation =
+        loadingAnimationsList[random.nextInt(loadingAnimationsList.length)];
+
     await Get.dialog(
       WillPopScope(
         child: Center(
-          child: LoadingAnimationWidget.inkDrop(
-            color: AppColors.kWhite,
-            size: 50.r,
-          ),
+          child: randomLoadingAnimation,
         ),
         onWillPop: () => Future.value(false),
       ),

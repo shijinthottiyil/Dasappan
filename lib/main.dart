@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           theme: AppTheme.lightTheme,
-          darkTheme: AppTheme.darkThemd,
+          darkTheme: AppTheme.darkTheme,
           themeMode: ThemeMode.system,
           scrollBehavior: const ScrollBehavior()
               .copyWith(physics: const BouncingScrollPhysics()),

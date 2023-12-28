@@ -11,16 +11,17 @@ class AppTheme {
     brightness: Brightness.light,
 
     // scaffoldBackgroundColor: ThemeData.light().scaffoldBackgroundColor,
-    fontFamily: AppTexts.kFontFamily,
+    // fontFamily: AppTexts.kFontFamily,
+    // textTheme: GoogleFonts.openSansTextTheme(),
   );
 
   //Dark Theme.
-  static ThemeData darkThemd = ThemeData(
+  static ThemeData darkTheme = ThemeData(
     // useMaterial3: true,
     // primarySwatch: Colors.teal,
     brightness: Brightness.dark,
 
     // scaffoldBackgroundColor: ThemeData.dark().scaffoldBackgroundColor,
-    fontFamily: AppTexts.kFontFamily,
+    // fontFamily: AppTexts.kFontFamily,
   );
 }

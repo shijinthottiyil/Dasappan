@@ -43,7 +43,7 @@ class HomeView extends StatelessWidget {
                   if (i == 0) ...[
                     Text(
                       c.home.homeList[i].title ?? AppTexts.kLoading,
-                      style: AppTypography.kSecondary,
+                      // style: AppTypography.kSecondary,
                     ),
                   ],
                   if (i != 0) ...[
@@ -51,7 +51,7 @@ class HomeView extends StatelessWidget {
                       padding: EdgeInsets.symmetric(vertical: 20.r),
                       child: Text(
                         c.home.homeList[i].title ?? AppTexts.kLoading,
-                        style: AppTypography.kSecondary,
+                        // style: AppTypography.kSecondary,
                       ),
                     ),
                   ],

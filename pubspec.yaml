@@ -83,6 +83,9 @@ dependencies:
   # Here we use it for implementing the autoscrollable fancy splash screen.
   # flutter_staggered_grid_view: ^0.7.0
 
+  # For Using Custom FontFamily
+  # google_fonts: ^6.1.0
+
 
 
 
@@ -107,9 +110,9 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
      - assets/images/
-     - assets/fonts/
+    #  - assets/fonts/
      - assets/lottie/
-     - assets/fonts/orbitron/
+    #  - assets/fonts/orbitron/
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -120,7 +123,7 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  fonts:
+  # fonts:
     # - family: Inter
     #   fonts:
     #     - asset: assets/fonts/Inter-Regular.ttf
@@ -133,14 +136,14 @@ flutter:
     #     - asset: assets/fonts/Inter-Light.ttf
     #     - asset: assets/fonts/Inter-Thin.ttf
 
-    - family: Orbitron
-      fonts:
-        - asset: assets/fonts/orbitron/Orbitron-Bold.ttf
-        - asset: assets/fonts/orbitron/Orbitron-Black.ttf
-        - asset: assets/fonts/orbitron/Orbitron-ExtraBold.ttf
-        - asset: assets/fonts/orbitron/Orbitron-Medium.ttf
-        - asset: assets/fonts/orbitron/Orbitron-Regular.ttf
-        - asset: assets/fonts/orbitron/Orbitron-SemiBold.ttf
+    # - family: Orbitron
+    #   fonts:
+    #     - asset: assets/fonts/orbitron/Orbitron-Bold.ttf
+    #     - asset: assets/fonts/orbitron/Orbitron-Black.ttf
+    #     - asset: assets/fonts/orbitron/Orbitron-ExtraBold.ttf
+    #     - asset: assets/fonts/orbitron/Orbitron-Medium.ttf
+    #     - asset: assets/fonts/orbitron/Orbitron-Regular.ttf
+    #     - asset: assets/fonts/orbitron/Orbitron-SemiBold.ttf
         
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

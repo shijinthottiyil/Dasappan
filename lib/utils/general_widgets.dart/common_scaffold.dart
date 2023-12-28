@@ -18,12 +18,12 @@ class CommonScaffold extends StatelessWidget {
         appBar: AppBar(
           title: Text(
             appBarTitle,
-            style: const TextStyle(
-              fontFamily: 'Orbitron',
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              letterSpacing: 2,
-            ),
+            // style: const TextStyle(
+            //   fontFamily: 'Orbitron',
+            //   fontWeight: FontWeight.bold,
+            //   fontSize: 20,
+            //   letterSpacing: 2,
+            // ),
           ),
         ),
         body: body,
