@@ -8,6 +8,7 @@ import 'package:music_stream/utils/constants/constants.dart';
 import 'package:music_stream/utils/general_widgets.dart/common_scaffold.dart';
 import 'package:music_stream/utils/helpers/audio_helper.dart';
 import 'package:music_stream/utils/helpers/exit_app.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -133,6 +134,15 @@ class HomeView extends StatelessWidget {
                             var data = c.home.homeList[i].contents![index];
                             return InkWell(
                               onTap: () {
+                                PersistentNavBarNavigator.pushNewScreen(
+                                  context,
+                                  screen: PlaylistView(
+                                    playlistImg: data.thumbnails?.last.url,
+                                    playlistName: data.title,
+                                    playlistId: data.playlistId,
+                                  ),
+                                );
+                                /*
                                 Get.to(
                                   () => PlaylistView(
                                     playlistImg: data.thumbnails?.last.url,
@@ -140,6 +150,7 @@ class HomeView extends StatelessWidget {
                                     playlistId: data.playlistId,
                                   ),
                                 );
+                                */
                               },
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(6).r,
@@ -174,8 +185,8 @@ class HomeView extends StatelessWidget {
                 ],
                 Obx(
                   () => AudioHelper.playlistList.isNotEmpty
-                      ? AppSpacing.gapH200
-                      : AppSpacing.gapH125,
+                      ? AppSpacing.gapH100
+                      : AppSpacing.gapH40,
                 ),
               ],
             ),

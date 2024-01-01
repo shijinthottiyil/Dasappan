@@ -99,8 +99,8 @@ class SearchSong extends StatelessWidget {
             ),
             Obx(
               () => AudioHelper.playlistList.isNotEmpty
-                  ? AppSpacing.gapH200
-                  : AppSpacing.gapH100,
+                  ? AppSpacing.gapH80
+                  : AppSpacing.gapH20,
             ),
           ],
         ),

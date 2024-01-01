@@ -204,7 +204,10 @@ class NowPlayView extends StatelessWidget {
                         AudioHelper.player.seekToPrevious();
                       }
                     },
-                    child: const Icon(Icons.skip_previous_rounded),
+                    child: const Icon(
+                      Icons.skip_previous_rounded,
+                      size: 36,
+                    ),
                   ),
                   //-------------------------------
 
@@ -228,7 +231,10 @@ class NowPlayView extends StatelessWidget {
                         AudioHelper.player.seekToNext();
                       }
                     },
-                    child: const Icon(Icons.skip_next_rounded),
+                    child: const Icon(
+                      Icons.skip_next_rounded,
+                      size: 36,
+                    ),
                   ),
                   //-------------------------------
                   //Shuffle Button.

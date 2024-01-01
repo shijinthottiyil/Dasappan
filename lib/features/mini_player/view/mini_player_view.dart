@@ -13,7 +13,10 @@ class MiniPlayerView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => Container(
-        color: context.theme.scaffoldBackgroundColor,
+        decoration: BoxDecoration(
+          color: context.theme.scaffoldBackgroundColor,
+          border: _getBorder(context),
+        ),
         child: AudioHelper.playlistList.isEmpty
             ? null
             : Padding(
@@ -58,14 +61,18 @@ class MiniPlayerView extends StatelessWidget {
                         ),
                         SizedBox(width: 5.w),
                         Expanded(
-                          child: Text(
-                            AudioHelper.playlistList
-                                .elementAt(currentIndex.data!)
-                                .title
-                                .toString(),
-                            style: AppTypography.kBold12,
+                          child: DefaultTextStyle(
+                            style: AppTypography.kBold12.copyWith(
+                              color: context.textTheme.bodyLarge!.color,
+                            ),
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
+                            child: Text(
+                              AudioHelper.playlistList
+                                  .elementAt(currentIndex.data!)
+                                  .title
+                                  .toString(),
+                            ),
                           ),
                         ),
                         Align(
@@ -84,6 +91,16 @@ class MiniPlayerView extends StatelessWidget {
                 ),
               ),
       ),
+    );
+  }
+
+  //Helper Fun. which will return Border Based on Theme.
+  Border _getBorder(BuildContext context) {
+    const width = 0.2;
+    var color = context.isDarkMode ? AppColors.kWhite : AppColors.kBlack;
+    return Border(
+      top: BorderSide(width: width, color: color),
+      bottom: BorderSide(width: width, color: color),
     );
   }
 }
