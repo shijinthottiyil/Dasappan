@@ -19,6 +19,10 @@ class PlaylistController extends GetxController {
   Future<void> getPlaylistList(String? browseId) async {
     try {
       AppPopups.showDialog();
+
+//Implimenting PersistentBottomNavigation Bar And Find a Small Bug and Fixing That.
+      playlist.playlistList.clear();
+
       var response = await service.getPlaylistList(browseId);
       // logger.f(response,
       //     error: 'PlaylistController getPlaylistList() response');

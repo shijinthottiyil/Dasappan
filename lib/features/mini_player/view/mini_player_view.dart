@@ -58,14 +58,18 @@ class MiniPlayerView extends StatelessWidget {
                         ),
                         SizedBox(width: 5.w),
                         Expanded(
-                          child: Text(
-                            AudioHelper.playlistList
-                                .elementAt(currentIndex.data!)
-                                .title
-                                .toString(),
-                            style: AppTypography.kBold12,
+                          child: DefaultTextStyle(
+                            style: AppTypography.kBold12.copyWith(
+                              color: context.textTheme.bodyLarge!.color,
+                            ),
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
+                            child: Text(
+                              AudioHelper.playlistList
+                                  .elementAt(currentIndex.data!)
+                                  .title
+                                  .toString(),
+                            ),
                           ),
                         ),
                         Align(

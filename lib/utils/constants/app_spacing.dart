@@ -19,7 +19,7 @@ class AppSpacing {
   static final gapW56 = SizedBox(width: 56.w);
   static final gapW60 = SizedBox(width: 60.w);
   static final gapW64 = SizedBox(width: 64.w);
-  static final gapW100 = SizedBox(width: 64.w);
+  static final gapW100 = SizedBox(width: 100.w);
 
   // Height
   static final gapH4 = SizedBox(height: 4.h);
@@ -38,6 +38,8 @@ class AppSpacing {
   static final gapH56 = SizedBox(height: 56.h);
   static final gapH60 = SizedBox(height: 60.h);
   static final gapH64 = SizedBox(height: 64.h);
+  static final gapH80 = SizedBox(height: 80.h);
+  static final gapH92 = SizedBox(height: 92.h);
   static final gapH100 = SizedBox(height: 100.h);
   static final gapH125 = SizedBox(height: 125.h);
   static final gapH200 = SizedBox(height: 200.h);

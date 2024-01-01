@@ -86,6 +86,9 @@ dependencies:
   # For Using Custom FontFamily
   # google_fonts: ^6.1.0
 
+  # Package for Persistent Bottom Navigation Bar.
+  persistent_bottom_nav_bar: ^5.0.2
+
 
 
 
