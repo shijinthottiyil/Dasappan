@@ -13,7 +13,10 @@ class MiniPlayerView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => Container(
-        color: context.theme.scaffoldBackgroundColor,
+        decoration: BoxDecoration(
+          color: context.theme.scaffoldBackgroundColor,
+          border: _getBorder(context),
+        ),
         child: AudioHelper.playlistList.isEmpty
             ? null
             : Padding(
@@ -88,6 +91,16 @@ class MiniPlayerView extends StatelessWidget {
                 ),
               ),
       ),
+    );
+  }
+
+  //Helper Fun. which will return Border Based on Theme.
+  Border _getBorder(BuildContext context) {
+    const width = 0.2;
+    var color = context.isDarkMode ? AppColors.kWhite : AppColors.kBlack;
+    return Border(
+      top: BorderSide(width: width, color: color),
+      bottom: BorderSide(width: width, color: color),
     );
   }
 }

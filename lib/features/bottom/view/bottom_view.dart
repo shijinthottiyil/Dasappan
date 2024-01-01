@@ -47,6 +47,7 @@ class BottomView extends StatelessWidget {
     // _controller = PersistentTabController(initialIndex: 0);
     return Obx(
       () => SlidingUpPanel(
+        renderPanelSheet: false,
         margin: const EdgeInsets.only(bottom: 70),
         controller: pc,
         maxHeight: MediaQuery.sizeOf(context).height,
@@ -55,6 +56,8 @@ class BottomView extends StatelessWidget {
         collapsed: const MiniPlayerView(),
         body: PersistentTabView(
           onItemSelected: (int selectedItem) {
+            // print(selectedItem);
+
             pc.close();
           },
           backgroundColor: context.theme.canvasColor,

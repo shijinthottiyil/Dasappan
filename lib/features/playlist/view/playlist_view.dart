@@ -167,7 +167,7 @@ class _PlaylistViewState extends State<PlaylistView> {
           //Button to play all songs in the playlist in the original order.
           Positioned(
             right: 10,
-            top: context.height / 3,
+            top: context.height / 2.8,
             child: FloatingActionButton(
               onPressed: _playlistC.playAll,
               child: const Icon(Icons.play_arrow_rounded),
