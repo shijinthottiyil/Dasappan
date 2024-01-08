@@ -79,7 +79,7 @@ class HomeView extends StatelessWidget {
                                 //       ),
                                 child: FadeInImage(
                                   placeholder: AssetImage(
-                                    AppAssets.kLenin,
+                                    AppAssets.kMusicLogo,
                                   ),
                                   image: NetworkImage(
                                     data.thumbnails!.last.url!,
@@ -87,7 +87,7 @@ class HomeView extends StatelessWidget {
                                   imageErrorBuilder:
                                       (context, error, stackTrace) =>
                                           Image.asset(
-                                    AppAssets.kLenin,
+                                    AppAssets.kMusicLogo,
                                     width: 48.w,
                                     height: 48.w,
                                     fit: BoxFit.cover,
@@ -157,7 +157,7 @@ class HomeView extends StatelessWidget {
                                 //       ),
                                 child: FadeInImage(
                                   placeholder: AssetImage(
-                                    AppAssets.kLenin,
+                                    AppAssets.kMusicLogo,
                                   ),
                                   image: NetworkImage(
                                     data.thumbnails!.last.url!,
@@ -165,7 +165,7 @@ class HomeView extends StatelessWidget {
                                   imageErrorBuilder:
                                       (context, error, stackTrace) =>
                                           Image.asset(
-                                    AppAssets.kLenin,
+                                    AppAssets.kMusicLogo,
                                     // width: 48.w,
                                     // height: 48.w,
                                     fit: BoxFit.cover,

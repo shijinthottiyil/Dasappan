@@ -63,13 +63,13 @@ class SearchPlay extends StatelessWidget {
                               borderRadius: BorderRadius.circular(4).r,
                               child: FadeInImage(
                                 placeholder: AssetImage(
-                                  AppAssets.kLenin,
+                                  AppAssets.kMusicLogo,
                                 ),
                                 image: NetworkImage(
                                     data.thumbnails?.last.url ?? ''),
                                 imageErrorBuilder:
                                     (context, error, stackTrace) => Image.asset(
-                                  AppAssets.kLenin,
+                                  AppAssets.kMusicLogo,
                                   width: double.infinity,
                                   fit: BoxFit.cover,
                                 ),

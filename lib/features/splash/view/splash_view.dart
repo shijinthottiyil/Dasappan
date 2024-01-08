@@ -2,9 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:music_stream/features/home/controller/home_controller.dart';
-import 'package:music_stream/utils/constants/app_colors.dart';
+import 'package:music_stream/utils/constants/constants.dart';
 import 'package:music_stream/utils/networking/connection_controller.dart';
 
 class SplashView extends StatelessWidget {
@@ -12,15 +11,36 @@ class SplashView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final connectionC = Get.put(ConnectionController());
-    final homeC = Get.put(HomeController());
-    var platformBrightness = MediaQuery.platformBrightnessOf(context);
+    Get.put(ConnectionController());
+    Get.put(HomeController());
+
+    ///Don't delete this code you may need this code for switching between themes baseed on system settings.
+    /* var platformBrightness = MediaQuery.platformBrightnessOf(context);
     var color = platformBrightness == Brightness.light
         ? AppColors.kBlack
         : AppColors.kWhite;
+        */
+    // -------------------------------------------------------------------------------------------------
     return Scaffold(
-      body: Center(
-        child: LoadingAnimationWidget.waveDots(color: color, size: 50.w),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Spacer(
+            flex: 2,
+          ),
+          Center(
+            child: Image.asset(
+              AppAssets.kLenin,
+              width: 150.w,
+              height: 150.w,
+              fit: BoxFit.contain,
+            ),
+          ),
+          const Spacer(),
+          const CircularProgressIndicator(),
+          const Spacer(),
+        ],
       ),
     );
   }

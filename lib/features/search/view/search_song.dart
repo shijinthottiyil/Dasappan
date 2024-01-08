@@ -62,14 +62,14 @@ class SearchSong extends StatelessWidget {
                       borderRadius: BorderRadius.circular(6).r,
                       child: FadeInImage(
                         placeholder: AssetImage(
-                          AppAssets.kLenin,
+                          AppAssets.kMusicLogo,
                         ),
                         image: NetworkImage(
                           data.thumbnails!.last.url!,
                         ),
                         imageErrorBuilder: (context, error, stackTrace) =>
                             Image.asset(
-                          AppAssets.kLenin,
+                          AppAssets.kMusicLogo,
                           width: 48.w,
                           height: 48.w,
                           fit: BoxFit.cover,

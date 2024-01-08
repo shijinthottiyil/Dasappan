@@ -47,7 +47,7 @@ class BottomView extends StatelessWidget {
     // _controller = PersistentTabController(initialIndex: 0);
     return Obx(
       () => SlidingUpPanel(
-        renderPanelSheet: false,
+        renderPanelSheet: true,
         margin: const EdgeInsets.only(bottom: 70),
         controller: pc,
         maxHeight: MediaQuery.sizeOf(context).height,

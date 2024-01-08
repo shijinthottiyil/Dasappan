@@ -58,6 +58,7 @@ class NowPlayView extends StatelessWidget {
                             .elementAt(currentIndexSnapshot.data!)
                             .title
                             .toString(),
+                        style: AppTypography.kBold24,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -83,9 +84,10 @@ class NowPlayView extends StatelessWidget {
                       stream: AudioHelper.player.positionStream,
                       builder: (_, currentPositionStream) {
                         if (currentPositionStream.hasData) {
-                          return SizedBox(
-                            width: double.infinity,
-                            child: CupertinoSlider(
+                          return SliderTheme(
+                            data:
+                                SliderThemeData(trackShape: CustomTrackShape()),
+                            child: Slider(
                               min: const Duration(microseconds: 0)
                                   .inSeconds
                                   .toDouble(),
@@ -102,6 +104,23 @@ class NowPlayView extends StatelessWidget {
                               }),
                             ),
                           );
+                          /* return CupertinoSlider(
+                            min: const Duration(microseconds: 0)
+                                .inSeconds
+                                .toDouble(),
+                            max: currentDurationStream.data?.inSeconds
+                                    .toDouble() ??
+                                1.0,
+                            value: currentPositionStream.data?.inSeconds
+                                    .toDouble() ??
+                                0.5,
+                            onChanged: ((value) {
+                              AudioHelper.player.seek(
+                                Duration(seconds: value.toInt()),
+                              );
+                            }),
+                          );
+                          */
                         } else {
                           return const SizedBox.shrink();
                         }
@@ -165,7 +184,7 @@ class NowPlayView extends StatelessWidget {
                                   .setShuffleModeEnabled(false)
                                   .then(
                                     (_) => Get.snackbar(
-                                      snackPosition: SnackPosition.BOTTOM,
+                                      // snackPosition: SnackPosition.BOTTOM,
                                       'ദാസപ്പൻ',
                                       'Shuffle off.',
                                     ),
@@ -182,7 +201,7 @@ class NowPlayView extends StatelessWidget {
                                   .setShuffleModeEnabled(true)
                                   .then(
                                     (_) => Get.snackbar(
-                                      snackPosition: SnackPosition.BOTTOM,
+                                      // snackPosition: SnackPosition.BOTTOM,
                                       'ദാസപ്പൻ',
                                       'Shuffle on.',
                                     ),
@@ -250,7 +269,7 @@ class NowPlayView extends StatelessWidget {
                             onTap: () {
                               AudioHelper.player.setLoopMode(LoopMode.one).then(
                                     (_) => Get.snackbar(
-                                      snackPosition: SnackPosition.BOTTOM,
+                                      // snackPosition: SnackPosition.BOTTOM,
                                       'ദാസപ്പൻ',
                                       'Repeat on.',
                                     ),
@@ -265,7 +284,7 @@ class NowPlayView extends StatelessWidget {
                             onTap: () {
                               AudioHelper.player.setLoopMode(LoopMode.off).then(
                                     (_) => Get.snackbar(
-                                      snackPosition: SnackPosition.BOTTOM,
+                                      // snackPosition: SnackPosition.BOTTOM,
                                       'ദാസപ്പൻ',
                                       'Repeat off.',
                                     ),
@@ -318,3 +337,22 @@ class NowPlayView extends StatelessWidget {
     );
   }
 }
+
+//The Code below is used for removing the padding from the slider.If we use the Slider only it will have a default padding.
+class CustomTrackShape extends RoundedRectSliderTrackShape {
+  @override
+  Rect getPreferredRect({
+    required RenderBox parentBox,
+    Offset offset = Offset.zero,
+    required SliderThemeData sliderTheme,
+    bool isEnabled = false,
+    bool isDiscrete = false,
+  }) {
+    final trackHeight = sliderTheme.trackHeight;
+    final trackLeft = offset.dx;
+    final trackTop = offset.dy + (parentBox.size.height - trackHeight!) / 2;
+    final trackWidth = parentBox.size.width;
+    return Rect.fromLTWH(trackLeft, trackTop, trackWidth, trackHeight);
+  }
+}
+// ------------------------------------------------------------------------------------------------------------------------.

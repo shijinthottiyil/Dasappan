@@ -16,12 +16,12 @@ class PlaylistController extends GetxController {
   var service = PlaylistService();
 
   ///Method to fetch all songs to display in the playlist view.[kPlaylistList].
-  Future<void> getPlaylistList(String? browseId) async {
+  Future<List<PlaylistModel>> getPlaylistList(String? browseId) async {
     try {
       AppPopups.showDialog();
 
 //Implimenting PersistentBottomNavigation Bar And Find a Small Bug and Fixing That.
-      playlist.playlistList.clear();
+      playlist.playlistList = [];
 
       var response = await service.getPlaylistList(browseId);
       // logger.f(response,
@@ -34,12 +34,14 @@ class PlaylistController extends GetxController {
         var json = trackList[i];
         playlist.playlistList.add(PlaylistModel.fromJson(json));
       }
+      return playlist.playlistList;
     } on DioException catch (dioError) {
       DioExceptionHandler.dioError(dioError.type);
     } catch (err) {
       AppPopups.cancelDialog();
       logger.e(err, error: 'PlaylistController getPlaylistList() catch');
     }
+    return playlist.playlistList;
   }
 
 //  ///Method to play all songs in the current playlist one by one when user clicks the FAB.
