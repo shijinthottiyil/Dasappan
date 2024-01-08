@@ -34,7 +34,7 @@ class HomeController extends GetxController {
         if (isSplash) {
           Get.offAll(
             () => const BottomView(),
-            transition: Transition.downToUp,
+            // transition: Transition.downToUp,
           );
         }
         // AppPopups.cancelDialog();

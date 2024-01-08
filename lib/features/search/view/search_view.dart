@@ -7,14 +7,20 @@ import 'package:music_stream/features/search/view/search_play.dart';
 import 'package:music_stream/features/search/view/search_song.dart';
 import 'package:music_stream/features/search/view/widgets/search_textfield.dart';
 import 'package:music_stream/features/search/controller/search_controller.dart';
+import 'package:music_stream/features/search/view/widgets/search_textfield_widget.dart';
 import 'package:music_stream/utils/constants/constants.dart';
+import 'package:music_stream/utils/networking/logger.dart';
 
 class SearchView extends StatelessWidget {
   const SearchView({super.key});
 
   TabBar get _tabBar => const TabBar(
+        dividerColor: Colors.transparent,
         tabs: [
-          Tab(icon: Icon(Icons.search_rounded)),
+          Tab(
+              icon: Text(
+            'Song',
+          )),
           Tab(icon: Icon(Icons.queue_music_rounded)),
         ],
       );
@@ -38,16 +44,20 @@ class SearchView extends StatelessWidget {
           appBar: AppBar(
             title: const Text(
               'Search',
-              // style: TextStyle(
-              //   fontFamily: 'Orbitron',
-              //   fontWeight: FontWeight.bold,
-              //   fontSize: 20,
-              //   letterSpacing: 2,
-              // ),
+              // style: Theme.of(context).primaryTextTheme.headlineLarge,
             ),
           ),
           body: Column(
             children: [
+              //SearchBar.
+              SearchTextFieldWidget(
+                onSubmitted: (keword) {
+                  c.getSearch(keword);
+                },
+                onTap: c.voiceSearchTap,
+              ),
+// ---------------------------------
+              /* <---Old TextField.
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: SearchTextField(
@@ -58,8 +68,25 @@ class SearchView extends StatelessWidget {
                   },
                 ),
               ),
+              */
               AppSpacing.gapH8,
-              _tabBar,
+              TabBar(
+                dividerColor: Colors.transparent,
+                tabs: [
+                  Tab(
+                    icon: Text(
+                      'Song',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ),
+                  Tab(
+                    icon: Text(
+                      'Playlist',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ),
+                ],
+              ),
               const Expanded(
                 child: TabBarView(
                   children: [

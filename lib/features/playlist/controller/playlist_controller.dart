@@ -84,7 +84,7 @@ class PlaylistController extends GetxController {
       Get.snackbar(
         AppTexts.kTitle,
         'Playing this Playlist',
-        snackPosition: SnackPosition.BOTTOM,
+        // snackPosition: SnackPosition.BOTTOM,
       );
 
       AudioHelper.playlistList.add(playlist.playlistList.first);
@@ -154,7 +154,7 @@ class PlaylistController extends GetxController {
       Get.snackbar(
         AppTexts.kTitle,
         'Playing Selected Song',
-        snackPosition: SnackPosition.BOTTOM,
+        // snackPosition: SnackPosition.BOTTOM,
       );
 
       AudioHelper.playlistList.add(playlist.playlistList[index]);
