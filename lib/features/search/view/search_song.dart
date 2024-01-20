@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
 import 'package:music_stream/features/home/controller/home_controller.dart';
 import 'package:music_stream/features/search/controller/search_controller.dart';
-
-import 'package:music_stream/utils/constants/constants.dart';
-import 'package:music_stream/utils/helpers/audio_helper.dart';
+import 'package:music_stream/utils/logic/helpers/audio_helper.dart';
+import 'package:music_stream/utils/ui/constants/constants.dart';
+import 'package:music_stream/utils/ui/shared_widgets/shared_widgets.dart';
 
 class SearchSong extends StatelessWidget {
   const SearchSong({super.key});
@@ -58,27 +57,12 @@ class SearchSong extends StatelessWidget {
                   var data = c.search.searchList[index];
                   return ListTile(
                     contentPadding: EdgeInsets.zero,
-                    leading: ClipRRect(
+                    leading: ImageLoaderWidget(
+                      imageUrl: data.thumbnails!.last.url!,
+                      width: 48.w,
+                      height: 48.w,
+                      fit: BoxFit.cover,
                       borderRadius: BorderRadius.circular(6).r,
-                      child: FadeInImage(
-                        placeholder: AssetImage(
-                          AppAssets.kMusicLogo,
-                        ),
-                        image: NetworkImage(
-                          data.thumbnails!.last.url!,
-                        ),
-                        imageErrorBuilder: (context, error, stackTrace) =>
-                            Image.asset(
-                          AppAssets.kMusicLogo,
-                          width: 48.w,
-                          height: 48.w,
-                          fit: BoxFit.cover,
-                        ),
-                        width: 48.w,
-                        height: 48.w,
-                        fit: BoxFit.cover,
-                        placeholderFit: BoxFit.cover,
-                      ),
                     ),
                     title: Text(
                       data.title ?? "Name",

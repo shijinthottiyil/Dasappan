@@ -1,11 +1,9 @@
 import 'dart:async';
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:music_stream/features/settings/model/settings.dart';
-import 'package:music_stream/utils/constants/app_texts.dart';
-import 'package:music_stream/utils/helpers/audio_helper.dart';
+import 'package:music_stream/utils/logic/helpers/audio_helper.dart';
+import 'package:music_stream/utils/ui/constants/app_texts.dart';
 
 class SettingsController extends GetxController {
   ///Variables.

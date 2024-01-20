@@ -89,6 +89,14 @@ dependencies:
   # Package for Persistent Bottom Navigation Bar.
   persistent_bottom_nav_bar: ^5.0.2
 
+  # Cached Network Image-to show images from the internet and keep them in the cache directory.
+  cached_network_image: ^3.3.1
+
+  # Implementing Favorites using local database.
+  sqflite: ^2.3.0
+  path: ^1.8.3
+  #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 
 

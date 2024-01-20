@@ -1,3 +1,4 @@
+/*<---------Old Code Which consists of Image of Playlist in Custom Shape--------------------->
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,8 +6,9 @@ import 'package:get/get.dart';
 import 'package:music_stream/features/home/model/playlist_model.dart';
 import 'package:music_stream/features/playlist/controller/playlist_controller.dart';
 import 'package:music_stream/features/playlist/view/widgets/mycustom_clipper.dart';
-import 'package:music_stream/utils/constants/constants.dart';
-import 'package:music_stream/utils/helpers/audio_helper.dart';
+import 'package:music_stream/utils/logic/helpers/audio_helper.dart';
+import 'package:music_stream/utils/ui/constants/constants.dart';
+import 'package:music_stream/utils/ui/shared_widgets/shared_widgets.dart';
 
 class PlaylistView extends StatefulWidget {
   const PlaylistView({
@@ -62,7 +64,13 @@ class _PlaylistViewState extends State<PlaylistView> {
                 child: SizedBox(
                   width: double.infinity,
                   height: MediaQuery.sizeOf(context).height / 2.5,
-                  child: FadeInImage(
+                  child: ImageLoaderWidget(
+                    imageUrl: widget.playlistImg!,
+                    width: double.maxFinite,
+                    height: double.maxFinite,
+                    fit: BoxFit.cover,
+                  ),
+                  /* FadeInImage(
                     placeholder: AssetImage(
                       AppAssets.kMusicLogo,
                     ),
@@ -81,6 +89,7 @@ class _PlaylistViewState extends State<PlaylistView> {
                     fit: BoxFit.cover,
                     placeholderFit: BoxFit.cover,
                   ),
+                  */
                 ),
               ),
               Expanded(
@@ -111,33 +120,16 @@ class _PlaylistViewState extends State<PlaylistView> {
                                   _playlistC.playSelected(index);
                                 },
                                 contentPadding: EdgeInsets.all(10.r),
-                                leading: ClipRRect(
+                                leading: ImageLoaderWidget(
                                   borderRadius: BorderRadius.circular(10.r),
-                                  child: FadeInImage(
-                                    placeholder:
-                                        AssetImage(AppAssets.kMusicLogo),
-                                    image: NetworkImage(
-                                        data?.thumbnail?.last.url ?? ''),
-                                    imageErrorBuilder:
-                                        (context, error, stackTrace) =>
-                                            Image.asset(
-                                      AppAssets.kMusicLogo,
-                                      width: 60.w,
-                                      height: 60.w,
-                                      fit: BoxFit.cover,
-                                    ),
-                                    fit: BoxFit.cover,
-                                    placeholderFit: BoxFit.cover,
-                                    width: 60.w,
-                                    height: 60.w,
-                                  ),
+                                  imageUrl: data!.thumbnail!.last.url!,
+                                  width: 60.w,
+                                  height: 60.w,
+                                  fit: BoxFit.cover,
                                 ),
                                 title: Text(
-                                  data?.title ?? 'title',
-                                  style: AppTypography.kRegular13.copyWith(
-                                    // color: AppColors.kBlack,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
+                                  data.title ?? 'title',
+                                  style: context.textTheme.labelLarge,
                                 ),
                               ),
                             ),
@@ -216,9 +208,13 @@ class _PlaylistViewState extends State<PlaylistView> {
                 ),
                 */
                   ),
-              if (AudioHelper.playlistList.isNotEmpty) ...[
-                AppSpacing.gapH100,
-              ]
+              Obx(() {
+                if (AudioHelper.playlistList.isNotEmpty) {
+                  return AppSpacing.gapH100;
+                } else {
+                  return Container();
+                }
+              }),
             ],
           ),
           Positioned(
@@ -275,6 +271,159 @@ class _PlaylistViewState extends State<PlaylistView> {
       ),
     );
     */
+    );
+  }
+}
+*/
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//New Version of Playlist View Which is as minimal as possible.
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:music_stream/features/home/model/playlist_model.dart';
+import 'package:music_stream/features/playlist/controller/playlist_controller.dart';
+import 'package:music_stream/utils/logic/helpers/audio_helper.dart';
+import 'package:music_stream/utils/ui/constants/constants.dart';
+import 'package:music_stream/utils/ui/shared_widgets/shared_widgets.dart';
+
+class PlaylistView extends StatefulWidget {
+  const PlaylistView({
+    super.key,
+    required this.playlistId,
+    required this.playlistName,
+  });
+
+  ///Name of the corresponding playlist.
+  final String? playlistName;
+
+  ///BrowseId of the corresponding playlist.
+  final String? playlistId;
+
+  @override
+  State<PlaylistView> createState() => _PlaylistViewState();
+}
+
+class _PlaylistViewState extends State<PlaylistView> {
+  ///Getx Controllers.
+  final playlistC = Get.put(PlaylistController());
+  // --------------------------------------.
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      playlistC.getPlaylistList(widget.playlistId);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          padding: EdgeInsets.zero,
+          onPressed: () {
+            // Get.back();
+            Navigator.of(context).pop();
+          },
+          icon: const Icon(CupertinoIcons.back),
+        ),
+        titleSpacing: 0,
+        title: Text(
+          widget.playlistName!,
+          style: context.textTheme.headlineSmall!.copyWith(
+            fontWeight: FontWeight.bold,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        actions: [
+          GestureDetector(
+            onTap: playlistC.playAll,
+            child: Container(
+              margin: EdgeInsets.only(right: 16),
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              child: Text(
+                'Play',
+                style: context.textTheme.titleMedium,
+              ),
+              decoration: ShapeDecoration(
+                // color: AppColors.kRed,
+                shape: StadiumBorder(
+                  side: BorderSide(color: context.theme.iconTheme.color!),
+                ),
+              ),
+              // width: 30,
+              // height: 20,
+            ),
+          )
+        ],
+      ),
+      body: Padding(
+        padding: AppSpacing.gapPSH16,
+        child: Column(
+          children: [
+            Expanded(
+              child: FutureBuilder(
+                future: playlistC.getPlaylistList(widget.playlistId),
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<PlaylistModel>> snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                      itemBuilder: (context, index) {
+                        var data = snapshot.data?[index];
+                        return Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                '${index + 1}.',
+                                // style: AppTypography.kSecondary.copyWith(
+                                //   color: AppColors.kBlack,
+                                //   overflow: TextOverflow.ellipsis,
+                                // ),
+                              ),
+                            ),
+                            Expanded(
+                              child: ListTile(
+                                onTap: () {
+                                  playlistC.playSelected(index);
+                                },
+                                contentPadding: EdgeInsets.all(10.r),
+                                leading: ImageLoaderWidget(
+                                  borderRadius: BorderRadius.circular(10.r),
+                                  imageUrl: data!.thumbnail!.last.url!,
+                                  width: 60.w,
+                                  height: 60.w,
+                                  fit: BoxFit.cover,
+                                ),
+                                title: Text(
+                                  data.title ?? 'title',
+                                  style: context.textTheme.titleSmall,
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                      itemCount: playlistC.playlist.playlistList.length,
+                    );
+                  }
+                  return Container();
+                },
+              ),
+            ),
+            Obx(() {
+              if (AudioHelper.playlistList.isNotEmpty) {
+                return AppSpacing.gapH100;
+              } else {
+                return Container();
+              }
+            }),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -3,9 +3,9 @@ import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:music_stream/features/playlist/model/playlist.dart';
 import 'package:music_stream/features/playlist/service/playlist_service.dart';
-import 'package:music_stream/utils/constants/app_texts.dart';
-import 'package:music_stream/utils/helpers/audio_helper.dart';
-import 'package:music_stream/utils/networking/networking.dart';
+import 'package:music_stream/utils/logic/helpers/audio_helper.dart';
+import 'package:music_stream/utils/ui/constants/app_texts.dart';
+import 'package:music_stream/utils/logic/networking/networking.dart';
 import 'package:music_stream/features/home/model/playlist_model.dart';
 
 class PlaylistController extends GetxController {

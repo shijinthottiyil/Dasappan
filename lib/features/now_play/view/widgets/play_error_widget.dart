@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:music_stream/utils/constants/app_colors.dart';
+import 'package:music_stream/utils/ui/constants/app_colors.dart';
 
 class PlayErrorWidget extends StatelessWidget {
   const PlayErrorWidget({super.key});

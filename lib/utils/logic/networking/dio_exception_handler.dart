@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:music_stream/utils/constants/constants.dart';
-import 'package:music_stream/utils/networking/app_popups.dart';
+import 'package:music_stream/utils/ui/constants/constants.dart';
+import 'package:music_stream/utils/logic/networking/app_popups.dart';
 
 class DioExceptionHandler {
   static void dioError(DioExceptionType type) {

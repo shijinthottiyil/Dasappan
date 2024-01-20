@@ -8,7 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:lottie/lottie.dart';
-import 'package:music_stream/utils/helpers/audio_helper.dart';
+import 'package:music_stream/utils/logic/helpers/audio_helper.dart';
 
 import 'app_popups.dart';
 

@@ -6,8 +6,8 @@ import 'package:music_stream/features/bottom/controller/bottom_controller.dart';
 import 'package:music_stream/features/bottom/view/bottom_view.dart';
 import 'package:music_stream/features/settings/controller/settings_controller.dart';
 import 'package:music_stream/features/settings/view/widgets/settings_icon_widget.dart';
-import 'package:music_stream/utils/constants/constants.dart';
-import 'package:music_stream/utils/general_widgets.dart/common_scaffold.dart';
+import 'package:music_stream/utils/ui/constants/constants.dart';
+import 'package:music_stream/utils/ui/shared_widgets/common_scaffold.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
@@ -15,19 +15,12 @@ class SettingsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = Get.put(SettingsController());
-    return CommonScaffold(
-      onWillPop: () async {
-        if (pc.isPanelOpen) {
-          pc.close();
-        } else {
-          Get.find<BottomController>().bottom.selectedIndex.value = 1;
-        }
-
-        return false;
-      },
-      appBarTitle: 'Settings',
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Settings'),
+      ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.w),
+        padding: AppSpacing.gapPSH16,
         child: Column(
           children: [
             // Audio Quality Section.

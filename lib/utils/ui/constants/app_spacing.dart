@@ -44,4 +44,7 @@ class AppSpacing {
   static final gapH125 = SizedBox(height: 125.h);
   static final gapH200 = SizedBox(height: 200.h);
   static final gapH250 = SizedBox(height: 250.h);
+
+  //Padding
+  static const gapPSH16 = EdgeInsets.symmetric(horizontal: 16);
 }

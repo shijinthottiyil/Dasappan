@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:music_stream/utils/constants/app_texts.dart';
+import 'package:music_stream/utils/ui/constants/app_texts.dart';
 
 ///Trying out Dynamic Theme Switching.[Means change the app theme according to the System Settings].
 ///

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:music_stream/utils/constants/app_typography.dart';
+import 'package:music_stream/utils/ui/constants/app_typography.dart';
 
 class DurationTextWidget extends StatelessWidget {
   const DurationTextWidget(

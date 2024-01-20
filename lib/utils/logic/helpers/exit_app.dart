@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:music_stream/utils/constants/app_colors.dart';
-import 'package:music_stream/utils/constants/app_typography.dart';
-import 'package:music_stream/utils/helpers/audio_helper.dart';
+import 'package:music_stream/utils/ui/constants/app_colors.dart';
+import 'package:music_stream/utils/ui/constants/app_typography.dart';
+import 'package:music_stream/utils/logic/helpers/audio_helper.dart';
 
 Future exitApp() async {
   await Get.dialog(

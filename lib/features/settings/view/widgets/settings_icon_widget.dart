@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:music_stream/utils/constants/constants.dart';
+import 'package:music_stream/utils/ui/constants/constants.dart';
 
 class SettingsIconWidget extends StatelessWidget {
   const SettingsIconWidget({

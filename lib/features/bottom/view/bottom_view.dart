@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:music_stream/features/bottom/controller/bottom_controller.dart';
+import 'package:music_stream/features/favorites/view/favorite_view.dart';
 import 'package:music_stream/features/home/view/home_view.dart';
 import 'package:music_stream/features/mini_player/view/mini_player_view.dart';
 import 'package:music_stream/features/now_play/view/now_play_view.dart';
 import 'package:music_stream/features/search/view/search_view.dart';
 import 'package:music_stream/features/settings/view/settings_view.dart';
-import 'package:music_stream/utils/constants/constants.dart';
-import 'package:music_stream/utils/general_widgets.dart/slide_up_panel/panel.dart';
-import 'package:music_stream/utils/helpers/audio_helper.dart';
+import 'package:music_stream/utils/logic/helpers/audio_helper.dart';
+import 'package:music_stream/utils/ui/constants/constants.dart';
+import 'package:music_stream/utils/ui/shared_widgets/slide_up_panel/panel.dart';
 
 // Expirementing Persistent BottomNavigationBar in Flutter
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
@@ -18,7 +18,12 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 final PanelController pc = PanelController();
 
 //_pages Variables defines the pages that we use withinout application.
-final _pages = [const HomeView(), const SearchView(), const SettingsView()];
+final _pages = [
+  const HomeView(),
+  // const SearchView(),
+  const FavoriteView(),
+  const SettingsView()
+];
 
 /*final _items = [
     PersistentBottomNavBarItem(
@@ -53,15 +58,18 @@ class BottomView extends StatelessWidget {
         maxHeight: MediaQuery.sizeOf(context).height,
         minHeight: AudioHelper.playlistList.isEmpty ? 0 : 70,
         panel: const NowPlayView(),
-        collapsed: const MiniPlayerView(),
+        collapsed: const Material(child: MiniPlayerView()),
         body: PersistentTabView(
+          context,
           onItemSelected: (int selectedItem) {
             // print(selectedItem);
 
             pc.close();
           },
-          backgroundColor: context.theme.canvasColor,
-          context,
+          backgroundColor: context.isDarkMode
+              ? context.theme.colorScheme.secondary
+              : context.theme.primaryColor,
+
           // controller: _controller,
           screens: _pages,
           items: [
@@ -70,10 +78,15 @@ class BottomView extends StatelessWidget {
               icon: const Icon(Icons.home_rounded),
               title: 'Home',
             ),
+            // PersistentBottomNavBarItem(
+            //   activeColorPrimary: _getActiveColorPrimary(context),
+            //   icon: const Icon(Icons.search_rounded),
+            //   title: 'Search',
+            // ),
             PersistentBottomNavBarItem(
               activeColorPrimary: _getActiveColorPrimary(context),
-              icon: const Icon(Icons.search_rounded),
-              title: 'Search',
+              icon: const Icon(Icons.favorite_rounded),
+              title: 'Favorite',
             ),
             PersistentBottomNavBarItem(
               activeColorPrimary: _getActiveColorPrimary(context),
@@ -81,7 +94,7 @@ class BottomView extends StatelessWidget {
               title: 'Settings',
             ),
           ],
-          navBarStyle: NavBarStyle.style12,
+          navBarStyle: NavBarStyle.style13,
           navBarHeight: 70,
         ),
       ),
@@ -90,7 +103,8 @@ class BottomView extends StatelessWidget {
 
 //Helper Method of Changing the BottomNavigationBar Icon Based on Device Theme.
   Color _getActiveColorPrimary(BuildContext context) {
-    return context.isDarkMode ? AppColors.kWhite : AppColors.kBlack;
+    // return context.isDarkMode ? AppColors.kBlack : AppColors.kBlack;
+    return context.theme.iconTheme.color!;
   }
   // ---------------------------------------------------------------------
 }

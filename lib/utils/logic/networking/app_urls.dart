@@ -4,6 +4,7 @@ class AppUrls {
   static const String kPlaylist = "searchwatchplaylist";
   static const String kSearch = "search";
   static const String kPlaylistList = "playlist";
+  static const String kArtist = 'artist';
 
   ///Endpoint for fetching wallpaper from Unsplash Api.
   static const String kWallpaper =

@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:music_stream/features/now_play/controller/now_controller.dart';
-import 'package:music_stream/utils/constants/app_assets.dart';
-import 'package:music_stream/utils/constants/app_colors.dart';
-import 'package:music_stream/utils/constants/app_texts.dart';
-import 'package:music_stream/utils/constants/app_typography.dart';
-import 'package:music_stream/utils/helpers/audio_helper.dart';
+import 'package:music_stream/utils/logic/helpers/audio_helper.dart';
+import 'package:music_stream/utils/ui/constants/app_assets.dart';
+import 'package:music_stream/utils/ui/constants/app_colors.dart';
+import 'package:music_stream/utils/ui/constants/app_texts.dart';
+import 'package:music_stream/utils/ui/constants/app_typography.dart';
+import 'package:music_stream/utils/ui/shared_widgets/shared_widgets.dart';
 
 class QueueContainer extends StatelessWidget {
   const QueueContainer({Key? key}) : super(key: key);
@@ -53,24 +54,12 @@ class QueueContainer extends StatelessWidget {
                             // _playlistC.playSelected(index);
                           },
                           contentPadding: EdgeInsets.all(10.r),
-                          leading: ClipRRect(
+                          leading: ImageLoaderWidget(
                             borderRadius: BorderRadius.circular(10.r),
-                            child: FadeInImage(
-                              placeholder: AssetImage(AppAssets.kLenin),
-                              image:
-                                  NetworkImage(data.thumbnail?.last.url ?? ''),
-                              imageErrorBuilder: (context, error, stackTrace) =>
-                                  Image.asset(
-                                AppAssets.kLenin,
-                                width: 60.w,
-                                height: 60.w,
-                                fit: BoxFit.cover,
-                              ),
-                              fit: BoxFit.cover,
-                              placeholderFit: BoxFit.cover,
-                              width: 60.w,
-                              height: 60.w,
-                            ),
+                            imageUrl: data.thumbnail!.last.url!,
+                            width: 60.w,
+                            height: 60.w,
+                            fit: BoxFit.cover,
                           ),
                           title: Text(
                             data.title ?? AppTexts.kTitle,

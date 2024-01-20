@@ -1,7 +1,7 @@
 class AppTexts {
   static const String kLoading = 'Loading';
   static const String kTitle = 'ദാസപ്പൻ';
-  static const String kTitleEng = 'DASAPPAN';
+  static const String kTitleEng = 'Dasappan';
   static const String kIntro = 'KERI VADA MAKKALE';
 
   ///Texts to use in the AudioQuality Changing.

@@ -3,8 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:music_stream/features/search/controller/search_controller.dart';
 import 'package:music_stream/features/playlist/view/playlist_view.dart';
-import 'package:music_stream/utils/constants/constants.dart';
-import 'package:music_stream/utils/helpers/audio_helper.dart';
+import 'package:music_stream/utils/logic/helpers/audio_helper.dart';
+import 'package:music_stream/utils/ui/constants/constants.dart';
+import 'package:music_stream/utils/ui/shared_widgets/shared_widgets.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class SearchPlay extends StatelessWidget {
@@ -39,7 +40,7 @@ class SearchPlay extends StatelessWidget {
                         PersistentNavBarNavigator.pushNewScreen(
                           context,
                           screen: PlaylistView(
-                            playlistImg: data.thumbnails?.last.url,
+                            // playlistImg: data.thumbnails?.last.url,
                             playlistName: data.title,
                             playlistId: data.browseId,
                           ),
@@ -59,33 +60,21 @@ class SearchPlay extends StatelessWidget {
                         children: [
                           Expanded(
                             flex: 7,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(4).r,
-                              child: FadeInImage(
-                                placeholder: AssetImage(
-                                  AppAssets.kMusicLogo,
-                                ),
-                                image: NetworkImage(
-                                    data.thumbnails?.last.url ?? ''),
-                                imageErrorBuilder:
-                                    (context, error, stackTrace) => Image.asset(
-                                  AppAssets.kMusicLogo,
-                                  width: double.infinity,
-                                  fit: BoxFit.cover,
-                                ),
-                                width: double.infinity,
-                                // height: double.infinity,
-                                fit: BoxFit.cover,
-                                placeholderFit: BoxFit.cover,
-                              ),
+                            child: ImageLoaderWidget(
+                              imageUrl: data.thumbnails!.last.url!,
+                              width: double.infinity,
+                              height: null,
+                              fit: BoxFit.cover,
+                              borderRadius: BorderRadius.circular(12).r,
                             ),
                           ),
+                          AppSpacing.gapH8,
                           Expanded(
                             child: Padding(
                               padding: EdgeInsets.only(top: 5.h),
                               child: Text(
                                 data.title ?? AppTexts.kLoading,
-                                style: AppTypography.kSecondary,
+                                style: context.textTheme.titleMedium,
                                 softWrap: false,
                                 maxLines: 4,
                                 overflow: TextOverflow.ellipsis,

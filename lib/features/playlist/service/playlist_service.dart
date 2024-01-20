@@ -1,4 +1,4 @@
-import 'package:music_stream/utils/networking/networking.dart';
+import 'package:music_stream/utils/logic/networking/networking.dart';
 
 class PlaylistService {
   ///Method to fetch all songs to display in the playlist view.[kPlaylistList].
