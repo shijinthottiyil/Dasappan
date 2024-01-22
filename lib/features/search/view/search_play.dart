@@ -14,9 +14,9 @@ class SearchPlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var c = Get.put(SearchCtr());
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15.w),
-      child: Scrollbar(
+    return Scrollbar(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 15.w),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

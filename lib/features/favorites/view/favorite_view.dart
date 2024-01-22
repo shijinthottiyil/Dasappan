@@ -49,9 +49,9 @@ class FavoriteView extends StatelessWidget {
         backgroundColor: AppColors.kWhite,
         strokeWidth: 4.0,
         child: Obx(
-          () => Padding(
-            padding: AppSpacing.gapPSH16,
-            child: Scrollbar(
+          () => Scrollbar(
+            child: Padding(
+              padding: AppSpacing.gapPSH16,
               child: Column(
                 children: [
                   Expanded(

@@ -14,9 +14,9 @@ class SearchArtist extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = Get.find<SearchCtr>();
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15.w),
-      child: Scrollbar(
+    return Scrollbar(
+      child: Padding(
+        padding: AppSpacing.gapPSH16,
         child: SingleChildScrollView(
           child: Column(
             children: [

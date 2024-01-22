@@ -87,9 +87,9 @@ class _ArtistViewState extends State<ArtistView> {
           )
         ],
       ),
-      body: Padding(
-        padding: AppSpacing.gapPSH16,
-        child: Scrollbar(
+      body: Scrollbar(
+        child: Padding(
+          padding: AppSpacing.gapPSH16,
           child: Column(
             children: [
               Obx(

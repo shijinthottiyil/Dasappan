@@ -42,9 +42,9 @@ class HomeView extends StatelessWidget {
         color: AppColors.kBlack,
         backgroundColor: AppColors.kWhite,
         strokeWidth: 4.0,
-        child: Padding(
-          padding: AppSpacing.gapPSH16,
-          child: Scrollbar(
+        child: Scrollbar(
+          child: Padding(
+            padding: AppSpacing.gapPSH16,
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
