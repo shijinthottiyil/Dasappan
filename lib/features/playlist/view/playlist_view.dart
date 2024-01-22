@@ -305,7 +305,7 @@ class PlaylistView extends StatefulWidget {
 }
 
 class _PlaylistViewState extends State<PlaylistView> {
-  final ScrollController _firstController = ScrollController();
+  var playlistList = <PlaylistModel>[].obs;
 
   ///Getx Controllers.
   final playlistC = Get.put(PlaylistController());
@@ -315,8 +315,13 @@ class _PlaylistViewState extends State<PlaylistView> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      playlistC.getPlaylistList(widget.playlistId);
+      // playlistC.getPlaylistList(widget.playlistId);
+      getPlaylistList();
     });
+  }
+
+  Future<void> getPlaylistList() async {
+    playlistList.value = await playlistC.getPlaylistList(widget.playlistId);
   }
 
   @override
@@ -361,64 +366,55 @@ class _PlaylistViewState extends State<PlaylistView> {
           )
         ],
       ),
-      body: Padding(
-        padding: AppSpacing.gapPSH16,
-        child: Scrollbar(
+      body: Scrollbar(
+        child: Padding(
+          padding: AppSpacing.gapPSH16,
           child: Column(
             children: [
               Expanded(
-                child: FutureBuilder(
-                  future: playlistC.getPlaylistList(widget.playlistId),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<List<PlaylistModel>> snapshot) {
-                    if (snapshot.hasData) {
-                      return ListView.builder(
-                        controller: _firstController,
-                        itemBuilder: (context, index) {
-                          var data = snapshot.data?[index];
-                          return Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  '${index + 1}.',
-                                  style: context.textTheme.labelLarge,
-                                  // style: AppTypography.kSecondary.copyWith(
-                                  //   color: AppColors.kBlack,
-                                  //   overflow: TextOverflow.ellipsis,
-                                  // ),
-                                ),
-                              ),
-                              Expanded(
-                                child: ListTile(
-                                  onTap: () {
-                                    playlistC.playSelected(index);
-                                  },
-                                  contentPadding: EdgeInsets.all(10.r),
-                                  leading: ImageLoaderWidget(
-                                    borderRadius: BorderRadius.circular(10.r),
-                                    imageUrl: data!.thumbnail!.last.url!,
-                                    width: 60.w,
-                                    height: 60.w,
-                                    fit: BoxFit.cover,
-                                  ),
-                                  title: Text(
-                                    data.title ?? 'title',
-                                    style: context.textTheme.titleMedium,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          );
-                        },
-                        itemCount: playlistC.playlist.playlistList.length,
-                      );
-                    }
-                    return Container();
+                  child: Obx(
+                () => ListView.builder(
+                  itemBuilder: (context, index) {
+                    final songData = playlistList[index];
+                    return Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            '${index + 1}.',
+                            style: context.textTheme.labelLarge,
+                            // style: AppTypography.kSecondary.copyWith(
+                            //   color: AppColors.kBlack,
+                            //   overflow: TextOverflow.ellipsis,
+                            // ),
+                          ),
+                        ),
+                        Expanded(
+                          child: ListTile(
+                            onTap: () {
+                              playlistC.playSelected(index);
+                            },
+                            contentPadding: EdgeInsets.all(10.r),
+                            leading: ImageLoaderWidget(
+                              borderRadius: BorderRadius.circular(10.r),
+                              imageUrl: songData.thumbnail!.last.url!,
+                              width: 60.w,
+                              height: 60.w,
+                              fit: BoxFit.cover,
+                            ),
+                            title: Text(
+                              songData.title ?? 'title',
+                              style: context.textTheme.titleMedium,
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
                   },
+                  itemCount: playlistList.length,
                 ),
-              ),
+              )),
               Obx(() {
                 if (AudioHelper.playlistList.isNotEmpty) {
                   return AppSpacing.gapH100;
