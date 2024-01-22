@@ -62,11 +62,8 @@ class AppPopups {
         loadingAnimationsList[random.nextInt(loadingAnimationsList.length)];
 
     await Get.dialog(
-      WillPopScope(
-        child: Center(
-          child: randomLoadingAnimation,
-        ),
-        onWillPop: () => Future.value(false),
+      Center(
+        child: randomLoadingAnimation,
       ),
       barrierDismissible: true,
       barrierColor: AppColors.kBlack.withOpacity(0.3),

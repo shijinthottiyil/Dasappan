@@ -4,10 +4,9 @@ import 'package:music_stream/features/favorites/view/favorite_view.dart';
 import 'package:music_stream/features/home/view/home_view.dart';
 import 'package:music_stream/features/mini_player/view/mini_player_view.dart';
 import 'package:music_stream/features/now_play/view/now_play_view.dart';
-import 'package:music_stream/features/search/view/search_view.dart';
 import 'package:music_stream/features/settings/view/settings_view.dart';
 import 'package:music_stream/utils/logic/helpers/audio_helper.dart';
-import 'package:music_stream/utils/ui/constants/constants.dart';
+import 'package:music_stream/utils/logic/helpers/exit_app.dart';
 import 'package:music_stream/utils/ui/shared_widgets/slide_up_panel/panel.dart';
 
 // Expirementing Persistent BottomNavigationBar in Flutter
@@ -51,51 +50,59 @@ class BottomView extends StatelessWidget {
   Widget build(BuildContext context) {
     // _controller = PersistentTabController(initialIndex: 0);
     return Obx(
-      () => SlidingUpPanel(
-        renderPanelSheet: true,
-        margin: const EdgeInsets.only(bottom: 70),
-        controller: pc,
-        maxHeight: MediaQuery.sizeOf(context).height,
-        minHeight: AudioHelper.playlistList.isEmpty ? 0 : 70,
-        panel: const NowPlayView(),
-        collapsed: const Material(child: MiniPlayerView()),
-        body: PersistentTabView(
-          context,
-          onItemSelected: (int selectedItem) {
-            // print(selectedItem);
+      () => PopScope(
+        canPop: false,
+        onPopInvoked: (bool didPop) {
+          exitApp();
+        },
+        child: SlidingUpPanel(
+          renderPanelSheet: true,
+          margin: const EdgeInsets.only(bottom: 70),
+          controller: pc,
+          maxHeight: MediaQuery.sizeOf(context).height,
+          minHeight: AudioHelper.playlistList.isEmpty ? 0 : 70,
+          panel: const Material(child: NowPlayView()),
+          collapsed: const Material(child: MiniPlayerView()),
+          body: Material(
+            child: PersistentTabView(
+              context,
+              onItemSelected: (int selectedItem) {
+                // print(selectedItem);
 
-            pc.close();
-          },
-          backgroundColor: context.isDarkMode
-              ? context.theme.colorScheme.secondary
-              : context.theme.primaryColor,
+                pc.close();
+              },
+              backgroundColor: context.isDarkMode
+                  ? context.theme.colorScheme.secondary
+                  : context.theme.primaryColor,
 
-          // controller: _controller,
-          screens: _pages,
-          items: [
-            PersistentBottomNavBarItem(
-              activeColorPrimary: _getActiveColorPrimary(context),
-              icon: const Icon(Icons.home_rounded),
-              title: 'Home',
+              // controller: _controller,
+              screens: _pages,
+              items: [
+                PersistentBottomNavBarItem(
+                  activeColorPrimary: _getActiveColorPrimary(context),
+                  icon: const Icon(Icons.home_rounded),
+                  title: 'Home',
+                ),
+                // PersistentBottomNavBarItem(
+                //   activeColorPrimary: _getActiveColorPrimary(context),
+                //   icon: const Icon(Icons.search_rounded),
+                //   title: 'Search',
+                // ),
+                PersistentBottomNavBarItem(
+                  activeColorPrimary: _getActiveColorPrimary(context),
+                  icon: const Icon(Icons.favorite_rounded),
+                  title: 'Favorite',
+                ),
+                PersistentBottomNavBarItem(
+                  activeColorPrimary: _getActiveColorPrimary(context),
+                  icon: const Icon(Icons.settings_rounded),
+                  title: 'Settings',
+                ),
+              ],
+              navBarStyle: NavBarStyle.style13,
+              navBarHeight: 70,
             ),
-            // PersistentBottomNavBarItem(
-            //   activeColorPrimary: _getActiveColorPrimary(context),
-            //   icon: const Icon(Icons.search_rounded),
-            //   title: 'Search',
-            // ),
-            PersistentBottomNavBarItem(
-              activeColorPrimary: _getActiveColorPrimary(context),
-              icon: const Icon(Icons.favorite_rounded),
-              title: 'Favorite',
-            ),
-            PersistentBottomNavBarItem(
-              activeColorPrimary: _getActiveColorPrimary(context),
-              icon: const Icon(Icons.settings_rounded),
-              title: 'Settings',
-            ),
-          ],
-          navBarStyle: NavBarStyle.style13,
-          navBarHeight: 70,
+          ),
         ),
       ),
     );

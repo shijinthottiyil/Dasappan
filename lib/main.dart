@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:music_stream/features/splash/view/splash_view.dart';
+import 'package:music_stream/utils/logic/bindings/all_controller_bindings.dart';
 import 'package:music_stream/utils/logic/database/database_manager.dart';
 import 'package:music_stream/utils/ui/constants/constants.dart';
 
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (context, child) {
         return GetMaterialApp(
+          initialBinding: AllControllerBindings(),
           debugShowCheckedModeBanner: false,
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,

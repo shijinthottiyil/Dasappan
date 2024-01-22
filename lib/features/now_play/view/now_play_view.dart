@@ -1,3 +1,4 @@
+/*<--------Old Now Play Screen-------->
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -422,22 +423,55 @@ class NowPlayView extends StatelessWidget {
     );
   }
 }
+*/
 
-//The Code below is used for removing the padding from the slider.If we use the Slider only it will have a default padding.
-class CustomTrackShape extends RoundedRectSliderTrackShape {
+// ------------------------------------------------------------------------------------------------------------------------.
+//<-------------New NowPlayScreen---------------->
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:music_stream/features/favorites/controller.dart/favorite_controller.dart';
+import 'package:music_stream/features/now_play/view/song_control_view.dart';
+import 'package:music_stream/features/now_play/view/song_queue_view.dart';
+
+class NowPlayView extends StatelessWidget {
+  const NowPlayView({super.key});
+
   @override
-  Rect getPreferredRect({
-    required RenderBox parentBox,
-    Offset offset = Offset.zero,
-    required SliderThemeData sliderTheme,
-    bool isEnabled = false,
-    bool isDiscrete = false,
-  }) {
-    final trackHeight = sliderTheme.trackHeight;
-    final trackLeft = offset.dx;
-    final trackTop = offset.dy + (parentBox.size.height - trackHeight!) / 2;
-    final trackWidth = parentBox.size.width;
-    return Rect.fromLTWH(trackLeft, trackTop, trackWidth, trackHeight);
+  Widget build(BuildContext context) {
+    final favoriteC = Get.find<FavoriteController>();
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+          body: SafeArea(
+              child: Column(
+        children: [
+          TabBar(
+            labelPadding: EdgeInsets.zero,
+            labelStyle: context.textTheme.headlineSmall!.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+            unselectedLabelStyle:
+                context.theme.tabBarTheme.unselectedLabelStyle,
+            indicatorColor: Colors.transparent,
+            dividerColor: Colors.transparent,
+            dividerHeight: 0.0,
+            tabs: const <Widget>[
+              Tab(icon: Text('Song')),
+              Tab(
+                icon: Text('Queue'),
+              ),
+            ],
+          ),
+          const Expanded(
+            child: TabBarView(
+              children: <Widget>[
+                SongControlView(),
+                SongQueueView(),
+              ],
+            ),
+          ),
+        ],
+      ))),
+    );
   }
 }
-// ------------------------------------------------------------------------------------------------------------------------.

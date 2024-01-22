@@ -6,7 +6,6 @@ import 'package:music_stream/features/favorites/model/favorite_model.dart';
 import 'package:music_stream/features/home/model/playlist_model.dart';
 import 'package:music_stream/utils/logic/database/database_manager.dart';
 import 'package:music_stream/utils/logic/helpers/audio_helper.dart';
-import 'package:music_stream/utils/logic/networking/logger.dart';
 import 'package:music_stream/utils/logic/networking/networking.dart';
 
 class FavoriteController extends GetxController {
@@ -31,8 +30,8 @@ class FavoriteController extends GetxController {
       variables.favoriteDbIdsList.add(index['videoId'] as String);
     }
 
-    logger.i(variables.favoriteDbIdsList,
-        error: 'Ids in the Favorite Database');
+    // logger.i(variables.favoriteDbIdsList,
+    //     error: 'Ids in the Favorite Database');
   }
 
   ///Method Add id to favoriteDbIdsList

@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:music_stream/features/artist/controller/artist_controller.dart';
-import 'package:music_stream/features/artist/service/artist_service.dart';
-import 'package:music_stream/features/home/model/playlist_model.dart';
-import 'package:music_stream/features/playlist/controller/playlist_controller.dart';
 import 'package:music_stream/utils/logic/helpers/audio_helper.dart';
 import 'package:music_stream/utils/ui/constants/constants.dart';
 import 'package:music_stream/utils/ui/shared_widgets/shared_widgets.dart';
@@ -72,17 +69,17 @@ class _ArtistViewState extends State<ArtistView> {
               AudioHelper.playAll(_artistC.artist.artistList);
             },
             child: Container(
-              margin: EdgeInsets.only(right: 16),
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              child: Text(
-                'Play',
-                style: context.textTheme.titleMedium,
-              ),
+              margin: const EdgeInsets.only(right: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               decoration: ShapeDecoration(
                 // color: AppColors.kRed,
                 shape: StadiumBorder(
                   side: BorderSide(color: context.theme.iconTheme.color!),
                 ),
+              ),
+              child: Text(
+                'Play',
+                style: context.textTheme.titleMedium,
               ),
               // width: 30,
               // height: 20,
@@ -92,57 +89,60 @@ class _ArtistViewState extends State<ArtistView> {
       ),
       body: Padding(
         padding: AppSpacing.gapPSH16,
-        child: Column(
-          children: [
-            Obx(
-              () => Expanded(
-                child: ListView.builder(
-                  itemBuilder: (context, index) {
-                    final artistData = _artistC.artist.artistList[index];
-                    return Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            '${index + 1}.',
-                          ),
-                        ),
-                        Expanded(
-                          child: ListTile(
-                            onTap: () {
-                              AudioHelper.playSelected(
-                                  index, _artistC.artist.artistList);
-                            },
-                            contentPadding: EdgeInsets.all(10.r),
-                            leading: ImageLoaderWidget(
-                              borderRadius: BorderRadius.circular(10.r),
-                              imageUrl: artistData.thumbnail!.last.url!,
-                              width: 60.w,
-                              height: 60.w,
-                              fit: BoxFit.cover,
-                            ),
-                            title: Text(
-                              artistData.title ?? 'title',
-                              style: context.textTheme.titleSmall,
+        child: Scrollbar(
+          child: Column(
+            children: [
+              Obx(
+                () => Expanded(
+                  child: ListView.builder(
+                    itemBuilder: (context, index) {
+                      final artistData = _artistC.artist.artistList[index];
+                      return Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              '${index + 1}.',
+                              style: context.textTheme.labelLarge,
                             ),
                           ),
-                        ),
-                      ],
-                    );
-                  },
-                  itemCount: _artistC.artist.artistList.length,
+                          Expanded(
+                            child: ListTile(
+                              onTap: () {
+                                AudioHelper.playSelected(
+                                    index, _artistC.artist.artistList);
+                              },
+                              contentPadding: EdgeInsets.all(10.r),
+                              leading: ImageLoaderWidget(
+                                borderRadius: BorderRadius.circular(10.r),
+                                imageUrl: artistData.thumbnail!.last.url!,
+                                width: 60.w,
+                                height: 60.w,
+                                fit: BoxFit.cover,
+                              ),
+                              title: Text(
+                                artistData.title ?? 'title',
+                                style: context.textTheme.titleMedium,
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                    itemCount: _artistC.artist.artistList.length,
+                  ),
                 ),
               ),
-            ),
-            Obx(() {
-              if (AudioHelper.playlistList.isNotEmpty) {
-                return AppSpacing.gapH100;
-              } else {
-                return Container();
-              }
-            }),
-          ],
+              Obx(() {
+                if (AudioHelper.playlistList.isNotEmpty) {
+                  return AppSpacing.gapH100;
+                } else {
+                  return Container();
+                }
+              }),
+            ],
+          ),
         ),
       ),
     );

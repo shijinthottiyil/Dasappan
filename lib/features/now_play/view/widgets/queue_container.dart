@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:music_stream/features/now_play/controller/now_controller.dart';
 import 'package:music_stream/utils/logic/helpers/audio_helper.dart';
-import 'package:music_stream/utils/ui/constants/app_assets.dart';
 import 'package:music_stream/utils/ui/constants/app_colors.dart';
 import 'package:music_stream/utils/ui/constants/app_texts.dart';
 import 'package:music_stream/utils/ui/constants/app_typography.dart';
@@ -21,7 +20,7 @@ class QueueContainer extends StatelessWidget {
       filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
       child: ClipRRect(
         child: Container(
-          height: 0.80.sh,
+          // height: 0.80.sh,
           margin: EdgeInsets.only(left: 10.w, right: 10.w, bottom: 10.w),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),

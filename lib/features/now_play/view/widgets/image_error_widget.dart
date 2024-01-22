@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:music_stream/utils/ui/constants/app_colors.dart';
 
 class ImageErrorWidget extends StatelessWidget {
   const ImageErrorWidget({super.key});
@@ -14,7 +13,8 @@ class ImageErrorWidget extends StatelessWidget {
         height: 380.w,
         decoration: BoxDecoration(
           border: Border.all(
-            color: AppColors.kRed,
+            /* color: Colors.red,*/
+            color: Colors.transparent,
           ),
         ),
         child: const Center(

@@ -1,4 +1,3 @@
-import 'package:get/get.dart';
 import 'package:music_stream/features/home/model/playlist_model.dart';
 
 class Playlist {

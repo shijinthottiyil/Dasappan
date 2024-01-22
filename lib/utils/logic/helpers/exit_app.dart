@@ -29,7 +29,7 @@ Future exitApp() async {
                         EdgeInsets.symmetric(horizontal: 50.w, vertical: 32.h)
                             .copyWith(bottom: 0.h),
                     child: Text(
-                      'പോവണോ ?',
+                      'Do you really want to exit ?',
                       textAlign: TextAlign.center,
                       style: AppTypography.kBold16.copyWith(
                           color: AppColors.kBrown500,
@@ -71,7 +71,7 @@ Future exitApp() async {
                     ),
                     child: Center(
                         child: Text(
-                      "വേണ്ട",
+                      "No",
                       style: AppTypography.kMedium14,
                     ))),
               ),
@@ -79,15 +79,15 @@ Future exitApp() async {
                 height: 24.h,
               ),
               InkWell(
-                onTap: () {
-                  AudioHelper.player.dispose();
-                  AudioHelper.playlist.value.clear();
+                onTap: () async {
+                  //  a AudioHelper.playlist.value.clear();
                   AudioHelper.playlistList.clear();
+                  await AudioHelper.player.dispose();
 
                   SystemNavigator.pop();
                 },
                 child: Text(
-                  "പോട്ടെ",
+                  "Yes",
                   style:
                       AppTypography.kMedium14.copyWith(color: AppColors.kBlack),
                 ),

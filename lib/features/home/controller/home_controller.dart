@@ -64,7 +64,11 @@ class HomeController extends GetxController {
 //Listtile tap
   Future<void> listTileTap({required int index, required bool isHome}) async {
     Uri? audioSource;
-
+    if (home.isForLoopRunning) {
+      Get.snackbar(AppTexts.kTitleEng, 'Wait processing data in background');
+      // logger.e('For Loop is Running ${home.isForLoopRunning}');
+      return;
+    }
     try {
       AppPopups.showDialog();
       // Clearing data
@@ -96,6 +100,8 @@ class HomeController extends GetxController {
       AppPopups.cancelDialog();
 
       logger.e(error, error: 'HomeController listTileTap()');
+    } finally {
+      home.isForLoopRunning = false;
     }
   }
 
@@ -126,11 +132,12 @@ class HomeController extends GetxController {
     AudioHelper.playlistList.add(PlaylistModel.fromJson(tracks[0]));
     // playing song
     AudioHelper.player.play();
+    AppPopups.cancelDialog();
     // go now play
     // Get.find<BottomController>().bottom.selectedIndex.value = 1;
-    AppPopups.cancelDialog();
 
     // add song to queue
+    home.isForLoopRunning = true;
     for (var i = 1; i < tracks.length; i++) {
       var id = tracks[i]["videoId"];
 
@@ -150,6 +157,7 @@ class HomeController extends GetxController {
         );
       }
     }
+    home.isForLoopRunning = false;
   }
 
   ///Get wallpaper from Unsplash Api.
