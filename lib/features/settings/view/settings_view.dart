@@ -1,13 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:music_stream/features/bottom/controller/bottom_controller.dart';
-import 'package:music_stream/features/bottom/view/bottom_view.dart';
 import 'package:music_stream/features/settings/controller/settings_controller.dart';
 import 'package:music_stream/features/settings/view/widgets/settings_icon_widget.dart';
-import 'package:music_stream/utils/constants/constants.dart';
-import 'package:music_stream/utils/general_widgets.dart/common_scaffold.dart';
+import 'package:music_stream/utils/ui/constants/constants.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
@@ -15,19 +11,12 @@ class SettingsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = Get.put(SettingsController());
-    return CommonScaffold(
-      onWillPop: () async {
-        if (pc.isPanelOpen) {
-          pc.close();
-        } else {
-          Get.find<BottomController>().bottom.selectedIndex.value = 1;
-        }
-
-        return false;
-      },
-      appBarTitle: 'Settings',
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Settings'),
+      ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.w),
+        padding: AppSpacing.gapPSH16,
         child: Column(
           children: [
             // Audio Quality Section.
@@ -81,11 +70,11 @@ class SettingsView extends StatelessWidget {
             // Timer
             ListTile(
               contentPadding: EdgeInsets.zero,
-              leading: SettingsIconWidget(
+              leading: const SettingsIconWidget(
                 icon: Icons.timer_rounded,
                 color: AppColors.kRed,
               ),
-              title: Text('Sleep Timer'),
+              title: const Text('Sleep Timer'),
               trailing: Obx(
                 () {
                   final hours = c.formatCountdownTimer(
@@ -108,7 +97,7 @@ class SettingsView extends StatelessWidget {
                             c.settings.countDownTimer?.cancel();
                             c.settings.countDownDuration.value = Duration.zero;
                           },
-                          child: Icon(
+                          child: const Icon(
                             Icons.close_rounded,
                             size: 16,
                           ),

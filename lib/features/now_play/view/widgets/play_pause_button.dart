@@ -4,8 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:just_audio/just_audio.dart';
 // import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:music_stream/features/now_play/view/widgets/now_button.dart';
-import 'package:music_stream/utils/constants/constants.dart';
-import 'package:music_stream/utils/helpers/audio_helper.dart';
+import 'package:music_stream/utils/logic/helpers/audio_helper.dart';
+import 'package:music_stream/utils/ui/constants/constants.dart';
 
 class PlayPauseButton extends StatelessWidget {
   const PlayPauseButton({super.key, required this.playerState});

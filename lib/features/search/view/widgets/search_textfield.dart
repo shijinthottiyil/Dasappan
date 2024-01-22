@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:music_stream/utils/constants/constants.dart';
+import 'package:music_stream/utils/ui/constants/constants.dart';
 
 class SearchTextField extends StatelessWidget {
   const SearchTextField({

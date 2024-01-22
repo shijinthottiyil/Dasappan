@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:music_stream/features/now_play/controller/now_controller.dart';
-import 'package:music_stream/utils/constants/app_assets.dart';
-import 'package:music_stream/utils/constants/app_colors.dart';
-import 'package:music_stream/utils/constants/app_texts.dart';
-import 'package:music_stream/utils/constants/app_typography.dart';
-import 'package:music_stream/utils/helpers/audio_helper.dart';
+import 'package:music_stream/utils/logic/helpers/audio_helper.dart';
+import 'package:music_stream/utils/ui/constants/app_colors.dart';
+import 'package:music_stream/utils/ui/constants/app_texts.dart';
+import 'package:music_stream/utils/ui/constants/app_typography.dart';
+import 'package:music_stream/utils/ui/shared_widgets/shared_widgets.dart';
 
 class QueueContainer extends StatelessWidget {
   const QueueContainer({Key? key}) : super(key: key);
@@ -20,7 +20,7 @@ class QueueContainer extends StatelessWidget {
       filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
       child: ClipRRect(
         child: Container(
-          height: 0.80.sh,
+          // height: 0.80.sh,
           margin: EdgeInsets.only(left: 10.w, right: 10.w, bottom: 10.w),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
@@ -53,24 +53,12 @@ class QueueContainer extends StatelessWidget {
                             // _playlistC.playSelected(index);
                           },
                           contentPadding: EdgeInsets.all(10.r),
-                          leading: ClipRRect(
+                          leading: ImageLoaderWidget(
                             borderRadius: BorderRadius.circular(10.r),
-                            child: FadeInImage(
-                              placeholder: AssetImage(AppAssets.kLenin),
-                              image:
-                                  NetworkImage(data.thumbnail?.last.url ?? ''),
-                              imageErrorBuilder: (context, error, stackTrace) =>
-                                  Image.asset(
-                                AppAssets.kLenin,
-                                width: 60.w,
-                                height: 60.w,
-                                fit: BoxFit.cover,
-                              ),
-                              fit: BoxFit.cover,
-                              placeholderFit: BoxFit.cover,
-                              width: 60.w,
-                              height: 60.w,
-                            ),
+                            imageUrl: data.thumbnail!.last.url!,
+                            width: 60.w,
+                            height: 60.w,
+                            fit: BoxFit.cover,
                           ),
                           title: Text(
                             data.title ?? AppTexts.kTitle,

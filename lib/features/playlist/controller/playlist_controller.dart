@@ -3,9 +3,9 @@ import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:music_stream/features/playlist/model/playlist.dart';
 import 'package:music_stream/features/playlist/service/playlist_service.dart';
-import 'package:music_stream/utils/constants/app_texts.dart';
-import 'package:music_stream/utils/helpers/audio_helper.dart';
-import 'package:music_stream/utils/networking/networking.dart';
+import 'package:music_stream/utils/logic/helpers/audio_helper.dart';
+import 'package:music_stream/utils/ui/constants/app_texts.dart';
+import 'package:music_stream/utils/logic/networking/networking.dart';
 import 'package:music_stream/features/home/model/playlist_model.dart';
 
 class PlaylistController extends GetxController {
@@ -16,12 +16,12 @@ class PlaylistController extends GetxController {
   var service = PlaylistService();
 
   ///Method to fetch all songs to display in the playlist view.[kPlaylistList].
-  Future<void> getPlaylistList(String? browseId) async {
+  Future<List<PlaylistModel>> getPlaylistList(String? browseId) async {
     try {
       AppPopups.showDialog();
 
 //Implimenting PersistentBottomNavigation Bar And Find a Small Bug and Fixing That.
-      playlist.playlistList.clear();
+      playlist.playlistList = [];
 
       var response = await service.getPlaylistList(browseId);
       // logger.f(response,
@@ -34,12 +34,14 @@ class PlaylistController extends GetxController {
         var json = trackList[i];
         playlist.playlistList.add(PlaylistModel.fromJson(json));
       }
+      return playlist.playlistList;
     } on DioException catch (dioError) {
       DioExceptionHandler.dioError(dioError.type);
     } catch (err) {
       AppPopups.cancelDialog();
       logger.e(err, error: 'PlaylistController getPlaylistList() catch');
     }
+    return playlist.playlistList;
   }
 
 //  ///Method to play all songs in the current playlist one by one when user clicks the FAB.
@@ -82,7 +84,7 @@ class PlaylistController extends GetxController {
       Get.snackbar(
         AppTexts.kTitle,
         'Playing this Playlist',
-        snackPosition: SnackPosition.BOTTOM,
+        // snackPosition: SnackPosition.BOTTOM,
       );
 
       AudioHelper.playlistList.add(playlist.playlistList.first);
@@ -152,7 +154,7 @@ class PlaylistController extends GetxController {
       Get.snackbar(
         AppTexts.kTitle,
         'Playing Selected Song',
-        snackPosition: SnackPosition.BOTTOM,
+        // snackPosition: SnackPosition.BOTTOM,
       );
 
       AudioHelper.playlistList.add(playlist.playlistList[index]);

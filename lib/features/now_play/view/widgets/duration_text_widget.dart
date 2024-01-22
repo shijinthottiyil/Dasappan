@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:music_stream/utils/ui/constants/app_typography.dart';
 
 class DurationTextWidget extends StatelessWidget {
   const DurationTextWidget(
@@ -11,8 +12,14 @@ class DurationTextWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(positionData),
-        Text(durationData),
+        Text(
+          positionData,
+          style: AppTypography.kBold12,
+        ),
+        Text(
+          durationData,
+          style: AppTypography.kBold12,
+        ),
       ],
     );
   }

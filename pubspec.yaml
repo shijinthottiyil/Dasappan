@@ -76,7 +76,7 @@ dependencies:
   get_storage: ^2.1.1
 
 
-  #Speech to Text Package for exprimening voice search functionality.
+  #Speech to Text Package for exprimenting voice search functionality.
   speech_to_text: ^6.4.1
 
   # Staggered Grid View package is used for implementing custom GridViews and 
@@ -88,6 +88,14 @@ dependencies:
 
   # Package for Persistent Bottom Navigation Bar.
   persistent_bottom_nav_bar: ^5.0.2
+
+  # Cached Network Image-to show images from the internet and keep them in the cache directory.
+  cached_network_image: ^3.3.1
+
+  # Implementing Favorites using local database.
+  sqflite: ^2.3.0
+  path: ^1.8.3
+  #----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 

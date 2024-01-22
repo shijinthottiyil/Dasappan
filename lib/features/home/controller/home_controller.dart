@@ -12,10 +12,11 @@ import 'package:music_stream/features/home/model/home_model.dart';
 import 'package:music_stream/features/home/model/playlist_model.dart';
 import 'package:music_stream/features/home/service/home_service.dart';
 import 'package:music_stream/features/search/controller/search_controller.dart';
-import 'package:music_stream/utils/helpers/audio_helper.dart';
-import 'package:music_stream/utils/networking/app_popups.dart';
-import 'package:music_stream/utils/networking/dio_exception_handler.dart';
-import 'package:music_stream/utils/networking/logger.dart';
+import 'package:music_stream/utils/logic/networking/app_popups.dart';
+import 'package:music_stream/utils/logic/networking/dio_exception_handler.dart';
+import 'package:music_stream/utils/logic/helpers/audio_helper.dart';
+import 'package:music_stream/utils/logic/networking/logger.dart';
+import 'package:music_stream/utils/ui/constants/app_texts.dart';
 
 class HomeController extends GetxController {
   // Variables
@@ -34,7 +35,7 @@ class HomeController extends GetxController {
         if (isSplash) {
           Get.offAll(
             () => const BottomView(),
-            transition: Transition.leftToRight,
+            // transition: Transition.downToUp,
           );
         }
         // AppPopups.cancelDialog();
@@ -63,30 +64,44 @@ class HomeController extends GetxController {
 //Listtile tap
   Future<void> listTileTap({required int index, required bool isHome}) async {
     Uri? audioSource;
-    AudioHelper.playlistList.clear();
+    if (home.isForLoopRunning) {
+      Get.snackbar(AppTexts.kTitleEng, 'Wait processing data in background');
+      // logger.e('For Loop is Running ${home.isForLoopRunning}');
+      return;
+    }
     try {
       AppPopups.showDialog();
-      logger.i(home.homeList[0].contents?.elementAt(index).videoId,
-          error: index);
+      // Clearing data
+      await AudioHelper.player.stop();
+      await AudioHelper.playlist.value.clear();
+      AudioHelper.playlistList.clear();
+      // logger.i(home.homeList[0].contents?.elementAt(index).videoId,
+      //     error: index);
       String? videoId = isHome
           ? home.homeList[0].contents?.elementAt(index).videoId
           : Get.find<SearchCtr>().search.searchList[index].videoId;
 
       audioSource = await AudioHelper.getAudioUri(videoId: videoId!);
       if (audioSource == null) {
-        AppPopups.cancelDialog();
-        AppPopups.errorSnackbar(
-            title: "Something went wrong",
-            message: '''എവിടെയോ എന്തോ ഒരു തകരാറ് പോലെ....''');
+        // AppPopups.cancelDialog();
+        // AppPopups.errorSnackbar(
+        //     title: "Something went wrong",
+        //     message: '''എവിടെയോ എന്തോ ഒരു തകരാറ് പോലെ....''');
+        throw Exception('unavilableSong');
       } else {
         await getPlaylist(audioSource, videoId, index, isHome);
       }
+    } on Exception catch (error) {
+      AppPopups.cancelDialog();
+
+      AppPopups.errorSnackbar(
+          title: AppTexts.kTitle, message: error.toString());
     } catch (error) {
       AppPopups.cancelDialog();
-      logger.e(error.toString(), error: 'HomeController listTileTap()');
-      if (kDebugMode) {
-        log(error.toString(), name: "listTileTap");
-      }
+
+      logger.e(error, error: 'HomeController listTileTap()');
+    } finally {
+      home.isForLoopRunning = false;
     }
   }
 
@@ -94,11 +109,6 @@ class HomeController extends GetxController {
   Future<void> getPlaylist(
       Uri uri, String? videoId, int index, bool isHome) async {
     Uri? audio;
-
-    // Clearing data
-    await AudioHelper.player.stop();
-    await AudioHelper.playlist.value.clear();
-    AudioHelper.playlistList.clear();
 
     dynamic data = isHome
         ? home.homeList[0].contents![index]
@@ -116,19 +126,18 @@ class HomeController extends GetxController {
     await AudioHelper.player.setAudioSource(AudioHelper.playlist.value,
         initialIndex: 0, initialPosition: Duration.zero, preload: false);
 
-    // playing song
-    AudioHelper.player.play();
-
     // call api
     var response = await service.getPlaylist(videoId: videoId);
     List tracks = response.data["tracks"];
     AudioHelper.playlistList.add(PlaylistModel.fromJson(tracks[0]));
-
+    // playing song
+    AudioHelper.player.play();
+    AppPopups.cancelDialog();
     // go now play
     // Get.find<BottomController>().bottom.selectedIndex.value = 1;
-    AppPopups.cancelDialog();
 
     // add song to queue
+    home.isForLoopRunning = true;
     for (var i = 1; i < tracks.length; i++) {
       var id = tracks[i]["videoId"];
 
@@ -148,6 +157,7 @@ class HomeController extends GetxController {
         );
       }
     }
+    home.isForLoopRunning = false;
   }
 
   ///Get wallpaper from Unsplash Api.

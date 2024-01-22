@@ -10,6 +10,9 @@ class Home {
   //Instance of WallpaperModel.
   var wallpaperModel = WallpaperModel().obs;
 
+  ///boolean variable to check if the for loop is running.
+  bool isForLoopRunning = false;
+
   // // Playlist List
   // var playlistList = List<PlaylistModel>.empty(growable: true).obs;
 

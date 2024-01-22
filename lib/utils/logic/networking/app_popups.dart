@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:music_stream/utils/constants/constants.dart';
+import 'package:music_stream/utils/ui/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
@@ -62,11 +62,8 @@ class AppPopups {
         loadingAnimationsList[random.nextInt(loadingAnimationsList.length)];
 
     await Get.dialog(
-      WillPopScope(
-        child: Center(
-          child: randomLoadingAnimation,
-        ),
-        onWillPop: () => Future.value(false),
+      Center(
+        child: randomLoadingAnimation,
       ),
       barrierDismissible: true,
       barrierColor: AppColors.kBlack.withOpacity(0.3),

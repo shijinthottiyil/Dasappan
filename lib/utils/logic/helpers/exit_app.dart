@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:music_stream/utils/constants/app_colors.dart';
-import 'package:music_stream/utils/constants/app_typography.dart';
-import 'package:music_stream/utils/helpers/audio_helper.dart';
+import 'package:music_stream/utils/ui/constants/app_colors.dart';
+import 'package:music_stream/utils/ui/constants/app_typography.dart';
+import 'package:music_stream/utils/logic/helpers/audio_helper.dart';
 
 Future exitApp() async {
   await Get.dialog(
@@ -29,7 +29,7 @@ Future exitApp() async {
                         EdgeInsets.symmetric(horizontal: 50.w, vertical: 32.h)
                             .copyWith(bottom: 0.h),
                     child: Text(
-                      'പോവണോ ?',
+                      'Do you really want to exit ?',
                       textAlign: TextAlign.center,
                       style: AppTypography.kBold16.copyWith(
                           color: AppColors.kBrown500,
@@ -71,7 +71,7 @@ Future exitApp() async {
                     ),
                     child: Center(
                         child: Text(
-                      "വേണ്ട",
+                      "No",
                       style: AppTypography.kMedium14,
                     ))),
               ),
@@ -79,15 +79,15 @@ Future exitApp() async {
                 height: 24.h,
               ),
               InkWell(
-                onTap: () {
-                  AudioHelper.player.dispose();
-                  AudioHelper.playlist.value.clear();
+                onTap: () async {
+                  //  a AudioHelper.playlist.value.clear();
                   AudioHelper.playlistList.clear();
+                  await AudioHelper.player.dispose();
 
                   SystemNavigator.pop();
                 },
                 child: Text(
-                  "പോട്ടെ",
+                  "Yes",
                   style:
                       AppTypography.kMedium14.copyWith(color: AppColors.kBlack),
                 ),
